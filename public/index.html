@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>MapSketcher</title>
+    
+    
+    
+
+    
+    
+    <!--<script type="text/javascript" src="/js/jquery.mobile.js"></script>-->
+    
+    <!--<script type="text/javascript" src="/js/jquery.touchScrollable.js"></script>-->
+    <!--<script type="text/javascript" src="/js/jquery.github-voice.js"></script>-->
+	
+	<!-- CSS -->
+	<!--<link rel="stylesheet" href="/css/jquery.mobile.css" />-->
+	<!--<link rel="stylesheet" href="/css/application.css" />-->
+	<link rel="stylesheet" href="/css/mapsketcher.css" />
+	<link rel="stylesheet" href="/css/roommates.css" />
+	<link rel="stylesheet" href="/css/CssButtons.css" />
+	<link rel="stylesheet" href="/css/CssTask.css" />
+	<link rel="stylesheet" href="http://yui.yahooapis.com/2.8.2/build/reset-fonts-grids/reset-fonts-grids.css" type="text/css"> 
+	<!--<link rel="stylesheet" href="/css/github-voice.css" />-->
+	<link rel="stylesheet" href="/css/modal.css" />
+	
+	<!-- JQuery -->
+	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript" src="/js/jquery.tools.js"></script>
+	
+	<!-- Modal -->
+	<script type="text/javascript" src="/js/models/modal.js"></script>
+	
+	<!-- Google Maps Api -->
+	<script type="text/javascript" src="http://www.google.com/maps/api/js?v=3.3&sensor=false"></script>
+	
+	<!-- Socket -->
+	<script type="text/javascript" src="/socket.js"></script>
+	
+	<!-- Libreria para realizar drag and drop desde cualquier dispositivo--->
+	<script src="http://yui.yahooapis.com/3.2.0/build/yui/yui-min.js" charset="utf-8"></script>
+	
+    	<!-- Utilidades -->
+    	<script type="text/javascript" src="/js/underscore.js"></script>
+    	<script type="text/javascript" src="/js/utils.js"></script>
+	
+	<!--Algoritmo reducción de puntos en polilineas-->
+	<script type="text/javascript" src="/js/models/DPR.js"></script>
+    
+	<!--Static Google Maps-->	
+    	<script type="text/javascript" src="/js/models/staticRoom.js"></script>
+    	<script type="text/javascript" src="/js/models/staticMap.js"></script>
+    
+    	<!--Google Maps elements-->
+	<script type="text/javascript" src="/js/models/googleMaps/infobubble.js"></script>
+	<script type="text/javascript" src="/js/models/infoWindow.js"></script>
+	<script type="text/javascript" src="/js/models/googleMapWizard.js"></script>
+	<script type="text/javascript" src="/js/models/sketch.js"></script>
+	<script type="text/javascript" src="/js/models/polyline.js"></script>
+	<script type="text/javascript" src="/js/models/marker.js"></script>
+	<script type="text/javascript" src="/js/models/overlay.js"></script>
+	<script type="text/javascript" src="/js/models/map.js"></script>
+	
+	<!--Archivos de la aplicacion-->
+	<script type="text/javascript" src="/js/models/canvas.js"></script>
+	<script type="text/javascript" src="/js/models/workspace.js"></script>
+	<script type="text/javascript" src="/js/map_sketcher_client.js"></script>
+	<script type="text/javascript" src="/js/application.js"></script>
+
+	<!--Archivos para la adminitración de grupo-->
+	<script type="text/javascript" src="/js/models/roommate.js"></script>
+	<script type="text/javascript" src="/js/models/groupWizard.js"></script>
+	<script type="text/javascript" src="/js/models/groupInstanceTaskWizard.js"></script>
+	<script type="text/javascript" src="/js/models/user.js"></script>
+	
+	<!--Archivos para la gestion de task-->
+	<script type="text/javascript" src="/js/models/task/menu/instanceTaskUI.js"></script>
+	<script type="text/javascript" src="/js/models/task/menu/instanceTask.js"></script>
+	<script type="text/javascript" src="/js/models/task/menu/instanceTaskLayer.js"></script>
+	<script type="text/javascript" src="/js/models/task/menu/moduleTask.js"></script>
+	<script type="text/javascript" src="/js/models/task/menu/InstanceTaskCreator.js"></script> 
+	<script type="text/javascript" src="/js/models/task/menu/containerTask.js"></script>
+	<script type="text/javascript" src="/js/models/task/menu/containerTaskLeader.js"></script>
+	<script type="text/javascript" src="/js/models/task/menu/containerTaskFollower.js"></script>
+	<script type="text/javascript" src="/js/models/task/taskCreator.js"></script>
+    
+	<!--Gestures-->
+	<script type="text/javascript" src="/js/models/gestures/dollar.js"></script>
+	
+	</head>
+	<body>
+		<div id="wrapper" >
+			<div id="toolbar">	
+				<div id = "toggleModeButton" class = "btnMap"></div>
+				<div id = "toolbar_centerUp" style = "display:none">
+					<div class = "block">
+						<div id = "btnColor" class = "btnListMap"></div>
+						<ul id = "listColor" class = "dropdownmenu" style="display:none">
+							<li><img id = "btnGreen" src="./css/images/green.png"/></li>
+							<li><img id = "btnRed" src="./css/images/red.png"/></li>
+							<li><img id = "btnBlue" src="./css/images/blue.png"/></li>
+						</ul>
+					</div>
+					<div class = "block">
+						<div id = "btnSketch" class = "btnListMap"></div>
+						<ul id = "listSketch" class = "dropdownmenu" style="display:none">
+							<li><img id = "btnSlim" src="./css/images/slim.png"/></li>
+							<li><img id = "btnNormal" src="./css/images/normal.png"/></li>
+							<li><img id = "btnFat" src="./css/images/fat.png"/></li>
+						</ul>
+					</div>
+				</div>
+			</div>	
+			<div id="textoPrueba"><label id="result">Resultado</label></div>
+			<div id="workspace" data-role="content">
+				<div id="layer">
+					<div id="map"></div>
+				</div>
+	
+				<div id="sketches"></div>
+			</div>
+			<!-- div para la definición de la task -->
+			<div id = "taskDefinition" class = "layer" style = "display:none">
+				<input type="text" id="taskTitle" placeholder="Task title">
+				<div id = "taskStructure">
+					<a href="#" id="taskInfo" class="btnHide"><<</a>
+					<div class = "addSection"></div>
+					<ul id = "sections1" class ="taskInfo"></ul>
+					<a href="#" id="taskCreate" class="btnHide">Create</a>
+				</div>
+			</div>
+			<!-- div para el contenedor de roommates -->
+			<div id ="divRoommateContainer" class = "layer">
+				<a href="#" id= "hideRoommate" class="btnHide">>></a>
+			</div>
+			<!-- div para el contenedor de task -->
+			<div id="play"> 
+				<a href="#" class ="roomAdd" id = "taskAdd"></a>
+				<ul class="list layer" id="list1"></ul>
+			</div>
+						
+		</div>
+		
+		<div id="boxes">
+			<div id="dialog1" class="window">
+				<div class="d-header">
+					<input type="text" id = "name" value="name" onclick="this.value=''"/><br/>
+					<input type="text" id = "username" value="username" onclick="this.value=''"/> 
+					<select id = "userType">
+						<option value="follower">Follower</option>
+						<option value="leader">Leader</option>
+					</select>   
+				</div>
+				<div class="d-blank"></div>
+				<div class="close"><input type="image" alt="Login" title="Login" src="css/images/login-button.png"/></div>
+			</div>
+		
+			<!-- Mask to cover the whole screen -->
+			<div id="mask"></div>
+		</div>
+	
+	</body>
+</html> 

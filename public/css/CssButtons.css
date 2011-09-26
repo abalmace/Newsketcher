@@ -1,0 +1,171 @@
+
+/*
+	clase para botones dentro de mapa
+*/
+
+.btnMap{
+	position:relative;
+	display: inline-block;
+	z-index:1;
+	vertical-align: top;
+	padding-right:5px;
+}
+
+/*
+	clase para botones dentro de mapa que despliegan listas
+*/
+.btnListMap{
+	display:block;	
+	padding-right:5px;
+}
+
+/*
+	Botón de edición
+*/
+
+#toggleModeButton{
+	background: transparent url('./images/btnDrawing.png') no-repeat;
+	position: relative;
+	left:15px;
+	height:57px;
+	width:58px;
+	top:15px;
+}
+#toggleModeButton:hover
+{ 
+  cursor:pointer;
+}
+
+/*
+	Botón de color
+*/
+
+#btnColor{
+
+    background: transparent url('./images/btnBlue.png') no-repeat;
+	height:31px;
+	width:39px;
+	
+}
+
+#btnColor:active {
+    background: transparent url('./images/Bsd.png') no-repeat;
+    color: #000;
+    outline: none; /* hide dotted outline in Firefox */
+}
+#btnColor:hover
+{ 
+  cursor:pointer;
+}
+
+/*
+	Botón de grosor
+*/
+
+#btnSketch{
+	
+    background: transparent url('./images/btnNormal.png') no-repeat;
+	height:31px;
+	width:39px;
+}
+
+#btnSketch:active {
+    background: transparent url('./images/Bsd.png') no-repeat;
+    color: #000;
+    outline: none; /* hide dotted outline in Firefox */
+}
+#btnSketch:hover
+{ 
+  cursor:pointer;
+}
+
+/*
+	clase para agregar mini mapas a una room
+*/
+.roomAdd{
+	position:absolute;
+	background: transparent url('./images/btnPlus.png') no-repeat;
+	top:0;
+	right:2px;
+	width:31px;
+	height:31px;
+	z-index:100;
+}
+.roomAdd:hover
+{ 
+  cursor:pointer;
+}
+
+/*
+	clase para eliminar mini mapas en una room
+*/
+.roomDelete{
+	position:absolute;
+	background: transparent url('./images/btnRest.png') no-repeat;
+	top:0;
+	left:0;
+	width:31px;
+	height:31px;
+	z-index:100;
+}
+.roomDelete:hover
+{ 
+  cursor:pointer;
+}
+
+/*
+	Botton para esconder y mostrar el contenedor de roommates
+*/
+#hideRoommate
+{
+	position:absolute;
+	top:40%;
+	left:-50px;
+}
+
+/*
+	Boton para esconder/mostrar la información de una task
+*/
+#taskInfo
+{
+	position:absolute;
+	top:40%;
+	right:-50px;
+}
+
+/*
+	clase con atributos comunes para los botones hide
+*/
+.btnHide
+{
+	-moz-box-shadow:inset 0px 0px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 0px 0px 0px #ffffff;
+	box-shadow:inset 0px 0px 0px 0px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+	background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+	background-color:#ededed;
+	-moz-border-radius:17px;
+	-webkit-border-radius:17px;
+	border-radius:17px;
+	border:3px solid #dcdcdc;
+	display:inline-block;
+	color:#777777;
+	font-family:arial;
+	font-size:21px;
+	font-weight:bold;
+	padding:5px 15px;
+	text-decoration:none;
+}.btnHide:hover
+{
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
+	background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+	background-color:#dfdfdf;
+}.myButton:active
+{
+	position:relative;
+	top:1px;
+}
+
+

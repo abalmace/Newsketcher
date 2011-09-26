@@ -1,0 +1,471 @@
+body {
+  overflow:hidden;
+}
+
+#feedback {
+  background: #111111 url(feedback_tab.png) no-repeat -2px 50%;
+  border: 1px none #1B97F2;
+  border-left: none;
+  display: block;
+  height: 90px;
+  left: 0px;
+  margin-top: -45px;
+  position: fixed;
+  top: 40%;
+  width: 25px;
+  z-index: 101;
+}
+
+#wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  right: 0;
+}
+
+#toolbar {
+  position: relative;
+  padding-right: 0;
+  padding-left: 0;
+  
+  height:200px;
+  width:100%;
+  top:0;
+  
+}
+
+.toolbarPanning {
+		
+	background-color:#333333;
+			
+}
+
+.toolbarDrawing {
+		
+	background-color:#ffd700;
+			
+}
+
+#toolbar-left{
+	
+	left:0;
+	width:80%;
+	position: absolute;
+	
+}
+
+#toolbar-right{
+
+	top:0;
+	right:0;
+	width:20%;
+	position: absolute;
+}
+
+
+#toolbar h4 {
+  margin-left: 18px;
+}
+
+#workspace {
+  position: absolute;
+  background-color: #333333;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 70%;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#canvas {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background: #FFFFFF;
+}
+
+#rooms {
+  position: absolute;
+  background-color: #666666;
+  top:0;
+  right: 0;
+  height: 100%;
+  width: 30%;
+  padding-right:10px;
+}
+
+#rooms .room {
+  position: relative;
+  width: 100%;
+  z-index: 100;
+  overflow:auto;
+  border-radius: 7px;
+}
+
+#personal {
+  height: 40%;
+}
+
+#collaborative {
+  height: 30%;
+}
+
+#global {
+  height: 30%;
+}
+
+
+#selected {
+	/*  overflow : auto;*/	
+}
+
+.miniRoom {
+  position: relative;
+  height: 100px;
+  /*width: 100% - 10px;*/
+  width:60%;
+  border:#000000;
+  border-style:solid;
+  border-width:5px;
+  border-radius:9px;
+}
+
+
+.drag {
+  position: absolute;
+  height: 40px;
+  right: 0;
+  width: 40px;
+  background: url(drag/drag.png) no-repeat center center;
+  z-index: 300;
+}
+
+.map {
+	height: 100%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#minimap {
+	bottom: 0;
+	right: 0;
+	width: 50%;
+	height: 30%;
+  
+}
+
+#objects {
+	bottom: 0;
+	left: 0;
+	width: 50%;
+	height: 30%;
+}
+
+.overlay {
+	display: none;
+	z-index:10000;
+	/* styling */
+	background-color:#ffffff;
+	
+	width:555px;	
+	border:1px solid #666666;
+	
+	/* CSS3 styling for latest browsers */
+	-moz-box-shadow:0 0 90px 5px #000000;
+	-webkit-box-shadow: 0 0 90px #000000;  
+}
+
+.map {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	overflow:hidden;
+}
+
+.space{
+	border:	#999999;
+	border-style:solid;
+	padding:2px;
+	
+}
+#tools{
+	position:relative;
+	left:0px;
+	top:200px;
+	width:50px;
+	height:200px;
+	z-index:1000;
+}
+#toolbar_centerUp{
+	display:inline-block;
+	position:relative;
+	top:25px;
+	left:50px;
+	width:200px;
+	height:100px;
+	background-color:red;
+}
+
+.list{
+	position:relative;
+	background-color:#FFF;
+	display:block;
+}
+
+ul.dropdownmenu{ /* all lists */
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+ 
+ul.dropdownmenu li{ /* all list items */
+	float: left;
+	position: relative;
+	width: 4em;
+	background-color:#FFF;
+}
+ul.dropdownmenu li:hover
+{ 
+  cursor:pointer;
+}
+ 
+li ul { /* second-level lists */
+	display: none;
+	position: absolute;
+	top: 1em;
+	left: 0;
+}
+ 
+li>ul { /* to override top and left in browsers other than IE, which will position to the top right of the containing li, rather than bottom left */
+	top: auto;
+	left: auto;
+}
+ 
+li:hover ul, li.over ul { /* lists nested under hovered list items */
+	display: block;
+}
+
+.block{
+	position:relative;
+	display: inline-block;
+	z-index:1;
+	vertical-align: top;
+}
+
+.dropdownmenu{
+	z-index:1000;
+	position:absolute;
+	background:#fff;
+	cursor:default;
+	border-top:1px solid #ccc;
+	border-left:1px solid #ccc;
+	border-bottom:1px solid #676767;
+	border-right:1px solid #676767
+}
+/*
+	Para el infoWIndow
+*/
+
+.msedit{
+	width: 200px;
+	min-width: 264px;
+	padding-right: 14px;
+	max-height: 450px;
+	background:white;
+}
+.iwspan{
+	width: 100%;
+}
+
+.msstyle{
+	background: white;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+}
+.inputField{
+	width: 100%;
+}
+.label{
+	color: #666;
+	font-weight: bold;
+	padding-right: 8px;
+	white-space: nowrap;
+}
+
+.stylecol{
+	width: 36px;
+}
+
+.icon{
+	width: 32px;
+	height: 32px;
+	padding: 2px;
+	border: 2px solid blue;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.textField{
+	height: 9.2em;
+	margin-bottom: .5em;
+	clear: both;
+	width: 99%;
+	padding: 0;
+	resize: none;
+}
+
+.msiwpd {
+	margin-top: 4px;
+}
+
+.navLeft {
+width: 100%;
+vertical-align: baseline;
+}
+
+.navRight {
+padding-left: .2em;
+white-space: nowrap;
+vertical-align: baseline;
+}
+
+#divRoommateContainer
+{
+	background-color:green;
+	border-radius: 7px;
+  	min-height: 70px;
+  	left: 20%;
+  	position: absolute;
+  	top:20px;
+  	width: 30%;
+  	z-index: 101;
+  	
+  	text-align:center;
+  	white-space: nowrap;
+  	overflow:auto;
+}
+
+#textoPrueba{
+	color:blue;
+  border: 1px none #1B97F2;
+  border-left: none;
+  display: block;
+  height: 10px;
+  left: 40%;
+  margin-top: -45px;
+  position: absolute;
+  bottom:10px;
+  width: 30%;
+  z-index: 101;
+}
+
+.roommateIconBase
+{
+	display:block;
+  	height: 50px;
+  	width: 100%;  	
+}
+.roommateIcon
+{
+	background: url(images/roommate.gif) no-repeat center center;
+}
+
+.roommateIconAdd
+{
+  	background: url(images/user_add.png) no-repeat center center;  	
+}
+
+.roommateIconRemoveOn
+{
+  	background: url(images/user_delete.png) no-repeat center center;  	
+}
+
+.roommateIconRemoveOff
+{
+  	background: url(images/user_delete.png) no-repeat center center;  	
+}
+
+.roommateIconEnabled
+{
+  	background: url(images/user.png) no-repeat center center;  	
+}
+
+.roommateIconLeader
+{
+  	background: url(images/leader.png) no-repeat center center;  	
+}
+
+.roommateName
+{
+	display:block;
+	color:#777777;
+	font-weight:bold;
+	overflow: hidden;
+	height:100%; 
+	
+}
+
+.roommate
+{
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+	background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+	background-color:#ededed;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	padding:6px 20px;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #ffffff;
+	height:90%;
+	width: 60px;
+	text-align:center;
+}.roommate:hover
+{
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
+	background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+	background-color:#dfdfdf;
+}.roommate:active
+{
+	position:relative;
+	top:1px;
+}
+
+#tasks
+{
+	position: absolute;
+	background-color: #666666;
+	top:0;
+	right: left;
+	height: 100%;
+	width: 30%;
+	padding-right:10px;
+	z-index: 101;
+}
+#doc3
+{
+z-index: 101;
+}

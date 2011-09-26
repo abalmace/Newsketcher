@@ -1,0 +1,9 @@
+{ name: "MapSketcher"
+, version: "0.0.1"
+, main: 
+  { "faye": "0.6.1"
+  , "express": "2.3.11"
+  , "mongodb": "0.9.4-5"
+  }
+}
+
