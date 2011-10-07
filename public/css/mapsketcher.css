@@ -1,3 +1,37 @@
+body {
+	position:absolute;
+  overflow:hidden;
+  height:100%;
+  width:100%;
+}
+
+#ajaxContainer
+{
+	position:relative;
+	height:95%;
+	width:auto;
+	left:0;
+	bottom:0;
+}
+
+#menuLeader
+{
+	position:relative;
+	top:0;
+	left:0;
+	height:5%;
+	width:100%;
+}
+
+#wrapper {
+  position: relative;
+  height:100%;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
 #workspace {
   position: absolute;
   background-color: #333333;
@@ -5,7 +39,7 @@
   bottom: 0;
   left: 0;
   width: 70%;
-  height:auto;
+  height:100%;
 }
 
 #map {

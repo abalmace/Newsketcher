@@ -1,7 +1,30 @@
 var mapSketcherClient;
 $(document).ready(function()
 {
-
+	var activityDesigner;
+	
+	$('#btnActivityLeader').click(function(e){
+		var data =
+			{
+			name:'mila'
+			,username:'mila'
+			,usertype:"Leader"
+			}
+		$('#ajaxContainer').load('/partialView/mainContainer.ejs', function(){initMapSketcher(data)}); 	
+	});
+	
+	$('#btnTaskLeader').click(function(e){
+		$('#ajaxContainer').load('/partialView/definerTaskContainer.ejs'); 
+	});
+	
+	$('#btnGroupLeader').click(function(e){
+		$('#ajaxContainer').load('/partialView/definerGroupContainer.ejs', function()
+		{
+			activityDesigner = new ActivityDesigner({client:mapSketcherClient});
+			
+		}); 
+	});
+/*
 	//select all the a tag with name equal to modal
 		//Get the A tag
 		var id = "#dialog1";
@@ -28,18 +51,20 @@ $(document).ready(function()
 		//transition effect
 		$(id).fadeIn(2000);
 		
-		/*
 		var data =
 			{
 			name:name
 			,username:Utils.guid()
 			,usertype:"hola"
 			}
-		initMapSketcher(data); 
+		*/
+
+
+
+
 	
-	*/
-	
-	//if close button is clicked
+		/*
+		//if close button is clicked
 	$('.window .close').click(function (e)
 	{
 		//Cancel the link behavior
@@ -57,7 +82,11 @@ $(document).ready(function()
 			,usertype:usertype
 			}
 		initMapSketcher(data);
-	});				
+	});	
+
+*/
+
+	
 	
 });
 
@@ -69,6 +98,8 @@ var initMapSketcher = function(data)
 		mapSketcherClient = new MapSketcherClient(config,data);
 		mapSketcherClient.launch();
 	});
+	
+	
 
 	$("a[rel]").overlay(
 	{
@@ -81,6 +112,7 @@ var initMapSketcher = function(data)
 			, onClose: function(){$('#workspace').focus()}
 		}
 	})
+	
 }
 
 
