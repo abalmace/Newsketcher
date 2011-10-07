@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>MapSketcher</title>
+    
+    
+    
+
+    
+    
+    <!--<script type="text/javascript" src="/js/jquery.mobile.js"></script>-->
+    
+    <!--<script type="text/javascript" src="/js/jquery.touchScrollable.js"></script>-->
+    <!--<script type="text/javascript" src="/js/jquery.github-voice.js"></script>-->
+	
+	<!-- CSS -->
+	<!--<link rel="stylesheet" href="/css/jquery.mobile.css" />-->
+	<!--<link rel="stylesheet" href="/css/application.css" />-->
+	<link rel="stylesheet" href="/css/mapsketcher.css" />
+	<link rel="stylesheet" href="./css/groupDefiner.css" />
+	<link rel="stylesheet" href="/css/roommates.css" />
+	<link rel="stylesheet" href="/css/CssButtons.css" />
+	<link rel="stylesheet" href="/css/CssTask.css" />
+	<link rel="stylesheet" href="http://yui.yahooapis.com/2.8.2/build/reset-fonts-grids/reset-fonts-grids.css" type="text/css"> 
+	<!--<link rel="stylesheet" href="/css/github-voice.css" />-->
+	<link rel="stylesheet" href="/css/modal.css" />
+	
+	<!-- JQuery -->
+	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript" src="/js/jquery.tools.js"></script>
+	
+	<!-- Modal -->
+	<script type="text/javascript" src="/js/models/modal.js"></script>
+	
+	<!-- Google Maps Api -->
+	<script type="text/javascript" src="http://www.google.com/maps/api/js?v=3.3&sensor=false"></script>
+	
+	<!-- Socket -->
+	<script type="text/javascript" src="/socket.js"></script>
+	
+	<!-- Libreria para realizar drag and drop desde cualquier dispositivo--->
+	<script src="http://yui.yahooapis.com/3.2.0/build/yui/yui-min.js" charset="utf-8"></script>
+	
+    	<!-- Utilidades -->
+    	<script type="text/javascript" src="/js/underscore.js"></script>
+    	<script type="text/javascript" src="/js/utils.js"></script>
+	
+	<!--Algoritmo reducción de puntos en polilineas-->
+	<script type="text/javascript" src="/js/models/DPR.js"></script>
+    
+	<!--Static Google Maps-->	
+    	<script type="text/javascript" src="/js/models/staticRoom.js"></script>
+    	<script type="text/javascript" src="/js/models/staticMap.js"></script>
+    
+    	<!--Google Maps elements-->
+	<script type="text/javascript" src="/js/models/googleMaps/infobubble.js"></script>
+	<script type="text/javascript" src="/js/models/infoWindow.js"></script>
+	<script type="text/javascript" src="/js/models/googleMapWizard.js"></script>
+	<script type="text/javascript" src="/js/models/sketch.js"></script>
+	<script type="text/javascript" src="/js/models/polyline.js"></script>
+	<script type="text/javascript" src="/js/models/marker.js"></script>
+	<script type="text/javascript" src="/js/models/overlay.js"></script>
+	<script type="text/javascript" src="/js/models/map.js"></script>
+	
+	<!--Archivos de la aplicacion-->
+	<script type="text/javascript" src="/js/models/canvas.js"></script>
+	<script type="text/javascript" src="/js/models/workspace.js"></script>
+	<script type="text/javascript" src="/js/map_sketcher_client.js"></script>
+	<script type="text/javascript" src="/js/application.js"></script>
+
+	<!--Archivos para la adminitración de grupo-->
+	<script type="text/javascript" src="/js/models/roommate.js"></script>
+	<script type="text/javascript" src="/js/models/groupWizard.js"></script>
+	<script type="text/javascript" src="/js/models/groupInstanceTaskWizard.js"></script>
+	<script type="text/javascript" src="/js/models/user.js"></script>
+	
+	<!--Archivos para la administración de circles-->
+	<script type="text/javascript" src="/js/models/circles/circle.js"></script>
+	<script type="text/javascript" src="/js/models/circles/circleCreator.js"></script>
+	<script type="text/javascript" src="/js/models/circles/containerCircle.js"></script>
+	
+	<!--Archivos para la administración de People-->
+	<script type="text/javascript" src="/js/models/people/person.js"></script>
+	<script type="text/javascript" src="/js/models/people/peopleContainer.js"></script>
+	
+	<!--Archivos para la administración de selectorTask -->
+	<script type="text/javascript" src="/js/models/task/selector/selectedTask.js"></script>
+	<script type="text/javascript" src="/js/models/task/selector/containerSelectorTask.js"></script>
+	
+	<!--Archivos para la administración de Actividades -->
+	<script type="text/javascript" src="/js/models/activityDesigner.js"></script>
+	
+	
+	<!--Archivos para la gestion de task-->
+	<script type="text/javascript" src="/js/models/task/menu/instanceTaskUI.js"></script>
+	<script type="text/javascript" src="/js/models/task/menu/instanceTask.js"></script>
+	<script type="text/javascript" src="/js/models/task/menu/instanceTaskLayer.js"></script>
+	<script type="text/javascript" src="/js/models/task/menu/moduleTask.js"></script>
+	<script type="text/javascript" src="/js/models/task/menu/InstanceTaskCreator.js"></script> 
+	<script type="text/javascript" src="/js/models/task/menu/containerTask.js"></script>
+	<script type="text/javascript" src="/js/models/task/menu/containerTaskLeader.js"></script>
+	<script type="text/javascript" src="/js/models/task/menu/containerTaskFollower.js"></script>
+	<script type="text/javascript" src="/js/models/task/taskCreator.js"></script>
+    
+	<!--Gestures-->
+	<script type="text/javascript" src="/js/models/gestures/dollar.js"></script>
+	
+	</head>
+	<body>
+		<div id="menuLeader">
+			<input type='button' id="btnTaskLeader" value="task"/>
+			<input type='button' id="btnGroupLeader" value="group"/>
+			<input type='button' id="btnActivityLeader" value="activity"/>
+		</div>
+		<div id="ajaxContainer"></div>
+	</body>
+</html> 

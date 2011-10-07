@@ -1,0 +1,69 @@
+<div id="wrapper" >
+	<div id="toolbar">	
+		<div id = "toggleModeButton" class = "btnMap"></div>
+		<div id = "toolbar_centerUp" style = "display:none">
+			<div class = "block">
+				<div id = "btnColor" class = "btnListMap"></div>
+				<ul id = "listColor" class = "dropdownmenu" style="display:none">
+					<li><img id = "btnGreen" src="./css/images/green.png"/></li>
+					<li><img id = "btnRed" src="./css/images/red.png"/></li>
+					<li><img id = "btnBlue" src="./css/images/blue.png"/></li>
+				</ul>
+			</div>
+			<div class = "block">
+				<div id = "btnSketch" class = "btnListMap"></div>
+				<ul id = "listSketch" class = "dropdownmenu" style="display:none">
+					<li><img id = "btnSlim" src="./css/images/slim.png"/></li>
+					<li><img id = "btnNormal" src="./css/images/normal.png"/></li>
+					<li><img id = "btnFat" src="./css/images/fat.png"/></li>
+				</ul>
+			</div>
+		</div>
+	</div>	
+	<div id="textoPrueba"><label id="result">Resultado</label></div>
+	<div id="workspace" data-role="content">
+		<div id="layer">
+			<div id="map"></div>
+		</div>
+
+		<div id="sketches"></div>
+	</div>
+	<!-- div para la definición de la task -->
+	<div id = "taskDefinition" class = "layer" style = "display:none">
+		<input type="text" id="taskTitle" placeholder="Task title"/>
+		<div id = "taskStructure">
+			<a href="#" id="taskInfo" class="btnHide"><<</a>
+			<div class = "addSection"></div>
+			<ul id = "sections1" class ="taskInfo"></ul>
+			<a href="#" id="taskCreate" class="btnHide">Create</a>
+		</div>
+	</div>
+	<!-- div para el contenedor de roommates -->
+	<div id ="divRoommateContainer" class = "layer">
+		<a href="#" id= "hideRoommate" class="btnHide">>></a>
+	</div>
+	<!-- div para el contenedor de task -->
+	<div id="play"> 
+		<a href="#" class ="roomAdd" id = "taskAdd"></a>
+		<ul class="list layer" id="list1"></ul>
+	</div>
+				
+</div>
+		
+<div id="boxes">
+	<div id="dialog1" class="window">
+		<div class="d-header">
+			<input type="text" id = "name" value="name" onclick="this.value=''"/><br/>
+			<input type="text" id = "username" value="username" onclick="this.value=''"/> 
+			<select id = "userType">
+				<option value="follower">Follower</option>
+				<option value="leader">Leader</option>
+			</select>   
+		</div>
+		<div class="d-blank"></div>
+		<div class="close"><input type="image" alt="Login" title="Login" src="css/images/login-button.png"/></div>
+	</div>
+
+	<!-- Mask to cover the whole screen -->
+	<div id="mask"></div>
+</div>
