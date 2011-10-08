@@ -1,7 +1,7 @@
 function Circle(data)
 {
 	this.dom = data.dom;
-	this.title = data.title;
+	this.name = data.name;
 	this.owner = data.owner;
 	this.guid = data.guid;
 	this.people = [];
@@ -21,7 +21,7 @@ Circle.prototype.defineDOMElement = function()
 	
 	var divLabel = document.createElement('div');
 	divLabel.className = "circle_label";
-	divLabel.innerHTML =this.title;
+	divLabel.innerHTML =this.name;
 	
 	var divNumber = document.createElement('div');
 	divNumber.className = "circle_number";
