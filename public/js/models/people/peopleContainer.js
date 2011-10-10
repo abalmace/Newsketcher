@@ -3,6 +3,7 @@ function PeopleContainer(data)
 	this.client = data.client;
 	this.allPeople = [];
 	this.container = data.container;
+	this.clicked = data.clicked;
 	this.subscriptions = [];
 	this.Y = null;			//Ambiente de Yui
 	this.init();
@@ -107,7 +108,8 @@ PeopleContainer.prototype.addPerson = function(data)
 	
 	data.dom = dom;
 	data.guid = guid;
-	data.name = data.name;
+	
+	data.clicked = this.clicked;
 	
 	var person = new Person(data);
 	this.allPeople.push(person);

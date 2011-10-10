@@ -45,6 +45,7 @@ YUI.add("modulecircle", function(Y)
 		{
 			client = null;
 			callback = null;
+			modal.destructor();
 			
 		},
 

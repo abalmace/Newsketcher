@@ -9,6 +9,8 @@ function ActivityDesigner(data)
 	this.peopleContainerDOM = document.getElementById(this.stringPeopleContainerDOM);
 	this.circleContainerDOM = document.getElementById(this.stringCircleContainerDOM);
 	this.subscriptions = [];
+	this.tasksSelected = [];
+	this.peopleSelected = []
 	this.Y = null;			//Ambiente de Yui
 	this.init();
 	this.prefixIdTask = 'task_';
@@ -18,7 +20,7 @@ function ActivityDesigner(data)
 ActivityDesigner.prototype.init = function()
 {
 	//this.addEventClick();
-    
+	var self = this;
 	this.containerCircle = new ContainerCircle(
 	{
 		client:mapSketcherClient
@@ -28,14 +30,48 @@ ActivityDesigner.prototype.init = function()
 	{
 		client:mapSketcherClient
 		,container:this.peopleContainerDOM
+		,clicked: function(selected,guid)
+		{
+			self.multiPeopleSelected(selected,guid);	
+		}
 	});
 	this.containerSelectorTask = new ContainerSelectorTask(
 	{
 		client:mapSketcherClient
 		,container:this.containerSelectorTaskDOM
+		,clicked: function(selected,guid)
+		{
+			self.multiTasksSelected(selected,guid);	
+		}
 	});
 	this.createDesigner();
 			
+}
+
+ActivityDesigner.prototype.multiPeopleSelected = function(selected,guid)
+{
+	if(selected)
+		this.peopleSelected.push(this.peopleContainer.getPerson(guid));
+	else
+	{
+		var person = _.detect(this.peopleSelected, function(s) { return s.guid == guid });
+		if (person)
+			this.peopleSelected = _.without(this.peopleSelected, person);
+	}
+		
+}
+
+ActivityDesigner.prototype.multiTasksSelected = function(selected,guid)
+{
+	if(selected)
+		this.tasksSelected.push(this.containerSelectorTask.getTask(guid));
+	else
+	{
+		var task = _.detect(this.tasksSelected, function(s) { return s.guid == guid });
+		if (task)
+			this.tasksSelected = _.without(this.tasksSelected, task);
+	}
+		
 }
 
 ActivityDesigner.prototype.subscribePath = function(zone)
@@ -91,7 +127,7 @@ ActivityDesigner.prototype.createDesigner = function()
 			,borderStyle: 'none'
 			});
 		
-
+		
 		//Listen for all drop:over events
 		Y.DD.DDM.on('drop:hit', function(e)
 		{
@@ -108,11 +144,22 @@ ActivityDesigner.prototype.createDesigner = function()
 			{
 				var taskJson = self.containerSelectorTask.getTask(guid);
 				self.containerCircle.addTaskToCircle(taskJson,guidCircle);
+				_.each(self.tasksSelected, function(task)
+				{
+					self.containerCircle.addTaskToCircle(task,guidCircle);
+				});
+				self.tasksSelected = [];
 			}
 			else if(fatherId == self.stringPeopleContainerDOM)
 			{
 				var personJson = self.peopleContainer.getPerson(guid);
 				self.containerCircle.addPersonToCircle(personJson,guidCircle);
+				_.each(self.peopleSelected, function(person)
+				{
+					self.containerCircle.addPersonToCircle(person,guidCircle);
+				});
+				self.peopleSelected = [];
+				
 			}
 		});
 		
@@ -244,10 +291,19 @@ ActivityDesigner.prototype.createDesigner = function()
 			var circle = self.containerCircle.getCircle(circleGuid);
 			self.peopleContainer.reload(circle.people);
 			self.containerSelectorTask.reload(circle.tasks);
+			Y.one('#closeCircleDefinition').setAttribute("style", "visibility:");
+			
 		};
 		Y.one('#'+self.stringCircleContainerDOM).delegate('click', _onClickCircles, 'div.outer_circle');
 
+		var _onCloseCircleDefinition = function(e)
+		{
+			Y.one('#closeCircleDefinition').setAttribute("style", "visibility:hidden");
+			self.peopleContainer.reload();
+			self.containerSelectorTask.reload();
+		}
 		
+		Y.one('#closeCircleDefinition').on('click', _onCloseCircleDefinition);
 		
 		
 		

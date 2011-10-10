@@ -161,6 +161,18 @@ to {-webkit-transform:scale(1) rotate(360deg);}
     color: #000;
     border-color: #444;
 }
+.gButtonSelected
+{
+	border: 1px solid #779;
+	background: -o-linear-gradient(top,#63ABF7,#5E99CD);
+	background: -webkit-gradient(linear,left top,left bottom,from(#63ABF7),to(#5E99CD));
+	background: -moz-linear-gradient(top,#63ABF7,#5E99CD);
+	background: -o-linear-gradient(top,#63ABF7,#5E99CD);
+	color: white;
+	-moz-box-shadow: 0 0 3px #497fb8;
+	-webkit-box-shadow: 0 0 3px #497fb8;
+	box-shadow: 0 0 3px #497fb8;
+}
 .left {
     -webkit-border-top-right-radius: 0;
     -moz-border-radius-topright: 0;
