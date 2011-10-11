@@ -1,44 +1,118 @@
-function Circle(data)
+YUI.add("circle", function(Y)
 {
-	this.dom = data.dom;
-	this.name = data.name;
-	this.owner = data.owner;
-	this.guid = data.guid;
-	this.people = [];
-	this.tasks = [];
-	this.init();	
-}
-Circle.prototype.init = function()
-{
-	this.defineDOMElement();
-	this.addEvents();
-}
 
-Circle.prototype.defineDOMElement = function()
-{
-	var divInner = document.createElement('div');
-	divInner.className = "inner_circle";
-	
-	var divLabel = document.createElement('div');
-	divLabel.className = "circle_label";
-	divLabel.innerHTML =this.name;
-	
-	var divNumber = document.createElement('div');
-	divNumber.className = "circle_number";
-	divNumber.innerHTML = this.people.length;
-	
-	divInner.appendChild(divLabel);
-	divInner.appendChild(divNumber);
-	this.dom.appendChild(divInner);
+   
+	var Lang = Y.Lang;
+
+
+	function Circle(data)
+	{
+	Circle.superclass.constructor.apply(this, arguments);
+	}
+
+
+	Circle.NAME = "circle";
+
 	/*
-	Para que el nuevo elemento agregado sea un Target tambien
+	* The attribute configuration for the component. This defines the core user facing state of the component
 	*/
-	//this.Y.mynamespace.syncTargets();
-}
+	Circle.ATTRS =
+	{
+		dom:
+			{
+			value:null
+			}
+		,name:
+			{
+			value:''	
+			}
+		,owner:
+			{
+			value:null
+			}
+		,guid:
+			{
+			value:null
+			}
+		,people:
+			{
+			value:[]
+			}
+		,tasks:
+			{
+			value:[]
+			}
+	};
 
-Circle.prototype.addEvents = function()
-{
-	var element = $(this.dom);
+    /* MyComponent extends the Base class */
+    Y.extend(Circle, Y.Base, {
+
+        initializer: function(data)
+	{
+		this.dom = data.dom;
+		this.name = data.name;
+		this.owner = data.owner;
+		this.guid = data.guid;
+		this.people = [];
+		this.tasks = [];
+		
+		this._defineDOMElement();
+		this._addEvents();
+
+             this.publish("myEvent", {
+                defaultFn: this._defMyEventFn,
+                bubbles:false
+             });
+        },
+
+        destructor : function()
+	{
+            this.owner = null;
+	    this.guid = null;
+	    this.people = null;
+	    this.tasks = null;
+        },
+
+        addPerson : function(person)
+	{
+		var personAux = _.detect(this.people, function(s) { return s.guid == person.guid });
+		if(!personAux)
+		{
+			this.people.push(person);
+			var element = $(this.dom).find('.circle_number');
+			element.html(this.people.length);
+		}
+	},
+	
+	addTask : function(task)
+	{
+		var taskAux = _.detect(this.tasks, function(s) { return s.guid == task.guid });
+		if(!taskAux)
+			this.tasks.push(task);		
+	},
+
+        _defineDOMElement : function()
+	{
+		var divInner = document.createElement('div');
+		divInner.className = "inner_circle";
+
+		var divLabel = document.createElement('div');
+		divLabel.className = "circle_label";
+		divLabel.innerHTML =this.name;
+
+		var divNumber = document.createElement('div');
+		divNumber.className = "circle_number";
+		divNumber.innerHTML = this.people.length;
+
+		divInner.appendChild(divLabel);
+		divInner.appendChild(divNumber);
+		this.dom.appendChild(divInner);
+        },
+	//TODO
+        _addEvents : function()
+	{
+		
+           var element = $(this.dom);
 	var element2 = element.find('.outer_circle');
 	
 	element2.bind('click', function(){alert("hola")});
@@ -60,23 +134,10 @@ Circle.prototype.addEvents = function()
 		element.find('.outer_circle').animate({"top":"150px"},300).animate({"bottom":"20px"}, 100, function(){ });
 		element.find('.outer_circle').animate({"opacity":"0","margin-left":"600px"}, 800, 'linear');	
 	});
+	
+        }
+    });
 
-}
+    Y.namespace("ModuleCircle").Circle = Circle;
 
-Circle.prototype.addPerson = function(person)
-{
-	var personAux = _.detect(this.people, function(s) { return s.guid == person.guid });
-	if(!personAux)
-	{
-		this.people.push(person);
-		var element = $(this.dom).find('.circle_number');
-		element.html(this.people.length);
-	}
-}
-
-Circle.prototype.addTask = function(task)
-{
-	var taskAux = _.detect(this.tasks, function(s) { return s.guid == task.guid });
-	if(!taskAux)
-		this.tasks.push(task);
-}
+}, "3.1.0", {requires:["base"]});

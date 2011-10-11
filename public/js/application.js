@@ -1,28 +1,40 @@
 var mapSketcherClient;
-$(document).ready(function()
-{
-	var activityDesigner;
+
+YUI().use('node','node-load', function(Y) {
+ 
+    function init() {
+        var activityDesigner;
 	
-	$('#btnActivityLeader').click(function(e){
+	Y.one('#btnActivityLeader').on('click', function(e)
+	{
 		var data =
 			{
 			name:'mila'
 			,username:'mila'
 			,usertype:"Leader"
 			}
-		$('#ajaxContainer').load('/partialView/mainContainer.ejs', function(){initMapSketcher(data)}); 	
+		Y.one('#ajaxContainer').load('/partialView/mainContainer.ejs', function(){initMapSketcher(data)}); 	
+		e.stopImmediatePropagation()
 	});
 	
-	$('#btnTaskLeader').click(function(e){
-		$('#ajaxContainer').load('/partialView/definerTaskContainer.ejs'); 
+	Y.one('#btnTaskLeader').on('click', function(e)
+	{
+		Y.one('#ajaxContainer').load('/partialView/definerTaskContainer.ejs'); 
+		e.stopImmediatePropagation()
 	});
 	
-	$('#btnGroupLeader').click(function(e){
-		$('#ajaxContainer').load('/partialView/definerGroupContainer.ejs', function()
+	Y.one('#btnGroupLeader').on('click', function(e)
+	{
+		var node = Y.one('#ajaxContainer');
+		node.load('/partialView/definerGroupContainer.ejs',null,function()
 		{
-			activityDesigner = new ActivityDesigner({client:mapSketcherClient});
+			Y.use('activity-designer', function(Y)
+			{
+				activityDesigner = new Y.NewSketcher.ActivityDesigner({client:mapSketcherClient});
+			});
 			
 		}); 
+		e.stopImmediatePropagation()
 	});
 /*
 	//select all the a tag with name equal to modal
@@ -85,12 +97,11 @@ $(document).ready(function()
 	});	
 
 */
-
-	
-	
-});
-
-var initMapSketcher = function(data)
+    }
+ 
+     Y.on("domready", init); 
+     
+     var initMapSketcher = function(data)
 {
 	jQuery.getJSON('/config.json', function(config)
 	{
@@ -114,5 +125,8 @@ var initMapSketcher = function(data)
 	})
 	
 }
+
+});
+
 
 

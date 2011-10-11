@@ -1,129 +1,135 @@
-function PeopleContainer(data)
+YUI.add("peoplecontainer", function(Y)
 {
-	this.client = data.client;
-	this.allPeople = [];
-	this.container = data.container;
-	this.clicked = data.clicked;
-	this.subscriptions = [];
-	this.Y = null;			//Ambiente de Yui
-	this.init();
-	this.prefixIdTask = 'people_';
-	
-}
 
-PeopleContainer.prototype.init = function()
-{
-    //this.createContainer();
-    this.addEventClick();
-    this.reload();
-}
-//TODO
-PeopleContainer.prototype.addSubscriptions = function()
-{
-	var self = this;
-//suscribirse a la edicion de Tasks
-	self.subscriptions.push(self.client.subscribe(self.subscribePath(), function(circle) {
-		if (circle.status == 'add')
-			self.addCircle(circle);
-		else if (circle.status == 'delete')
-			self.removeCircle(circle);
+   
+	var Lang = Y.Lang;
 
-	}));
-	
-}
 
-PeopleContainer.prototype.reload = function(people)
-{
-	var self = this;
-	$(this.container).empty();
-	this.allPeople = [];
-	if(people)
+	function PeopleContainer(data)
 	{
-		_.each(people, function(person) {
-				self.addPerson(person);
-		  });
+	PeopleContainer.superclass.constructor.apply(this, arguments);
 	}
-	else
-	{
-		// Download people
-		$.getJSON('/channel/allUsers/people.json', function(data) {
-			_.each(data.users, function(person) {
-				self.addPerson(person);
-			});
-		})
-	}
-}
-//TODO
-PeopleContainer.prototype.subscribePath = function()
-{
-	return '/channel/people';
-}
-/*
-	Crea el contenedor y lo deja como un elemento drop.
-	Indica que todos los elementos 'li' dentro del contenedor son elementos drag
-*/
 
-//TODO
-PeopleContainer.prototype.addEventClick = function()
-{
+
+	PeopleContainer.NAME = "peopleContainer";
+
 	/*
-	agregar evento click para addButton
+	* The attribute configuration for the component. This defines the core user facing state of the component
 	*/
-	var self = this;
-	var personAdd = $('#personAdd');
-	personAdd.bind('click', function(e)
+	PeopleContainer.ATTRS =
 	{
-		var data =
+		client:
+			{
+			value:null
+			}
+		,allPeople:
+			{
+			value:[]	
+			}
+		,container:
+			{
+			value:null
+			}
+		,subscriptions:
+			{
+			value:[]
+			}
+		,clicked:
+			{
+			value:[]
+			}
+		,prefixIdTask:
+			{
+			value:[]
+			}
+	};
+
+    /* MyComponent extends the Base class */
+	Y.extend(PeopleContainer, Y.Base,
+	{
+
+		initializer: function(data)
 		{
-		guid:Utils.guid()
-		,name:"texto nombre de prueba"
+			this.client = data.client;
+			this.allPeople = [];
+			this.container = data.container;
+			this.clicked = data.clicked;
+			this.subscriptions = [];
+			this.prefixIdTask = 'people_';
+			
+			this.reload();
+
+		     this.publish("myEvent", {
+		        defaultFn: this._defMyEventFn,
+		        bubbles:false
+		     });
+		},
+
+		destructor : function()
+		{
+		    /*
+		     * destructor is part of the lifecycle introduced by 
+		     * the Base class. It is invoked when destroy() is called,
+		     * and can be used to cleanup instance specific state.
+		     *
+		     * It does not need to invoke the superclass destructor. 
+		     * destroy() will call initializer() for all classes in the hierarchy.
+		     */
+		},
+
+		/* MyComponent specific methods */
+
+		reload : function(people)
+		{
+			var self = this;
+			$(this.container).empty();
+			this.allPeople = [];
+			if(people)
+			{
+				_.each(people, function(person) {
+					self.addPerson(person);
+				});
+			}
+			else
+			{
+			// Download people
+				$.getJSON('/channel/allUsers/people.json', function(data)
+				{
+				_.each(data.users, function(person) {
+					self.addPerson(person);
+				});
+				})
+			}
+		},
+
+		addPerson: function(data)
+		{
+			var dom = document.createElement('div');
+			var guid = data.guid || Utils.guid();
+			dom.className = "people gButton";
+			dom.id = guid;
+
+			data.client = this.client;
+
+			data.dom = dom;
+			data.guid = guid;
+
+			data.clicked = this.clicked;
+
+			var person = new Y.ModulePerson.Person(data);
+			this.allPeople.push(person);
+			this.container.appendChild(dom);
+		},
+
+		getPerson : function(guid)
+		{
+			var self = this;
+			var person = _.detect(self.allPeople, function(s) { return s.guid == guid });
+
+			return person.to_json();
 		}
-		self.addPerson(data);
 	});
-}
 
-/*
-	Eliminar una task
-*/
-//TODO
-PeopleContainer.prototype.removeTask = function()
-{
-	var data = 
-		{
-		guid:this.guid
-		,status:'remove'
-		}
-		
-	this.client.sendSignal(data);
-}
+	Y.namespace("ModulePeopleContainer").PeopleContainer = PeopleContainer;
 
-PeopleContainer.prototype.addPerson = function(data)
-{
-	var dom = document.createElement('div');
-	var guid = data.guid || Utils.guid();
-	dom.className = "people gButton";
-	dom.id = guid;
-	
-	data.client = this.client;
-	
-	data.dom = dom;
-	data.guid = guid;
-	
-	data.clicked = this.clicked;
-	
-	var person = new Person(data);
-	this.allPeople.push(person);
-	this.container.appendChild(dom);
-	/*
-	Para que el nuevo elemento agregado sea un Target tambien
-	*/
-	//this.Y.mynamespace.syncTargets();
-}
-
-PeopleContainer.prototype.getPerson = function(guid)
-{
-	var self = this;
-	var person = _.detect(self.allPeople, function(s) { return s.guid == guid });
-	
-	return person.to_json();
-}
+}, "1.0", {requires:['base','person']});

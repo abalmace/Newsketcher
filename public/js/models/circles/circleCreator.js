@@ -1,4 +1,4 @@
-YUI.add("modulecircle", function(Y)
+YUI.add("circle-creator", function(Y)
 {
 	/* Any frequently used shortcuts, strings and constants */
 	var Lang = Y.Lang;
@@ -99,7 +99,7 @@ YUI.add("modulecircle", function(Y)
 		}
 	});
 
-	Y.namespace("moduleCircle").CircleCreator = CircleCreator;
+	Y.namespace("ModuleCircle").CircleCreator = CircleCreator;
 
 }, "1.0", {requires:['base','node', 'overlay', 'widget-anim', 'gallery-overlay-extras']});
 
