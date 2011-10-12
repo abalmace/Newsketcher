@@ -35,17 +35,17 @@ YUI.add("circle-creator", function(Y)
 
 		initializer: function(data)
 		{
-			client = data.client;
-			callback = data.function;
-			prefixIdCircle = "circle_";
+			this.client = data.client;
+			this.callback = data.function;
+			this.prefixIdCircle = "circle_";
 			this._createModal();
 		},
 
 		destructor : function()
 		{
-			client = null;
-			callback = null;
-			modal.destructor();
+			this.client = null;
+			this.callback = null;
+			this.modal.destructor();
 			
 		},
 
@@ -90,12 +90,12 @@ YUI.add("circle-creator", function(Y)
 			var data = 
 				{
 				name:name
-				,guid: prefixIdCircle + Utils.guid()
+				,guid: this.prefixIdCircle + Utils.guid()
 				,status:'add'
-				,owner:client.guid
+				,owner:this.client.guid
 				}
-			if(callback.click)
-				callback.click(data);
+			if(this.callback && this.callback.click)
+				this.callback.click(data);
 		}
 	});
 

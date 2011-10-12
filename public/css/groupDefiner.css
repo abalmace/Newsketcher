@@ -120,6 +120,11 @@ from {-webkit-transform:scale(1) rotate(0deg);}
 to {-webkit-transform:scale(1) rotate(360deg);}
 }
 
+.dragHidden
+{
+	visibility:hidden;	
+}
+
 /*
  * para los people
  */

@@ -201,6 +201,7 @@ YUI.add("activity-designer", function(Y)
 				moveOnEnd: false
 				,borderStyle: 'none'
 				});
+			delcircles.dd.addHandle('.dragHidden');
 			
 			
 			//Listen for all drop:over events

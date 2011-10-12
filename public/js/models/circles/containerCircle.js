@@ -73,16 +73,25 @@ YUI.add("containercircle", function(Y)
 
 		addPersonToCircle : function(person, circleGuid)
 		{
-			var circle = this.getCircle(circleGuid);
-			if (circle)
-				circle.addPerson(person)
+			
+			var data =
+			{
+				person : person
+				,circleGuid : circleGuid
+				,status : 'add'
+			}
+			this.client.sendSignal(this._subscribePath('circlePeople'), data);
 		},
 	  
 		addTaskToCircle : function(task, circleGuid)
 		{
-			var circle = this.getCircle(circleGuid);
-			if (circle)
-				circle.addTask(task)
+			var data =
+			{
+				task : task
+				,circleGuid : circleGuid
+				,status : 'add'
+			}
+			this.client.sendSignal(this._subscribePath('circleTasks'), data);
 		},
 	  
 		getCircle : function(circleGuid)
@@ -105,12 +114,26 @@ YUI.add("containercircle", function(Y)
 			this.allCircles.push(circle);
 			this.container.appendChild(div);
 		},
+	  
+		_addPersonToCircle : function(circlePerson)
+		{
+			var circle = this.getCircle(circlePerson.circleGuid);
+			if (circle)
+				circle.addPerson(circlePerson.person)
+		},
+	  
+		_addTaskToCircle : function(circleTask)
+		{
+			var circle = this.getCircle(circleTask.circleGuid);
+			if (circle)
+				circle.addTask(circleTask.task)
+		},
 
 		_addSubscriptions : function()
 		{
 			var self = this;
-			//suscribirse a la edicion de Tasks
-			self.subscriptions.push(self.client.subscribe(self._subscribePath(), function(circle)
+			//suscribirse a la creación-eliminacion de circles
+			self.subscriptions.push(self.client.subscribe(self._subscribePath('circle'), function(circle)
 			{
 				if (circle.status == 'add')
 					self._addCircle(circle);
@@ -119,42 +142,44 @@ YUI.add("containercircle", function(Y)
 
 			}));
 			
-			Y.io('/channel/'+self.activity+'/circles.json',
-			     {
-				on :
-				{
-					success : function (tx, r)
-					{
-						var data;
+			//suscripción a la edicion de personas en circles
+			self.subscriptions.push(self.client.subscribe(self._subscribePath('circlePeople'), function(circlePerson)
+			{
+				if (circlePerson.status == 'add')
+					self._addPersonToCircle(circlePerson);
+				else if (circlePerson.status == 'delete')
+					self.removeCircle(circlePerson);
 
-						// protected against malformed JSON response
-						try
-						{
-							data = Y.JSON.parse(r.responseText);
-							_.each(data.circles, function(circle)
-							{
-								self._addCircle(circle);
-							});
-						}
-						catch (e)
-						{
-							alert("JSON Parse failed!");
-							return;
-						}
-					}
-				}
-			});
+			}));
 			
+			//suscripción a la edicion de task en circles
+			self.subscriptions.push(self.client.subscribe(self._subscribePath('circleTasks'), function(circleTask)
+			{
+				if (circleTask.status == 'add')
+					self._addTaskToCircle(circleTask);
+				else if (circleTask.status == 'delete')
+					self.removeCircle(circleTask);
+
+			}));
+			
+			Y.ModuleConnectionServer.getJSON('/channel/'+self.activity+'/circles.json',function(data)
+			{
+				_.each(data.circles, function(circle)
+				{
+					self._addCircle(circle);
+				});
+			});
 				
 		},
 
-		_subscribePath : function()
+		_subscribePath : function(zone)
 		{
-			return '/channel/circles/circle';
+			return '/channel/circles/'+zone;
 		},
 
 		_initCircleCreator : function()
 		{
+			var self = this;
 			var circleCreator = new Y.ModuleCircle.CircleCreator(
 			{
 				client:self.client
@@ -162,7 +187,7 @@ YUI.add("containercircle", function(Y)
 					{
 					click:function(data)
 						{
-						self.client.sendSignal(self.subscribePath(), data);
+						self.client.sendSignal(self._subscribePath('circle'), data);
 						}
 					}
 			});	
@@ -171,4 +196,4 @@ YUI.add("containercircle", function(Y)
 
 	Y.namespace("ModuleContainerCircle").ContainerCircle = ContainerCircle;
 
-}, "3.1.0", {requires:['base','circle-creator','circle','io','json-parse']});
+}, "3.1.0", {requires:['base','circle-creator','circle','connectionserver']});

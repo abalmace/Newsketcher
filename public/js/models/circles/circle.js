@@ -53,8 +53,8 @@ YUI.add("circle", function(Y)
 		this.name = data.name;
 		this.owner = data.owner;
 		this.guid = data.guid;
-		this.people = [];
-		this.tasks = [];
+		this.people = data.people || [];
+		this.tasks = data.tasks || [];
 		
 		this._defineDOMElement();
 		this._addEvents();
@@ -103,9 +103,13 @@ YUI.add("circle", function(Y)
 		var divNumber = document.createElement('div');
 		divNumber.className = "circle_number";
 		divNumber.innerHTML = this.people.length;
+		
+		var divDragHidden = document.createElement('div');
+		divDragHidden.className = ".dragHidden";
 
 		divInner.appendChild(divLabel);
 		divInner.appendChild(divNumber);
+		divInner.appendChild(divDragHidden);
 		this.dom.appendChild(divInner);
         },
 	//TODO
