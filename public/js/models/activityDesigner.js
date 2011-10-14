@@ -35,6 +35,10 @@ YUI.add("activity-designer", function(Y)
 			{
 			value:[]
 			}
+		,currentCircle:
+			{
+			value:null
+			}
 		,stringContainerSelectorTaskDOM:
 			{
 			value:null
@@ -73,6 +77,18 @@ YUI.add("activity-designer", function(Y)
 		,start:
 			{
 			value:false
+			}
+		,delTasks:
+			{
+			value:null
+			}
+		,delUsers:
+			{
+			value:null
+			}
+		,delCircles:
+			{
+			value:null
 			}
 	};
 
@@ -120,7 +136,6 @@ YUI.add("activity-designer", function(Y)
 					self._multiTasksSelected(selected,guid);	
 				}
 			});
-			
 			this._createDesigner();
 		},
 
@@ -142,7 +157,7 @@ YUI.add("activity-designer", function(Y)
 		_multiPeopleSelected : function(selected, guid)
 		{
 			if(selected)
-				this.peopleSelected.push(this.peopleContainer.getPerson(guid));
+				this.peopleSelected.push(this.peopleContainer.getPerson(guid).to_json());
 			else
 			{
 				var person = _.detect(this.peopleSelected, function(s) { return s.guid == guid });
@@ -154,7 +169,7 @@ YUI.add("activity-designer", function(Y)
 		_multiTasksSelected : function(selected, guid)
 		{
 			if(selected)
-				this.tasksSelected.push(this.containerSelectorTask.getTask(guid));
+				this.tasksSelected.push(this.containerSelectorTask.getTask(guid).to_json());
 			else
 			{
 				var task = _.detect(this.tasksSelected, function(s) { return s.guid == guid });
@@ -167,97 +182,136 @@ YUI.add("activity-designer", function(Y)
 		{
 			var self = this;
 			var taskElements = Y.one('#'+self.stringContainerSelectorTaskDOM);
-			var delTasks = new Y.DD.Delegate({
+			this.delTasks = new Y.DD.Delegate({
 				container: taskElements
 				,nodes: 'div'
 				,target: false
 			});
-			delTasks.dd.plug(Y.Plugin.DDProxy,
+			this.delTasks.dd.plug(Y.Plugin.DDProxy,
 				{
 				moveOnEnd: false
 				,borderStyle: 'none'
 				});
 			
 			var userElements = Y.one('#'+self.stringPeopleContainerDOM);
-			var delUsers = new Y.DD.Delegate({
+			this.delUsers = new Y.DD.Delegate({
 				container: userElements
 				,nodes: 'div'
 				,target: false
 			});
-			delUsers.dd.plug(Y.Plugin.DDProxy,
+			this.delUsers.dd.plug(Y.Plugin.DDProxy,
 				{
 				moveOnEnd: false
 				,borderStyle: 'none'
 				});
 			
 			var circlesElements = Y.one('#'+self.stringCircleContainerDOM);
-			var delcircles = new Y.DD.Delegate({
+			this.delCircles = new Y.DD.Delegate({
 				container: circlesElements
 				,nodes: 'div.outer_circle'
 				,target: true
 			});
-			delcircles.dd.plug(Y.Plugin.DDProxy,
+			this.delCircles.dd.plug(Y.Plugin.DDProxy,
 				{
 				moveOnEnd: false
 				,borderStyle: 'none'
 				});
-			delcircles.dd.addHandle('.dragHidden');
+			this.delCircles.dd.addHandle('.dragHidden');
 			
+			var trash = new Y.DD.Drop(
+			{
+			    node: '#trash'
+			});
+			
+			trash.on('drop:enter', function(e)
+			{
+				var node = e.target.get('node');
+				node.addClass('trashOver');
+			});
+			
+			trash.on('drop:exit', function(e)
+			{
+				var node = e.target.get('node');
+				node.removeClass('trashOver');
+			});
 			
 			//Listen for all drop:over events
 			Y.DD.DDM.on('drop:hit', function(e)
 			{
 				//Get a reference to our drag and drop nodes
-				var drag = e.drag.get('node'),
-				drop = e.drop.get('node');
+				var drag = e.drag.get('node');
+				var drop = e.drop.get('node');
 				if(!drop)
 					alert("error");
 
 				var fatherId = drag.get('parentNode').get('id');
 				var guid = drag.get('id');
-				var guidCircle = drop.get('id');
-				if(fatherId == self.stringContainerSelectorTaskDOM)
+				var dropId = drop.get('id');
+				var guidCircle = dropId;
+				if(dropId == "trash")
 				{
-					var taskJson = self.containerSelectorTask.getTask(guid);
+					if(fatherId == self.stringContainerSelectorTaskDOM)
+					{
+						var taskJson = self.containerSelectorTask.getTask(guid).to_json();
+						self.containerCircle.removeTaskFromCircle(taskJson,self.currentCircle);
+						_.each(self.tasksSelected, function(task)
+						{
+							self.containerCircle.removeTaskFromCircle(task,self.currentCircle);
+						});
+						self.tasksSelected = [];
+					}
+					else if(fatherId == self.stringPeopleContainerDOM)
+					{
+						var personJson = self.peopleContainer.getPerson(guid).to_json();
+						self.containerCircle.removePersonFromCircle(personJson,self.currentCircle);
+						_.each(self.peopleSelected, function(person)
+						{
+							self.containerCircle.removePersonFromCircle(person,self.currentCircle);
+						});
+						self.peopleSelected = [];
+					}
+					drop.removeClass('trashOver');
+				}
+				else if(fatherId == self.stringContainerSelectorTaskDOM)
+				{
+					var taskJson = self.containerSelectorTask.getTask(guid).to_json();
 					self.containerCircle.addTaskToCircle(taskJson,guidCircle);
 					_.each(self.tasksSelected, function(task)
 					{
 						self.containerCircle.addTaskToCircle(task,guidCircle);
 					});
-					self.tasksSelected = [];
 				}
 				else if(fatherId == self.stringPeopleContainerDOM)
 				{
-					var personJson = self.peopleContainer.getPerson(guid);
+					var personJson = self.peopleContainer.getPerson(guid).to_json();
 					self.containerCircle.addPersonToCircle(personJson,guidCircle);
 					_.each(self.peopleSelected, function(person)
 					{
 						self.containerCircle.addPersonToCircle(person,guidCircle);
 					});
-					self.peopleSelected = [];
 					
 				}
 			});
 			
 			//Listen for all drag:start events
-			delTasks.on('drag:start', function(e)
+			this.delTasks.on('drag:start', function(e)
 			{
 				var target = e.target;
 				var node = target.get('node');
 				var drag = target.get('dragNode');
+				self._addTaskAndSelect(node.get('id'));
+				
 				if (target.target)
 				{
 					target.target.set('locked', true);
 				}
 				var dragAux = drag.get('dragNode');
-				drag.set('innerHTML', node.get('innerHTML'));
-				drag.setStyle('opacity','.9');
-				drag.addClass('selectorTask gButton');
-				delTasks.syncTargets();
-				delUsers.syncTargets();
+				drag.addClass('dragTasks');
+				self.delTasks.syncTargets();
+				self.delUsers.syncTargets();
 			});
 			//Listen for a drag:end events
-			delTasks.on('drag:end', function(e)
+			this.delTasks.on('drag:end', function(e)
 			{
 				var target = e.target;
 				var node = target.get('node');
@@ -267,12 +321,12 @@ YUI.add("activity-designer", function(Y)
 					target.target.set('locked', false);
 				}
 				node.setStyle('visibility', '');
-				drag.removeClass('selectorTask gButton');
+				drag.removeClass('dragTasks');
 				drag.set('innerHTML', '');
 			});
 			
 			//Listen for all drag:drophit events
-			delTasks.on('drag:drophit', function(e)
+			this.delTasks.on('drag:drophit', function(e)
 			{
 				var drop = e.drop.get('node'),
 				drag = e.drag.get('node');
@@ -280,22 +334,22 @@ YUI.add("activity-designer", function(Y)
 			});
 			
 			//Listen for all drag:start events
-			delUsers.on('drag:start', function(e)
+			this.delUsers.on('drag:start', function(e)
 			{
 				var target = e.target;
 				var node = target.get('node');
 				var drag = target.get('dragNode');
+				self._addPersonAndSelect(node.get('id'));
+				
 				if (target.target)
 				{
 					target.target.set('locked', true);
 				}
 				var dragAux = drag.get('dragNode');
-				drag.set('innerHTML', node.get('innerHTML'));
-				drag.setStyle('opacity','.9');
-				drag.addClass('selectorTask gButton');
+				drag.addClass('dragPeople');
 			});
 			//Listen for a drag:end events
-			delUsers.on('drag:end', function(e)
+			this.delUsers.on('drag:end', function(e)
 			{
 				var target = e.target;
 				var node = target.get('node');
@@ -305,12 +359,12 @@ YUI.add("activity-designer", function(Y)
 					target.target.set('locked', false);
 				}
 				node.setStyle('visibility', '');
-				drag.removeClass('selectorTask gButton');
+				drag.removeClass('dragPeople');
 				drag.set('innerHTML', '');
 			});
 			
 			//Listen for all drag:drophit eventsmilaalvarobalumamapapa
-			delUsers.on('drag:drophit', function(e)
+			this.delUsers.on('drag:drophit', function(e)
 			{
 				var drop = e.drop.get('node'),
 				drag = e.drag.get('node');
@@ -331,16 +385,14 @@ YUI.add("activity-designer", function(Y)
 				self._onCloseCircleDefinition();
 			});
 			
+			self._onCloseCircleDefinition();
+		},
+		
+		_unSelect : function()
+		{
+			this.tasksSelected = [];
+			this.peopleSelected = [];
 			
-			Y.namespace('mynamespace');
-
-			Y.mynamespace.syncTargets = function()
-			{
-				delTasks.syncTargets();
-				delUsers.syncTargets();
-				delCircles.syncTargets();
-			};
-			self.Y=Y;
 		},
 		
 		_onClickCircles : function(circleGuid)
@@ -350,14 +402,47 @@ YUI.add("activity-designer", function(Y)
 			this.containerSelectorTask.reload(circle.tasks);
 			Y.one('#closeCircleDefinition').set('innerHTML',circle.name);
 			Y.one('#closeCircleDefinition').setAttribute("style", "visibility:");
+			Y.one('#trash').addClass('trash');
+			this.currentCircle = circleGuid;
+			this._unSelect();
+			this._syncTargets();
 		},
 	  
 		_onCloseCircleDefinition : function()
-			{
-				Y.one('#closeCircleDefinition').setAttribute("style", "visibility:hidden");
-				this.peopleContainer.reload();
-				this.containerSelectorTask.reload();
-			}
+		{
+			Y.one('#closeCircleDefinition').setAttribute("style", "visibility:hidden");
+			this.peopleContainer.reload();
+			this.containerSelectorTask.reload();
+			this.currentCircle = null;
+			this._unSelect();
+			this._syncTargets();
+			Y.one('#trash').removeClass('trash');
+		},
+	  
+		_syncTargets : function()
+		{
+			this.delTasks.syncTargets();
+			this.delUsers.syncTargets();
+			this.delCircles.syncTargets();
+		},
+		
+		_addPersonAndSelect : function(guid)
+		{
+			this._multiPeopleSelected(true,guid)
+			var person = this.peopleContainer.getPerson(guid);
+			if(!person.selected)
+				person.clickEvent();
+			
+		},
+	  
+		_addTaskAndSelect : function(guid)
+		{
+			this._multiTasksSelected(true,guid)
+			var task = this.containerSelectorTask.getTask(guid);
+			if(!task.selected)
+				task.clickEvent();
+			
+		}
 	});
 	Y.namespace("NewSketcher").ActivityDesigner = ActivityDesigner;
 

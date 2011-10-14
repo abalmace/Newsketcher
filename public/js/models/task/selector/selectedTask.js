@@ -93,13 +93,13 @@ YUI.add("selectedtask", function(Y)
 			var self = this;
 			dom.bind('click',function(e)
 			{
-				self._clickEvent();
+				self.clickEvent();
 				if(self.clicked)
 					self.clicked(self.selected,self.guid);
 			});
 		},
 	  
-		_clickEvent : function()
+		clickEvent : function()
 		{
 			if(!this.selected)
 			{

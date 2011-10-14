@@ -56,8 +56,6 @@ YUI.add("peoplecontainer", function(Y)
 			this.clicked = data.clicked;
 			this.subscriptions = [];
 			this.prefixIdTask = 'people_';
-			
-			this.reload();
 
 		     this.publish("myEvent", {
 		        defaultFn: this._defMyEventFn,
@@ -126,7 +124,7 @@ YUI.add("peoplecontainer", function(Y)
 			var self = this;
 			var person = _.detect(self.allPeople, function(s) { return s.guid == guid });
 
-			return person.to_json();
+			return person;
 		}
 	});
 

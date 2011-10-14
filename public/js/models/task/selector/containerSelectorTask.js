@@ -91,7 +91,7 @@ YUI.add("containerselectortask", function(Y)
 			else
 			{
 				// Download Tasks
-				$.getJSON('/room/Tasks/tasks.json', function(data) {
+				$.getJSON('/room/Task/tasks.json', function(data) {
 					_.each(data.tasks, function(task) {
 						self.addTask(task);
 					});
@@ -121,7 +121,7 @@ YUI.add("containerselectortask", function(Y)
 			var self = this;
 			var task = _.detect(self.allTasks, function(s) { return s.guid == guid });
 			
-			return task.to_json();
+			return task;
 		},
 
 		_addSubscriptions : function()
@@ -135,8 +135,6 @@ YUI.add("containerselectortask", function(Y)
 					self.removeTask(task);
 
 			}));
-			
-			self.reload();
 		},
 
 		_subscribePath : function(e)

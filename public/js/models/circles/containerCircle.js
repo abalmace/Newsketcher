@@ -83,6 +83,18 @@ YUI.add("containercircle", function(Y)
 			this.client.sendSignal(this._subscribePath('circlePeople'), data);
 		},
 	  
+		removePersonFromCircle : function(person, circleGuid)
+		{
+			
+			var data =
+			{
+				person : person
+				,circleGuid : circleGuid
+				,status : 'delete'
+			}
+			this.client.sendSignal(this._subscribePath('circlePeople'), data);
+		},
+	  
 		addTaskToCircle : function(task, circleGuid)
 		{
 			var data =
@@ -90,6 +102,17 @@ YUI.add("containercircle", function(Y)
 				task : task
 				,circleGuid : circleGuid
 				,status : 'add'
+			}
+			this.client.sendSignal(this._subscribePath('circleTasks'), data);
+		},
+	  
+		removeTaskFromCircle : function(task, circleGuid)
+		{
+			var data =
+			{
+				task : task
+				,circleGuid : circleGuid
+				,status : 'delete'
 			}
 			this.client.sendSignal(this._subscribePath('circleTasks'), data);
 		},
@@ -122,11 +145,25 @@ YUI.add("containercircle", function(Y)
 				circle.addPerson(circlePerson.person)
 		},
 	  
+		_removePersonFromCircle : function(circlePerson)
+		{
+			var circle = this.getCircle(circlePerson.circleGuid);
+			if (circle)
+				circle.removePerson(circlePerson.person)
+		},
+	  
 		_addTaskToCircle : function(circleTask)
 		{
 			var circle = this.getCircle(circleTask.circleGuid);
 			if (circle)
 				circle.addTask(circleTask.task)
+		},
+	  
+		_removeTaskFromCircle : function(circleTask)
+		{
+			var circle = this.getCircle(circleTask.circleGuid);
+			if (circle)
+				circle.removeTask(circleTask.task)
 		},
 
 		_addSubscriptions : function()
@@ -148,7 +185,7 @@ YUI.add("containercircle", function(Y)
 				if (circlePerson.status == 'add')
 					self._addPersonToCircle(circlePerson);
 				else if (circlePerson.status == 'delete')
-					self.removeCircle(circlePerson);
+					self._removePersonFromCircle(circlePerson);
 
 			}));
 			
@@ -158,7 +195,7 @@ YUI.add("containercircle", function(Y)
 				if (circleTask.status == 'add')
 					self._addTaskToCircle(circleTask);
 				else if (circleTask.status == 'delete')
-					self.removeCircle(circleTask);
+					self._removeTaskFromCircle(circleTask);
 
 			}));
 			

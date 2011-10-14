@@ -21,7 +21,17 @@
 	bottom:0;
 	left:0;
 	height:50%;
-	width:70%;
+	width:60%;
+	overflow:auto;
+}
+
+#specialCircleContainer
+{
+	position:absolute;
+	bottom:0;
+	left:60%;
+	height:50%;
+	width:10%;
 	overflow:auto;
 }
 
@@ -125,9 +135,40 @@ to {-webkit-transform:scale(1) rotate(360deg);}
 	visibility:hidden;	
 }
 
+.dragPeople
+{
+	height:48px;
+	width:48px;
+	background:url('./images/dragPeople.png') no-repeat left top;
+}
+
+.dragTasks
+{
+	height:128px;
+	width:128px;
+	background:url('./images/dragTasks.png') no-repeat left top;
+}
+
 /*
  * para los people
  */
+
+.people
+{
+	height:48px;
+	width:128px;
+}
+
+/*
+ * para las task
+ */
+
+.selectorTask
+{
+	width:100%;
+	height:30px;
+	margin:5px;
+}
 
 .gButtons {
     float: left;
@@ -154,7 +195,6 @@ to {-webkit-transform:scale(1) rotate(360deg);}
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     margin-right: 10px;
-    height:50px;
 }
 .gButton:hover {
     color: #333;
@@ -216,57 +256,57 @@ to {-webkit-transform:scale(1) rotate(360deg);}
     padding: 15px 20px;
 }
 .save {
-    background: url(sprite.png) 10px 7px no-repeat #f3f3f3;
+    background: url(images/sprite.png) 10px 7px no-repeat #f3f3f3;
     padding-left: 30px;
 }
 .add {
-    background: url(sprite.png)  10px -27px no-repeat #f3f3f3;
+    background: url(images/sprite.png)  10px -27px no-repeat #f3f3f3;
     padding-left: 30px;
 }
 .delete {
-    background: url(sprite.png)  10px -61px no-repeat #f3f3f3;
+    background: url(images/sprite.png)  10px -61px no-repeat #f3f3f3;
     padding-left: 30px;
 }
 .flag {
-    background: url(sprite.png)  10px -96px no-repeat #f3f3f3;
+    background: url(images/sprite.png)  10px -96px no-repeat #f3f3f3;
     padding-left: 30px;
 }
 .up {
-    background: url(sprite.png)  13px -133px no-repeat #f3f3f3;
+    background: url(images/sprite.png)  13px -133px no-repeat #f3f3f3;
     width: 18px;
 }
 .down {
-    background: url(sprite.png)  13px -168px no-repeat #f3f3f3;
+    background: url(images/sprite.png)  13px -168px no-repeat #f3f3f3;
     width: 18px;
 }
 .save-big {
-    background: url(sprite.png) 15px 11px no-repeat #f3f3f3;
+    background: url(images/sprite.png) 15px 11px no-repeat #f3f3f3;
     font-size: 16px;
     padding: 10px 15px 10px 35px;
 }
 .add-big {
-    background: url(sprite.png)  15px -23px no-repeat #f3f3f3;
+    background: url(images/sprite.png)  15px -23px no-repeat #f3f3f3;
     font-size: 16px;
     padding: 10px 15px 10px 35px;
 }
 .delete-big {
-    background: url(sprite.png)  15px -57px no-repeat #f3f3f3;
+    background: url(images/sprite.png)  15px -57px no-repeat #f3f3f3;
     font-size: 16px;
     padding: 10px 15px 10px 35px;
 }
 .flag-big {
-    background: url(sprite.png)  15px -92px no-repeat #f3f3f3;
+    background: url(images/sprite.png)  15px -92px no-repeat #f3f3f3;
     font-size: 16px;
     padding: 10px 15px 10px 35px;
 }
 .up-big {
-    background: url(sprite.png)  15px -128px no-repeat #f3f3f3;
+    background: url(images/sprite.png)  15px -128px no-repeat #f3f3f3;
     width: 18px;
     font-size: 16px;
     padding: 10px 15px;
 }
 .down-big {
-    background: url(sprite.png)  15px -163px no-repeat #f3f3f3;
+    background: url(images/sprite.png)  15px -163px no-repeat #f3f3f3;
     width: 18px;
     font-size: 16px;
     padding: 10px 15px;
@@ -279,9 +319,24 @@ to {-webkit-transform:scale(1) rotate(360deg);}
 
 
 
+.trash
+{
+	position:absolute;
+	top:0;
+	right:0;
+	height:70px;
+	width:70px;
+	overflow:auto;
+	background:url('./images/trash.png') no-repeat left top;
+	z-index:100;
+	visibility:visible;
+}
 
 
-
+.trashOver
+{
+	background:url('./images/trash_green.png') no-repeat left top !important;
+}
 
 #modalCircleCreator { display: none; }
 			

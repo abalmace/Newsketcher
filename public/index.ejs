@@ -18,6 +18,7 @@
 	<!--<link rel="stylesheet" href="/css/application.css" />-->
 	<link rel="stylesheet" href="/css/mapsketcher.css" />
 	<link rel="stylesheet" href="./css/groupDefiner.css" />
+	<link rel="stylesheet" href="/css/CssToolbar.css" />
 	<link rel="stylesheet" href="/css/roommates.css" />
 	<link rel="stylesheet" href="/css/CssButtons.css" />
 	<link rel="stylesheet" href="/css/CssTask.css" />
@@ -110,12 +111,12 @@
 	</head>
 	<body>
 		<div id="menuLeader">
-			<div id= "closeCircleDefinition" class = "gButton">hola</div>
-			<input type='button' id="btnTaskLeader" value="task"/>
+			<div id= "closeCircleDefinition" class = "gButton delete" style = "display:none">hola</div>
+			<input type='button' id="btnTaskLeader" style = "visibility:hidden" value="task"/>
 			<input type='button' id="btnGroupLeader" value="group"/>
 			<input type='button' id="btnActivityLeader" value="activity"/>
 			<input type = "button" id ="circleAdd" value = "new circle"/>
-		<input type = "button" id ="personAdd" value = "new person"/>
+		<input type = "button" id ="personAdd" style = "visibility:hidden" value = "new person"/>
 		</div>
 		<div id="ajaxContainer"></div>
 	</body>

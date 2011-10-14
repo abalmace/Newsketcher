@@ -84,11 +84,34 @@ YUI.add("circle", function(Y)
 		}
 	},
 	
+	removePerson : function(person)
+	{
+		var personAux = _.detect(this.people, function(s) { return s.guid == person.guid });
+		if(personAux)
+		{
+			this.people = _.without(this.people, personAux);
+			var element = $(this.dom).find('.circle_number');
+			element.html(this.people.length);
+			Y.one('#'+personAux.guid).remove(true);
+		}
+	},
+	
 	addTask : function(task)
 	{
 		var taskAux = _.detect(this.tasks, function(s) { return s.guid == task.guid });
 		if(!taskAux)
 			this.tasks.push(task);		
+	},
+	
+	removeTask : function(task)
+	{
+		var taskAux = _.detect(this.tasks, function(s) { return s.guid == task.guid });
+		if(taskAux)
+		{
+			this.tasks = _.without(this.tasks, taskAux);
+			
+			Y.one(document.getElementById(taskAux.guid)).remove(true);
+		}
 	},
 
         _defineDOMElement : function()
@@ -144,4 +167,4 @@ YUI.add("circle", function(Y)
 
     Y.namespace("ModuleCircle").Circle = Circle;
 
-}, "3.1.0", {requires:["base"]});
+}, "3.1.0", {requires:["base","node","node-core"]});

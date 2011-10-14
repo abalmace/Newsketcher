@@ -82,7 +82,7 @@ YUI.add("person", function(Y)
 			return data;
 		},
 	  
-		_clickEvent : function()
+		clickEvent : function()
 		{
 			if(!this.selected)
 			{
@@ -106,7 +106,7 @@ YUI.add("person", function(Y)
 			var self = this;
 			dom.bind('click',function(e)
 			{
-				self._clickEvent();
+				self.clickEvent();
 				if(self.clicked)
 					self.clicked(self.selected,self.guid);
 			});
