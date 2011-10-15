@@ -115,12 +115,12 @@ YUI.add("activity-designer", function(Y)
 			
 			this.containerCircle = new Y.ModuleContainerCircle.ContainerCircle(
 			{
-				client:mapSketcherClient
+				client:newsketcherClient
 				,container:this.circleContainerDOM
 			});
 			this.peopleContainer = new Y.ModulePeopleContainer.PeopleContainer(
 			{
-				client:mapSketcherClient
+				client:newsketcherClient
 				,container:this.peopleContainerDOM
 				,clicked: function(selected,guid)
 				{
@@ -129,7 +129,7 @@ YUI.add("activity-designer", function(Y)
 			});
 			this.containerSelectorTask = new Y.ModuleContainerSelectorTask.ContainerSelectorTask(
 			{
-				client:mapSketcherClient
+				client:newsketcherClient
 				,container:this.containerSelectorTaskDOM
 				,clicked: function(selected,guid)
 				{

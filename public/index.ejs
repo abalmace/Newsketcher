@@ -67,7 +67,7 @@
 	<!--Archivos de la aplicacion-->
 	<script type="text/javascript" src="/js/models/canvas.js"></script>
 	<script type="text/javascript" src="/js/models/workspace.js"></script>
-	<script type="text/javascript" src="/js/map_sketcher_client.js"></script>
+	<script type="text/javascript" src="/js/new_sketcher_client.js"></script>
 	<script type="text/javascript" src="/js/application.js"></script>
 
 	<!--Archivos para la adminitración de grupo-->
@@ -91,7 +91,6 @@
 	
 	<!--Archivos para la administración de Actividades -->
 	<script type="text/javascript" src="/js/models/activityDesigner.js"></script>
-	<script type="text/javascript" src="/js/application.js"></script>
 	
 	
 	<!--Archivos para la gestion de task-->
@@ -103,7 +102,7 @@
 	<script type="text/javascript" src="/js/models/task/menu/containerTask.js"></script>
 	<script type="text/javascript" src="/js/models/task/menu/containerTaskLeader.js"></script>
 	<script type="text/javascript" src="/js/models/task/menu/containerTaskFollower.js"></script>
-	<script type="text/javascript" src="/js/models/task/taskCreator.js"></script>
+	<script type="text/javascript" src="/js/models/task/creator/taskCreator.js"></script>
     
 	<!--Gestures-->
 	<script type="text/javascript" src="/js/models/gestures/dollar.js"></script>
@@ -112,10 +111,9 @@
 	<body>
 		<div id="menuLeader">
 			<div id= "closeCircleDefinition" class = "gButton delete" style = "display:none">hola</div>
-			<input type='button' id="btnTaskLeader" style = "visibility:hidden" value="task"/>
+			<input type='button' id="btnTaskLeader" value="task creator"/>
 			<input type='button' id="btnGroupLeader" value="group"/>
 			<input type='button' id="btnActivityLeader" value="activity"/>
-			<input type = "button" id ="circleAdd" value = "new circle"/>
 		<input type = "button" id ="personAdd" style = "visibility:hidden" value = "new person"/>
 		</div>
 		<div id="ajaxContainer"></div>

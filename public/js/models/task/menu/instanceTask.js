@@ -312,10 +312,6 @@ InstanceTask.prototype.moveTo = function(pos, options)
 	//this.map.update();
 }
 
-MapSketcherClient.prototype.sendMove = function(room, pos) {
-	this.socket.publish();
-}
-
 InstanceTask.prototype.events = function()
 {
 	var self = this;
