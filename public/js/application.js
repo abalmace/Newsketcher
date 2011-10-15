@@ -6,6 +6,7 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 	{
 		var activityDesigner;
 		var taskcreator;
+		var personCreator;
 		
 		Y.ModuleConnectionServer.getJSON('/config.json',function(config)
 		{
@@ -48,6 +49,20 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 				Y.use('activity-designer', function(Y)
 				{
 					activityDesigner = new Y.NewSketcher.ActivityDesigner({client:newsketcherClient});
+				});
+				
+			}); 
+			e.stopImmediatePropagation()
+		});
+		
+		Y.one('#personAdd').on('click', function(e)
+		{
+			var node = Y.one('#ajaxContainer');
+			node.load('/partialView/personCreator.ejs',null,function()
+			{
+				Y.use('personcreator', function(Y)
+				{
+					personCreator = new Y.ModulePeople.PersonCreator({client:newsketcherClient});
 				});
 				
 			}); 

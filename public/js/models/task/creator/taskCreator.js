@@ -9,7 +9,7 @@ YUI.add("taskcreator", function(Y)
 	}
 
 
-	TaskCreator.NAME = "selectedTask";
+	TaskCreator.NAME = "taskcreator";
 
 	/*
 	* The attribute configuration for the component. This defines the core user facing state of the component
@@ -25,14 +25,6 @@ YUI.add("taskcreator", function(Y)
 			value:null	
 			}
 		,guid:
-			{
-			value:null
-			}
-		,clicked:
-			{
-			value:null
-			}
-		,selected:
 			{
 			value:null
 			}
