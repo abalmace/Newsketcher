@@ -54,6 +54,11 @@ YUI.add("activity-designer", function(Y)
 			value:null
 			,readOnly: true
 			}
+		,stringSpecialCircleContainerDOM:
+			{
+			value:null
+			,readOnly: true
+			}
 		,containerSelectorTaskDOM:
 			{
 			value:null
@@ -65,6 +70,11 @@ YUI.add("activity-designer", function(Y)
 			,readOnly: true
 			}
 		,circleContainerDOM:
+			{
+			value:null
+			,readOnly: true
+			}
+		,specialCircleContainerDOM:
 			{
 			value:null
 			,readOnly: true
@@ -90,6 +100,22 @@ YUI.add("activity-designer", function(Y)
 			{
 			value:null
 			}
+		,containerCircle:
+			{
+			value:null
+			}
+		,containerSpecialCircle:
+			{
+			value:null
+			}
+		,peopleContainer:
+			{
+			value:null
+			}
+		,containerSelectorTask:
+			{
+			value:null
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -102,21 +128,42 @@ YUI.add("activity-designer", function(Y)
 			this.stringContainerSelectorTaskDOM = 'containerSelectorTask';
 			this.stringPeopleContainerDOM = 'peopleContainer';
 			this.stringCircleContainerDOM = 'circleContainer';
+			this.stringSpecialCircleContainerDOM = 'specialCircleContainer';
 			this.prefixIdTask = 'task_';
 			
 			this.containerSelectorTaskDOM = document.getElementById(this.stringContainerSelectorTaskDOM);
 			this.peopleContainerDOM = document.getElementById(this.stringPeopleContainerDOM);
 			this.circleContainerDOM = document.getElementById(this.stringCircleContainerDOM);
+			this.specialCircleContainerDOM = document.getElementById(this.stringSpecialCircleContainerDOM);
 			
 			this.peopleSelected = [];
 			this.tasksSelected = [];
 			
 			this.client = data.client;
 			
-			this.containerCircle = new Y.ModuleContainerCircle.ContainerCircle(
+			this.containerCircle = new Y.ModuleContainerCircle.NormalContainerCircle(
 			{
 				client:newsketcherClient
 				,container:this.circleContainerDOM
+				,callback: 
+				{
+					click : function(circle)
+					{
+						self._onClickCircles(circle);	
+					}
+				}
+			});
+			this.containerSpecialCircle = new Y.ModuleContainerCircle.SpecialContainerCircle(
+			{
+				client:newsketcherClient
+				,container:this.specialCircleContainerDOM
+				,callback: 
+				{
+					click : function(circle)
+					{
+						self._onClickCircles(circle);	
+					}
+				}
 			});
 			this.peopleContainer = new Y.ModulePeopleContainer.PeopleContainer(
 			{
@@ -218,6 +265,19 @@ YUI.add("activity-designer", function(Y)
 				});
 			this.delCircles.dd.addHandle('.dragHidden');
 			
+			var specialCirclesElements = Y.one('#'+self.stringSpecialCircleContainerDOM);
+			this.delSpecialCircles = new Y.DD.Delegate({
+				container: specialCirclesElements
+				,nodes: 'div.outer_circle'
+				,target: true
+			});
+			this.delSpecialCircles.dd.plug(Y.Plugin.DDProxy,
+				{
+				moveOnEnd: false
+				,borderStyle: 'none'
+				});
+			this.delSpecialCircles.dd.addHandle('.dragHidden');
+			
 			var trash = new Y.DD.Drop(
 			{
 			    node: '#trash'
@@ -245,6 +305,7 @@ YUI.add("activity-designer", function(Y)
 					alert("error");
 
 				var fatherId = drag.get('parentNode').get('id');
+				var dropFatherId = drop.get('parentNode').get('id');
 				var guid = drag.get('id');
 				var dropId = drop.get('id');
 				var guidCircle = dropId;
@@ -252,8 +313,6 @@ YUI.add("activity-designer", function(Y)
 				{
 					if(fatherId == self.stringContainerSelectorTaskDOM)
 					{
-						var taskJson = self.containerSelectorTask.getTask(guid).to_json();
-						self.containerCircle.removeTaskFromCircle(taskJson,self.currentCircle);
 						_.each(self.tasksSelected, function(task)
 						{
 							self.containerCircle.removeTaskFromCircle(task,self.currentCircle);
@@ -262,8 +321,6 @@ YUI.add("activity-designer", function(Y)
 					}
 					else if(fatherId == self.stringPeopleContainerDOM)
 					{
-						var personJson = self.peopleContainer.getPerson(guid).to_json();
-						self.containerCircle.removePersonFromCircle(personJson,self.currentCircle);
 						_.each(self.peopleSelected, function(person)
 						{
 							self.containerCircle.removePersonFromCircle(person,self.currentCircle);
@@ -272,10 +329,32 @@ YUI.add("activity-designer", function(Y)
 					}
 					drop.removeClass('trashOver');
 				}
+				/*
+				 * un special circle es el drop
+				 */
+				else if(dropFatherId == self.stringSpecialCircleContainerDOM)
+				{
+					if(fatherId == self.stringContainerSelectorTaskDOM)
+					{
+						_.each(self.tasksSelected, function(task)
+						{
+							self.containerSpecialCircle.addTaskToCircle(task,guidCircle);
+						});
+					}
+					else if(fatherId == self.stringPeopleContainerDOM)
+					{
+						_.each(self.peopleSelected, function(person)
+						{
+							self.containerSpecialCircle.addPersonToCircle(person,guidCircle);
+						});
+						
+					}	
+				}
+				/*
+				 * un circle es el drop
+				 */
 				else if(fatherId == self.stringContainerSelectorTaskDOM)
 				{
-					var taskJson = self.containerSelectorTask.getTask(guid).to_json();
-					self.containerCircle.addTaskToCircle(taskJson,guidCircle);
 					_.each(self.tasksSelected, function(task)
 					{
 						self.containerCircle.addTaskToCircle(task,guidCircle);
@@ -283,8 +362,6 @@ YUI.add("activity-designer", function(Y)
 				}
 				else if(fatherId == self.stringPeopleContainerDOM)
 				{
-					var personJson = self.peopleContainer.getPerson(guid).to_json();
-					self.containerCircle.addPersonToCircle(personJson,guidCircle);
 					_.each(self.peopleSelected, function(person)
 					{
 						self.containerCircle.addPersonToCircle(person,guidCircle);
@@ -374,11 +451,7 @@ YUI.add("activity-designer", function(Y)
 			//click events
 
 	
-			Y.one('#'+self.stringCircleContainerDOM).delegate('click', function(e)
-			{
-				self._onClickCircles(this.get('id'));	
-			}
-			,'div.outer_circle');
+			
 			
 			Y.one('#closeCircleDefinition').on('click', function(e)
 			{
@@ -395,15 +468,14 @@ YUI.add("activity-designer", function(Y)
 			
 		},
 		
-		_onClickCircles : function(circleGuid)
+		_onClickCircles : function(circle)
 		{
-			var circle = this.containerCircle.getCircle(circleGuid);
 			this.peopleContainer.reload(circle.people);
 			this.containerSelectorTask.reload(circle.tasks);
 			Y.one('#closeCircleDefinition').set('innerHTML',circle.name);
 			Y.one('#closeCircleDefinition').setAttribute("style", "visibility:");
 			Y.one('#trash').addClass('trash');
-			this.currentCircle = circleGuid;
+			this.currentCircle = circle.guid;
 			this._unSelect();
 			this._syncTargets();
 		},
@@ -446,4 +518,4 @@ YUI.add("activity-designer", function(Y)
 	});
 	Y.namespace("NewSketcher").ActivityDesigner = ActivityDesigner;
 
-}, "1.0", {requires:['base','containercircle','peoplecontainer','containerselectortask','dd-constrain', 'dd-proxy', 'dd-drop','anim','dd-plugin', 'dd-delegate','dd-drop-plugin','node']});
+}, "1.0", {requires:['base','normalcontainercircle','specialcontainercircle','peoplecontainer','containerselectortask','dd-constrain', 'dd-proxy', 'dd-drop','anim','dd-plugin', 'dd-delegate','dd-drop-plugin','node']});

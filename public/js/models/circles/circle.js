@@ -42,6 +42,10 @@ YUI.add("circle", function(Y)
 			{
 			value:[]
 			}
+		,selected:
+			{
+			value : false	
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -55,11 +59,12 @@ YUI.add("circle", function(Y)
 		this.guid = data.guid;
 		this.people = data.people || [];
 		this.tasks = data.tasks || [];
+		this.callback = data.callback;
 		
 		this._defineDOMElement();
 		this._addEvents();
 
-             this.publish("myEvent", {
+             this.publish("click", {
                 defaultFn: this._defMyEventFn,
                 bubbles:false
              });
@@ -138,11 +143,25 @@ YUI.add("circle", function(Y)
 	//TODO
         _addEvents : function()
 	{
+		var self = this;
+		
+		
+		
+		$(this.dom).bind('click', function(e)
+		{
+			if(self.callback && self.callback.click)
+				self.callback.click(self);
+		});
+		
+		
+		
+	/*	
+		
 		
            var element = $(this.dom);
-	var element2 = element.find('.outer_circle');
+	var element2 = element.find('div.outer_circle');
 	
-	element2.bind('click', function(){alert("hola")});
+	
 		element2.mouseover(function() {
 			element.find('.outer_circle').addClass('outer_circle_open');
 			element.find('.inner_circle').animate({left:'47px',top:'76px'},0);
@@ -161,10 +180,11 @@ YUI.add("circle", function(Y)
 		element.find('.outer_circle').animate({"top":"150px"},300).animate({"bottom":"20px"}, 100, function(){ });
 		element.find('.outer_circle').animate({"opacity":"0","margin-left":"600px"}, 800, 'linear');	
 	});
+	*/
 	
         }
     });
 
     Y.namespace("ModuleCircle").Circle = Circle;
 
-}, "3.1.0", {requires:["base","node","node-core"]});
+}, "3.1.0", {requires:["base","node","node-core",'event',]});

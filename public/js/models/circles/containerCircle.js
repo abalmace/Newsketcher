@@ -38,10 +38,10 @@ YUI.add("containercircle", function(Y)
 			{
 			value:''
 			}
-		,activity:
-			{
-			value:'Actividad1'
-			}
+		,callback:
+		{
+			value : null
+		}
 	};
 
     /* MyComponent extends the Base class */
@@ -53,12 +53,11 @@ YUI.add("containercircle", function(Y)
 			this.client = data.client;
 			this.allCircles = [];
 			this.container = data.container;
+			this.callback = data.callback;
 			this.subscriptions = [];
 			this.prefixIdTask = 'circle_';
-			this.activity = 'Actividad1';
 			
-			this._addSubscriptions();
-			this._initCircleCreator();
+			
 		},
 
 		destructor : function()
@@ -166,69 +165,15 @@ YUI.add("containercircle", function(Y)
 				circle.removeTask(circleTask.task)
 		},
 
-		_addSubscriptions : function()
-		{
-			var self = this;
-			//suscribirse a la creación-eliminacion de circles
-			self.subscriptions.push(self.client.subscribe(self._subscribePath('circle'), function(circle)
-			{
-				if (circle.status == 'add')
-					self._addCircle(circle);
-				else if (circle.status == 'delete')
-					self.removeCircle(circle);
-
-			}));
-			
-			//suscripción a la edicion de personas en circles
-			self.subscriptions.push(self.client.subscribe(self._subscribePath('circlePeople'), function(circlePerson)
-			{
-				if (circlePerson.status == 'add')
-					self._addPersonToCircle(circlePerson);
-				else if (circlePerson.status == 'delete')
-					self._removePersonFromCircle(circlePerson);
-
-			}));
-			
-			//suscripción a la edicion de task en circles
-			self.subscriptions.push(self.client.subscribe(self._subscribePath('circleTasks'), function(circleTask)
-			{
-				if (circleTask.status == 'add')
-					self._addTaskToCircle(circleTask);
-				else if (circleTask.status == 'delete')
-					self._removeTaskFromCircle(circleTask);
-
-			}));
-			
-			Y.ModuleConnectionServer.getJSON('/channel/'+self.activity+'/circles.json',function(data)
-			{
-				_.each(data.circles, function(circle)
-				{
-					self._addCircle(circle);
-				});
-			});
-				
-		},
-
 		_subscribePath : function(zone)
 		{
-			return '/channel/circles/'+zone;
+			return '/channel/Circle/'+zone;
 		},
-
-		_initCircleCreator : function()
+	  
+		_addNewCircle : function(data,zone)
 		{
-			var self = this;
-			var circleCreator = new Y.ModuleCircle.CircleCreator(
-			{
-				client:self.client
-				,function:
-					{
-					click:function(data)
-						{
-						self.client.sendSignal(self._subscribePath('circle'), data);
-						}
-					}
-			});	
-		},
+			this.client.sendSignal(this._subscribePath(zone), data);
+		}
 	});
 
 	Y.namespace("ModuleContainerCircle").ContainerCircle = ContainerCircle;
