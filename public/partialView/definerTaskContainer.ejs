@@ -1,5 +1,45 @@
 <div id ="divCreatorTask">
-	<input type ="text" name ="title" class = "selector_title"/>
-	<div id = "buttonAddTask" class = "gButton add"></div>
+	<div id = "divDefinerTask" class = "layer">
+		<input type ="text" name ="title" class = "selector_title text_box text_box_title"  placeholder = "Title"/>
+		<div id = "divDefinerGoal" class = "layerTable">
+			<div id = "divGoaltitle" class = "headerTable"><span>Objetives</span></div>
+			<div id = "divGoals">
+				<!-- This is the main container and "shell" for the todo app. -->
+				<div id="todo-app">
+				<label class="todo-label" for="new-todo"></label>
+				<input type="text" id="new-todo" class="todo-input"
+				placeholder="New objetive">
+
+				<ul id="todo-list"></ul>
+				<div id="todo-stats"></div>
+				</div>
+			</div>
+		</div>
+		<div id = "divDefinerStep" class = "layerTable">
+			<div id = "divStepTitle" class = "headerTable"><span>Desarrollo</span></div>
+			<div id = "divSteps"></div>
+		</div>
+		<div id = "buttonAddTask" class = "gButton add"></div>
+	</div>
+	<div id = "divMapTask"></div>
 	
 <div>
+	
+	
+	
+<!-- This template HTML will be used to render each todo item. -->
+<script type="text/x-template" id="todo-item-template">
+    <div class="todo-view">
+        <input type="checkbox" class="todo-checkbox" {checked}>
+        <span class="todo-content" tabindex="0">{text}</span>
+    </div>
+
+    <div class="todo-edit">
+        <input type="text" class="todo-input" value="{text}">
+    </div>
+
+    <a href="#" class="todo-remove" title="Remove this task">
+        <span class="todo-remove-icon"></span>
+    </a>
+</script>
+

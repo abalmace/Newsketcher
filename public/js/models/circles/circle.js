@@ -187,4 +187,4 @@ YUI.add("circle", function(Y)
 
     Y.namespace("ModuleCircle").Circle = Circle;
 
-}, "3.1.0", {requires:["base","node","node-core",'event',]});
+}, "1.0", {requires:["base","node","node-core",'event',]});

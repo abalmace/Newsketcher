@@ -28,6 +28,10 @@ YUI.add("taskcreator", function(Y)
 			{
 			value:null
 			}
+		,listView :
+			{
+			value:null
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -36,7 +40,7 @@ YUI.add("taskcreator", function(Y)
 		initializer: function(data)
 		{
 			this.client = data.client;
-			
+			this.listView = new Y.ModuleList.ListAddView();
 			this._addEvents();
 
 		this.publish("myEvent", {
@@ -85,4 +89,4 @@ YUI.add("taskcreator", function(Y)
 
 	Y.namespace("ModuleTask").TaskCreator = TaskCreator;
 
-}, "1.0", {requires:["base"]});
+}, "1.0", {requires:['base','listaddview']});
