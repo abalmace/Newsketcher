@@ -36,6 +36,10 @@ YUI.add("personcreator", function(Y)
 			{
 			value:null
 			}
+		,userType:
+			{
+			value:null
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -47,10 +51,10 @@ YUI.add("personcreator", function(Y)
 			
 			this._addEvents();
 
-		this.publish("myEvent", {
-		defaultFn: this._defMyEventFn,
-		bubbles:false
-		});
+			this.publish("myEvent", {
+			defaultFn: this._defMyEventFn,
+			bubbles:false
+			});
 		},
 
 		destructor : function()
@@ -80,6 +84,8 @@ YUI.add("personcreator", function(Y)
 			var data =
 			{
 				name : nodeName.get('value')
+				,nick : nodeNick.get('value')
+				,password: nodePassword.get('value')
 				,guid : Utils.guid()
 				,status : 'new'
 			}

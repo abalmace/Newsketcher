@@ -178,4 +178,4 @@ YUI.add("containercircle", function(Y)
 
 	Y.namespace("ModuleContainerCircle").ContainerCircle = ContainerCircle;
 
-}, "3.1.0", {requires:['base','circle-creator','circle','connectionserver']});
+}, "3.1.0", {requires:['base','circle-creator','circle']});

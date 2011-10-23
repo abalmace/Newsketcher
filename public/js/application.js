@@ -2,6 +2,7 @@ var newsketcherClient;
 
 YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y) {
  
+	var configClient;
 	function init()
 	{
 		var activityDesigner;
@@ -11,15 +12,9 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 		Y.ModuleConnectionServer.getJSON('/config.json',function(config)
 		{
 			config.hostname = window.location.hostname
+			configClient = config;
 			
-			var data =
-				{
-				name:'mila'
-				,username:'mila'
-				,usertype:"Leader"
-				};
-			
-			newsketcherClient = new Y.NewSketcher.NewsketcherClient({options:config,data:data});
+			Y.one('#ajaxContainer').load('/partialView/login.ejs', _submitLogin); 	
 		});
 		
 		Y.one('#btnActivityLeader').on('click', function(e)
@@ -113,7 +108,7 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 		{
 			//Cancel the link behavior
 			e.preventDefault();
-			
+			var configClient; 
 			$('#mask').hide();
 			$('.window').hide();
 			var name = $("#name").attr('value');
@@ -129,6 +124,38 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 		});	
 
 	*/
+	}
+	
+	function _submitLogin()
+	{
+		Y.one('#signIn').on('click', function(e)
+			{
+				Y.ModuleConnectionServer.getJSON('/channel/Person/'+Y.one('#login_UserName').get('value')+'/'+Y.one('#login_Password').get('value')+'/person.json',function(data)
+				{
+					continueOrLogAgain(data.person && data.person[0])
+				});
+			});
+	}
+	function continueOrLogAgain(person)
+	{
+		//athenticate
+		if(person)
+		{
+			var data =
+				{
+				name:person.name
+				,nick:person.nick
+				,userType:person.userType
+				,guid:person.guid
+				};
+			
+			newsketcherClient = new Y.NewSketcher.NewsketcherClient({options:configClient,data:data});
+		}
+		//wrong user - pass
+		else
+		{
+			
+		}
 	}
  
      Y.on("domready", init); 
