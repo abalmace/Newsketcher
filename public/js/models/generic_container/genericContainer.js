@@ -123,7 +123,7 @@ YUI.add("genericcontainer", function(Y)
 				//Are we dropping on a li node?
 				var tagName = drop.get('tagName').toLowerCase();
 				var parentClassName = drop.get('parentNode').get('className');
-				if (tagName === 'li' && parentClassName !== 'instanceContainer')
+				if (tagName === 'li' && parentClassName !== 'elementContainer')
 				{
 					//Are we not going up?
 					if (!goingUp)
