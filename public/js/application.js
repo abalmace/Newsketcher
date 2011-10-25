@@ -3,12 +3,12 @@ var newsketcherClient;
 YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y) {
  
 	var configClient;
+	var activityDesigner;
+	var taskcreator;
+	var personCreator;
+	var showContainerCircle;
 	function init()
 	{
-		var activityDesigner;
-		var taskcreator;
-		var personCreator;
-		
 		Y.ModuleConnectionServer.getJSON('/config.json',function(config)
 		{
 			config.hostname = window.location.hostname
@@ -19,6 +19,7 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 		
 		Y.one('#btnActivityLeader').on('click', function(e)
 		{
+			memoryFree();
 			Y.one('#ajaxContainer').load('/partialView/mainContainer.ejs', function(){}); 	
 			e.stopImmediatePropagation()
 		});
@@ -30,6 +31,7 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 			
 				Y.use('taskcreator', function(Y)
 				{
+					memoryFree();
 					taskcreator = new Y.ModuleTask.TaskCreator({client:newsketcherClient});
 				});
 			});
@@ -43,6 +45,7 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 			{
 				Y.use('activity-designer', function(Y)
 				{
+					memoryFree();
 					activityDesigner = new Y.NewSketcher.ActivityDesigner({client:newsketcherClient});
 				});
 				
@@ -57,73 +60,30 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 			{
 				Y.use('personcreator', function(Y)
 				{
+					memoryFree();
 					personCreator = new Y.ModulePeople.PersonCreator({client:newsketcherClient});
 				});
 				
 			}); 
 			e.stopImmediatePropagation()
 		});
-	/*
-		//select all the a tag with name equal to modal
-			//Get the A tag
-			var id = "#dialog1";
 		
-			//Get the screen height and width
-			var maskHeight = $(document).height();
-			var maskWidth = $(window).width();
-		
-			//Set heigth and width to mask to fill up the whole screen
-			$('#mask').css({'width':maskWidth,'height':maskHeight});
-			
-			//transition effect		
-			$('#mask').fadeIn(1000);	
-			$('#mask').fadeTo("slow",0.8);	
-		
-			//Get the window height and width
-			var winH = $(window).height();
-			var winW = $(window).width();
-		
-			//Set the popup window to center
-			$(id).css('top',  winH/2-$(id).height()/2);
-			$(id).css('left', winW/2-$(id).width()/2);
-		
-			//transition effect
-			$(id).fadeIn(2000);
-			
-			var data =
-				{
-				name:name
-				,username:Utils.guid()
-				,usertype:"hola"
-				}
-			*/
-
-
-
-
-		
-			/*
-			//if close button is clicked
-		$('.window .close').click(function (e)
+		Y.one('#btnSelectTask').on('click', function(e)
 		{
-			//Cancel the link behavior
-			e.preventDefault();
-			var configClient; 
-			$('#mask').hide();
-			$('.window').hide();
-			var name = $("#name").attr('value');
-			var username = $("#username").attr('value');
-			var usertype = $("#userType").attr('value');
-			var data =
+			var node = Y.one('#ajaxContainer');
+			node.load('/partialView/screenSelectTask.ejs',null,function()
+			{
+				Y.use('showcontainercircle', function(Y)
 				{
-				name:name
-				,username:username
-				,usertype:usertype
-				}
-			initMapSketcher(data);
-		});	
-
-	*/
+					memoryFree();
+					showContainerCircle = new Y.ModuleContainerCircle.ShowContainerCircle({client:newsketcherClient,container:'div_containerSelectorTask'});
+				});
+				
+				
+			}); 
+			e.stopImmediatePropagation()
+		});
+	
 	}
 	
 	function _submitLogin()
@@ -138,6 +98,7 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 	}
 	function continueOrLogAgain(person)
 	{
+		memoryFree();
 		//athenticate
 		if(person)
 		{
@@ -148,7 +109,6 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 				,userType:person.userType
 				,guid:person.guid
 				};
-			
 			newsketcherClient = new Y.NewSketcher.NewsketcherClient({options:configClient,data:data});
 		}
 		//wrong user - pass
@@ -157,28 +117,18 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 			
 		}
 	}
+	
+	function memoryFree()
+	{
+		if(showContainerCircle)
+		{
+			showContainerCircle.destroy();
+			showContainerCircle = null;
+		}
+		
+	}
  
      Y.on("domready", init); 
-     
-     var initMapSketcher = function(data)
-{
-	
-	
-
-	$("a[rel]").overlay(
-	{
-		mask:
-		{
-			color: '#ebecff'
-			,loadSpeed: 200
-			,opacity: 0.9
-			,onLoad: function(){$('#name').focus()}
-			, onClose: function(){$('#workspace').focus()}
-		}
-	})
-	
-}
-
 });
 
 

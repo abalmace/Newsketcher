@@ -5,7 +5,7 @@ YUI.add("genericcontainer", function(Y)
 
 	function GenericContainer(data)
 	{
-	GenericContainer.superclass.constructor.apply(this, arguments);
+		GenericContainer.superclass.constructor.apply(this, arguments);
 	}
 
 
@@ -20,7 +20,7 @@ YUI.add("genericcontainer", function(Y)
 			{
 			value:null
 			}
-		,allModules:
+		,allElements:
 			{
 			value:null	
 			}
@@ -48,11 +48,11 @@ YUI.add("genericcontainer", function(Y)
 		initializer: function(data)
 		{
 			this.client = data.client;
-			this.allModules = [];
+			this.allElements = [];
 			this.container = document.getElementById(data.container || 'list1');
 			this.subscriptions = [];
 			this.prefixIdTask = 'task_';
-			this.init();
+			this._createContainer();
 
 		this.publish("myEvent", {
 		defaultFn: this._defMyEventFn,
@@ -62,22 +62,16 @@ YUI.add("genericcontainer", function(Y)
 
 		destructor : function()
 		{
-		/*
-		* destructor is part of the lifecycle introduced by 
-		* the Base class. It is invoked when destroy() is called,
-		* and can be used to cleanup instance specific state.
-		*
-		* It does not need to invoke the superclass destructor. 
-		* destroy() will call initializer() for all classes in the hierarchy.
-		*/
-		},
-
-		/* MyComponent specific methods */
-
-		init : function()
-		{
-			this.createContainer();
-			this.addEventClick();
+			this.client = null;
+			this.container = null;
+			this.del.destroy();
+			Y.DD.DDM.destroy();
+			this.del = null;
+			Y.Array.each(this.allElements, function(element)
+			{
+				element.destroy();
+			});
+			this.allElements = null;
 		},
 
 		_subscribePath : function(zone)
@@ -90,13 +84,13 @@ YUI.add("genericcontainer", function(Y)
 			//Setup some private variables..
 			var goingUp = false, lastY = 0, trans = {};
 
-			var elementsContainer = Y.one('#play ul');
-			var del = this.del;
-			del = new Y.DD.Delegate({
+			var elementsContainer = Y.one(this.container);
+			this.del = new Y.DD.Delegate({
 				container: elementsContainer
 				,nodes: 'li'
 				,target: true
 			});
+			var del = this.del;
 			del.dd.plug(Y.Plugin.DDProxy,
 				{
 				moveOnEnd: false
@@ -110,7 +104,7 @@ YUI.add("genericcontainer", function(Y)
 			
 			
 			//Create simple targets for the 2 lists.
-			var uls = Y.Node.all('#play ul');
+			var uls = Y.Node.all(this.container);
 			uls.each(function(v, k)
 			{
 				var tar = new Y.DD.Drop({node: v});
@@ -186,10 +180,11 @@ YUI.add("genericcontainer", function(Y)
 					drag.target.set('locked', true);
 				}
 				var dragAux = drag.get('dragNode');
-				drag.get('dragNode').set('innerHTML', drag.get('node').get('innerHTML'));
-				drag.get('dragNode').setStyle('opacity','.5');
-				drag.get('node').one('div.mod').setStyle('visibility', 'hidden');
-				drag.get('node').addClass('moving');
+				var node = drag.get('node');
+				dragAux.set('innerHTML', node.get('innerHTML'));
+				dragAux.setStyle('opacity','.5');
+				node.one('div.mod').setStyle('visibility', 'hidden');
+				node.addClass('moving');
 			});
 			//Listen for a drag:end events
 			del.on('drag:end', function(e)
@@ -220,36 +215,11 @@ YUI.add("genericcontainer", function(Y)
 					}
 				}
 			});
-			
-			self.addSubscriptions();
 		},
 	  
 		_syncTargets: function()
 		{
 			this.del.syncTargets();
-		},
-	  
-		_addEventClick : function()
-		{
-			/*
-			agregar evento click para addButton
-			*/
-			var self = this;
-			var taskAdd = $('#taskAdd');
-			taskAdd.bind('click', function(e)
-			{
-				var taskCreator = new TaskCreator(
-					{
-					client:self.client
-					,function:
-						{
-						click:function(data)
-							{
-							self.client.sendSignal(self.subscribePath('Tasks'), data);
-							}
-						}
-					});
-			});
 		},
 		
 		/*
@@ -266,19 +236,22 @@ YUI.add("genericcontainer", function(Y)
 			this.client.sendSignal(data);
 		},
 
-		_joinTask : function(data)
+		_addElement : function(data, classElement)
 		{
 			var li = document.createElement('li');
-			var id = data.id || Utils.guid()
+			var id = data.guid || Utils.guid()
 			li.className = "item";
+			li.innerHTML = data.textElement;
 			li.id = id;	
 			data.client = this.client;
 			
 			data.li = li;
-			data.id = id;
-			
-			var mod = new ModuleTask(data);
-			this.allModules.push(mod);
+			data.guid = id;
+			if(classElement)
+			{
+				var element = new classElement(data);
+				this.allElements.push(element);
+			}
 			this.container.appendChild(li);
 			/*
 			Para que el nuevo elemento agregado sea un Target tambien

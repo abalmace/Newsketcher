@@ -25,6 +25,7 @@
 	<link rel="stylesheet" href="/css/roommates.css" />
 	<link rel="stylesheet" href="/css/CssButtons.css" />
 	<link rel="stylesheet" href="/css/CssTask.css" />
+	<link rel="stylesheet" href="/css/screenSelectTask.css" />
 	<link rel="stylesheet" href="http://yui.yahooapis.com/2.8.2/build/reset-fonts-grids/reset-fonts-grids.css" type="text/css"> 
 	<!--<link rel="stylesheet" href="/css/github-voice.css" />-->
 	<link rel="stylesheet" href="/css/modal.css" />
@@ -109,8 +110,12 @@
 	<!--Archivos de la capa Model -->
 	<script type="text/javascript" src="/js/model/list/specialListModel.js"></script>
 	
+	<!--Archivos para módulos genéricos-->
+	<script type="text/javascript" src="/js/models/generic_container/genericContainer.js"></script>
+	<script type="text/javascript" src="/js/models/generic_div_animation/genericDivAnimation.js"></script>
 	
 	<!--Archivos para la gestion de task-->
+	<!--
 	<script type="text/javascript" src="/js/models/task/menu/instanceTaskUI.js"></script>
 	<script type="text/javascript" src="/js/models/task/menu/instanceTask.js"></script>
 	<script type="text/javascript" src="/js/models/task/menu/instanceTaskLayer.js"></script>
@@ -120,6 +125,11 @@
 	<script type="text/javascript" src="/js/models/task/menu/containerTaskLeader.js"></script>
 	<script type="text/javascript" src="/js/models/task/menu/containerTaskFollower.js"></script>
 	<script type="text/javascript" src="/js/models/task/creator/taskCreator.js"></script>
+	-->
+	
+	<!--Archivos para mostrar task disponibles a followers-->
+	<script type="text/javascript" src="/js/models/circles/show/showContainerCircle.js"></script>
+	<script type="text/javascript" src="/js/models/circles/show/showCircle.js"></script>
     
 	<!--Gestures-->
 	<script type="text/javascript" src="/js/models/gestures/dollar.js"></script>
@@ -131,6 +141,7 @@
 			<input type='button' id="btnTaskLeader" value="task creator"/>
 			<input type='button' id="btnGroupLeader" value="group"/>
 			<input type='button' id="btnActivityLeader" value="activity"/>
+			<input type='button' id="btnSelectTask" value="select task"/>
 		<input type = "button" id ="personAdd" value = "new person"/>
 		</div>
 		<div id="ajaxContainer"></div>

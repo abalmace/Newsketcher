@@ -69,7 +69,7 @@ YUI.add("newsketcher_client", function(Y)
 		 * fin setup BayeauxClient
 		 */
 		
-			this.guid = data.username || Utils.guid();
+			this.guid = data.guid || Utils.guid();
 			this.name = data.name || "unknow";
 			this.userType = data.usertype || "follower";
 			this.nick = data.nick || this.name;

@@ -5,7 +5,7 @@ function ContainerTaskFollower(data)
 {
 	this.client = data.client;
 	this.allModules = [];
-	this.container = document.getElementById('list1');
+	this.container = document.getElementById(data.container || 'list1');
 	this.subscriptions = [];
 	this.Y = null;			//Ambiente de Yui
 	this.init();
@@ -29,7 +29,7 @@ ContainerTaskFollower.prototype.addSubscriptions = function()
 	}));
 	
 // Download previos Tasks
-	$.getJSON('/room/Tasks/tasks.json', function(data) {
+	$.getJSON('/channel/Circle/'+this.client.guid +'/circles.json', function(data) {
 		_.each(data.tasks, function(task) {
 			self.addMyTask(task);
 		});

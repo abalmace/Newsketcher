@@ -1,0 +1,15 @@
+#divGlobalScreenSelectorTask	
+{
+	position:absolute;
+	height:100%;
+	width:100%;
+}
+#div_containerSelectorTask
+{
+	position:absolute;
+	top:0;
+	right:0;
+	width:30%;
+	height:100%;
+	overflow:auto;
+}

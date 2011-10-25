@@ -1,56 +1,58 @@
-YUI.add("selectedtask", function(Y)
+YUI.add("showcontainertask", function(Y)
 { 
 	var Lang = Y.Lang;
 
 
-	function SelectedTask(data)
+	function ShowContainerTask(data)
 	{
-	SelectedTask.superclass.constructor.apply(this, arguments);
+	ShowContainerTask.superclass.constructor.apply(this, arguments);
 	}
 
 
-	SelectedTask.NAME = "selectedTask";
+	ShowContainerTask.NAME = "showContainerTask";
 
 	/*
 	* The attribute configuration for the component. This defines the core user facing state of the component
 	*/
-	SelectedTask.ATTRS =
+	ShowContainerTask.ATTRS =
 	{
-		dom:
+		client:
 			{
 			value:null
 			}
-		,title:
+		,allModules:
 			{
 			value:null	
 			}
-		,guid:
+		,container:
 			{
 			value:null
 			}
-		,clicked:
+		,subcriptions:
 			{
 			value:null
 			}
-		,selected:
+		,prefixIdTask:
 			{
 			value:null
+			}
+		,del:
+			{
+			value:null	
 			}
 	};
 
     /* MyComponent extends the Base class */
-	Y.extend(SelectedTask, Y.Base,
+	Y.extend(ShowContainerTask, Y.ModuleContainerTask.ContainerTask,
 	{
 		initializer: function(data)
 		{
-			this.dom = data.dom;
-			this.title = data.title;
-			this.guid = data.guid;
-			this.clicked = data.clicked;
-			this.selected = false;
-			
-			this._defineDOMElement();
-			this._addEvents();
+			this.client = data.client;
+			this.allModules = [];
+			this.container = document.getElementById(data.container || 'list1');
+			this.subscriptions = [];
+			this.prefixIdTask = 'task_';
+			this.init();
 
 		this.publish("myEvent", {
 		defaultFn: this._defMyEventFn,
@@ -72,34 +74,39 @@ YUI.add("selectedtask", function(Y)
 
 		/* MyComponent specific methods */
 
-		to_json : function()
+		init : function()
 		{
-			var data =
-			{
-			title:this.title
-			,guid:this.guid
-			}
-			return data;
 		},
 
-		_defineDOMElement : function()
+		_subscribePath : function(zone)
 		{
-			this.dom.innerHTML =this.title;
+		
 		},
 
-		_addEvents : function(e)
+		_createContainer : function()
 		{
-			var dom = $(this.dom);
-			var self = this;
-			dom.bind('click',function(e)
-			{
-				self._clickEvent();
-				if(self.clicked)
-					self.clicked(self.selected,self.guid);
-			});
+			
+		},
+	  
+		_addEventClick : function()
+		{
+			
+		},
+		
+		/*
+		Eliminar una task
+		*/
+		_removeTask : function()
+		{
+			
+		},
+
+		_joinTask : function(data)
+		{
+			
 		}
 	});
 
-	Y.namespace("ModuleSelectedTask").SelectedTask = SelectedTask;
+	Y.namespace("ModuleContainerTask").ShowContainerTask = ContainerTask;
 
-}, "1.0", {requires:["base"]});
+}, "1.0", {requires:['base','containertask']});
