@@ -217,7 +217,7 @@ YUI.add("genericdivanimation", function(Y)
 				this.elements.push(element);
 			}
 			this.Container.appendChild(li);
-			
+			return li;
 		}
 	});
 

@@ -13,3 +13,12 @@
 	height:100%;
 	overflow:auto;
 }
+#div_containerSelectorInfoTask
+{
+	position:absolute;
+	top:0;
+	left:0;
+	width:30%;
+	height:100%;
+	overflow:auto;
+}

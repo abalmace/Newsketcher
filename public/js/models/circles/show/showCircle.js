@@ -24,7 +24,7 @@ YUI.add("showcircle", function(Y)
 			{
 			value:null	
 			}
-		,div:
+		,container:
 			{
 			value:null
 			}
@@ -49,7 +49,7 @@ YUI.add("showcircle", function(Y)
 		{
 			this.client = data.client;	//cliente
 			this.guid = data.guid;
-			this.div = data.div;		//elemento html que representa al módulo
+			this.li = data.li;	//elemento html que representa al módulo
 			this.name = data.name;
 			this.people = data.people;	//integrantes del circle	
 			this.tasks = data.tasks;	//tareas asignadas a la circle
@@ -78,7 +78,8 @@ YUI.add("showcircle", function(Y)
 		{
 			task.textElement = task.title;
 			task.title = null;
-			this._addElement(task);
+			var li = this._addElement(task);
+			this._addEvent(li);
 		},
 
 		_addTasks : function()
@@ -90,9 +91,26 @@ YUI.add("showcircle", function(Y)
 			{
 				self._addMyTask(task);
 			});	
+		},
+	  
+	  
+		_addEvent : function(dom)
+		{
+			var self = this;
+			var container = $(dom);
+			container.bind('click',function (e)
+			{
+				self._handleClick(dom.id);	
+			});
+			
+		},
+	  
+		_handleClick : function(guid)
+		{
+			var showDescription = new Y.ModuleTask.ShowTask({container : this.li, guid:guid});
 		}
 	});
 
 	Y.namespace("ModuleCircle").ShowCircle = ShowCircle;
 
-}, "1.0", {requires:['base','genericdivanimation']});
+}, "1.0", {requires:['base','genericdivanimation','showtask']});

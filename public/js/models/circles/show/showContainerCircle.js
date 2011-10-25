@@ -16,11 +16,7 @@ YUI.add("showcontainercircle", function(Y)
 	*/
 	ShowContainerCircle.ATTRS =
 	{
-		client:
-			{
-			value:null
-			}
-		,allCircles:
+		allCircles:
 			{
 			value:[]	
 			}
@@ -39,7 +35,6 @@ YUI.add("showcontainercircle", function(Y)
 	{
 		initializer: function(data)
 		{
-			this.client = data.client;
 			this.container = document.getElementById(data.container || 'unknow');
 			this.subscriptions = [];
 			this.allCircles = [];
