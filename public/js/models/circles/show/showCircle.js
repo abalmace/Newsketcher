@@ -53,6 +53,7 @@ YUI.add("showcircle", function(Y)
 			this.name = data.name;
 			this.people = data.people;	//integrantes del circle	
 			this.tasks = data.tasks;	//tareas asignadas a la circle
+			this.callback = data.callback;
 			
 			this._addTasks();
 			
@@ -107,7 +108,12 @@ YUI.add("showcircle", function(Y)
 	  
 		_handleClick : function(guid)
 		{
-			var showDescription = new Y.ModuleTask.ShowTask({container : this.li, guid:guid});
+			var showDescription = new Y.ModuleTask.ShowTask(
+			{
+				container : this.li
+				,guid:guid
+				,callback : this.callback
+			});
 		}
 	});
 

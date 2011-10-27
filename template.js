@@ -43,7 +43,7 @@ YUI.add("showcontainertask", function(Y)
 	};
 
     /* MyComponent extends the Base class */
-	Y.extend(ShowContainerTask, Y.ModuleContainerTask.ContainerTask,
+	Y.extend(ShowContainerTask, Y.Base,
 	{
 		initializer: function(data)
 		{
@@ -74,10 +74,6 @@ YUI.add("showcontainertask", function(Y)
 
 		/* MyComponent specific methods */
 
-		init : function()
-		{
-		},
-
 		_subscribePath : function(zone)
 		{
 		
@@ -107,6 +103,6 @@ YUI.add("showcontainertask", function(Y)
 		}
 	});
 
-	Y.namespace("ModuleContainerTask").ShowContainerTask = ContainerTask;
+	Y.namespace("ModuleGenericContainer").ShowContainerTask = ShowContainerTask;
 
 }, "1.0", {requires:['base','containertask']});

@@ -24,9 +24,13 @@ YUI.add("showcontainercircle", function(Y)
 			{
 			value:null
 			}
-		,subcriptions:
+		,subscriptions:
 			{
 			value:[]
+			}
+		,callback:
+			{
+			value:null
 			}
 	};
 
@@ -39,6 +43,7 @@ YUI.add("showcontainercircle", function(Y)
 			this.subscriptions = [];
 			this.allCircles = [];
 			this.prefixIdTask = 'task_';
+			this.callback = data.callback;
 			
 			//this._addEventClick();
 			this._addSubscriptions();
@@ -61,7 +66,7 @@ YUI.add("showcontainercircle", function(Y)
 		*/
 		},
 
-		_subscribePath : function(zone)
+		_subscribePath : function()
 		{
 			return '/channel/show/Task';
 		},
@@ -116,6 +121,7 @@ YUI.add("showcontainercircle", function(Y)
 		{
 			circle.textElement = circle.name;
 			circle.name = null;
+			circle.callback = this.callback;
 			this._addElement(circle,Y.ModuleCircle.ShowCircle);
 		},
 	  

@@ -38,7 +38,7 @@ YUI.add("genericdivanimation", function(Y)
 			}
 		,container:
 			{
-			value:[]
+			value:null
 			}	
 	};
 
@@ -51,7 +51,6 @@ YUI.add("genericdivanimation", function(Y)
 			this.li = data.li;		//elemento html que representa al módulo
 			this.textElement = data.textElement;
 			this.elements = [];
-			this.container = [];
 			
 			this._createModule();
 
@@ -84,7 +83,7 @@ YUI.add("genericdivanimation", function(Y)
 			
 			var node = Y.one(liTag);
 			//define
-			this.Container = liTag.getElementsByClassName("elementContainer")[0];
+			this.container = liTag.getElementsByClassName("elementContainer")[0];
 			
 			//eventos de botones.
 			var _moduleClick = function(e)
@@ -216,8 +215,13 @@ YUI.add("genericdivanimation", function(Y)
 				var element = new classElement(data);
 				this.elements.push(element);
 			}
-			this.Container.appendChild(li);
+			this.container.appendChild(li);
 			return li;
+		},
+	  
+		_getContainer : function()
+		{
+			return this.container;
 		}
 	});
 

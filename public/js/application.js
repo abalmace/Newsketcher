@@ -7,6 +7,7 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 	var taskcreator;
 	var personCreator;
 	var showContainerCircle;
+	var activity;
 	function init()
 	{
 		Y.ModuleConnectionServer.getJSON('/config.json',function(config)
@@ -70,22 +71,48 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 		
 		Y.one('#btnSelectTask').on('click', function(e)
 		{
+			
 			var node = Y.one('#ajaxContainer');
 			node.load('/partialView/screenSelectTask.ejs',null,function()
 			{
-				Y.use('showcontainercircle', function(Y)
+				Y.use('showcontainercircle','activityworkout', function(Y)
 				{
 					memoryFree();
-					showContainerCircle = new Y.ModuleContainerCircle.ShowContainerCircle({client:newsketcherClient,container:'div_containerSelectorTask'});
+					showContainerCircle = new Y.ModuleContainerCircle.ShowContainerCircle(
+					{
+						client:newsketcherClient
+						,container:'div_containerSelectorTask'
+						,callback :
+						{
+							click:function(data)
+							{
+								_startTask(data);
+							}
+						}
+					});
 				});
 				
 				
 			}); 
 			e.stopImmediatePropagation()
 		});
-	
 	}
 	
+	function _startTask(data)
+	{
+		var node = Y.one('#ajaxContainer');
+		node.load('/partialView/activityWorkOut.ejs',null,function()
+		{
+			Y.use('activityworkout', function(Y)
+			{
+				memoryFree();
+				data.client = newsketcherClient;
+				data.container = "ul_subTask_container";
+				activity = new Y.ModuleNewsketcher.ActivityWorkOut(data);
+			});
+			
+		}); 
+	}
 	function _submitLogin()
 	{
 		Y.one('#signIn').on('click', function(e)

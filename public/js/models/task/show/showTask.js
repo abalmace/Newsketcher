@@ -36,6 +36,10 @@ YUI.add("showtask", function(Y)
 			{
 			value:[]
 			}
+		,callback:
+			{
+			value:null
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -48,6 +52,7 @@ YUI.add("showtask", function(Y)
 			this.li = data.li;		//elemento html que representa al módulo
 			this.name = data.name;
 			this.people = data.people;	//integrantes del circle
+			this.callback = data.callback;
 			
 			this._retrieveTaskInformation();
 
@@ -73,8 +78,27 @@ YUI.add("showtask", function(Y)
 
 		_createContainer : function(data)
 		{
+			var self = this;
 			var title = Y.one('#div_containerSelectorInfoTask').one('span');
 			title.set('innerHTML',data.title);
+			
+			var btnStart = Y.one('#btn_start_task');
+			btnStart.on('click', function(e)
+			{
+				if(self.callback && self.callback.click)
+				{
+					var activity =
+					{
+						guid : data.guid
+						,title : data.title
+						,type : data.type
+						,people : self.people
+						,subtasks : data.subtasks
+					}
+					self.callback.click(activity);
+				}
+				btnStart.detach();
+			});
 		}
 	});
 

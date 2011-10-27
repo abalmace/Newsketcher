@@ -16,6 +16,9 @@ YUI.add("connectionserver", function(Y)
 					var data;
 
 					// protected against malformed JSON response
+					data = Y.JSON.parse(r.responseText);
+						callback(data);
+					/*	
 					try
 					{
 						data = Y.JSON.parse(r.responseText);
@@ -25,7 +28,7 @@ YUI.add("connectionserver", function(Y)
 					{
 						alert("JSON Parse failed!");
 						return;
-					}
+					}*/
 				}
 			}
 		});

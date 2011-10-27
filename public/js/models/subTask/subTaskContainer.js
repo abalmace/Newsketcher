@@ -1,20 +1,20 @@
-YUI.add("activityworkout", function(Y)
+YUI.add("subtaskcontainer", function(Y)
 { 
 	var Lang = Y.Lang;
 
 
-	function ActivityWorkOut(data)
+	function SubTaskContainer(data)
 	{
-		ActivityWorkOut.superclass.constructor.apply(this, arguments);
+		SubTaskContainer.superclass.constructor.apply(this, arguments);
 	}
 
 
-	ActivityWorkOut.NAME = "activityWorkOut";
+	SubTaskContainer.NAME = "subTaskContainer";
 
 	/*
 	* The attribute configuration for the component. This defines the core user facing state of the component
 	*/
-	ActivityWorkOut.ATTRS =
+	SubTaskContainer.ATTRS =
 	{
 		allCircles:
 			{
@@ -31,11 +31,11 @@ YUI.add("activityworkout", function(Y)
 	};
 
     /* MyComponent extends the Base class */
-	Y.extend(ActivityWorkOut, Y.ModuleGenericContainer.GenericContainer,
+	Y.extend(SubTaskContainer, Y.ModuleGenericContainer.GenericContainer,
 	{
 		initializer: function(data)
 		{
-			this.container = document.getElementById(data.container || 'unknown');
+			this.container = document.getElementById(data.container || 'unknow');
 			this.allCircles = [];
 			this.prefixIdTask = 'task_';
 			
@@ -64,7 +64,7 @@ YUI.add("activityworkout", function(Y)
 
 		_subscribePath : function()
 		{
-			return '/channel/'+this.guid+'/subTask';
+			return '/channel/'+this.guid.+'/subTask';
 		},
 
 		_handleClick : function(e)
@@ -72,7 +72,7 @@ YUI.add("activityworkout", function(Y)
 			
 		},
 	  
-		_retrieveTaskInfo : function(guid)
+		__retrieveTaskInfo : function(guid)
 		{
 			
 		// Download previos Tasks
@@ -109,10 +109,10 @@ YUI.add("activityworkout", function(Y)
 		
 		_addMySubTask : function(subTask)
 		{
-			this._addElement(subTask,Y.ModuleTask.SubTaskUI);
+			this._addElement(subTask);
 		}
 	});
 
-	Y.namespace("ModuleNewsketcher").ActivityWorkOut = ActivityWorkOut;
+	Y.namespace("ModuleSubTask").SubTaskContainer = SubTaskContainer;
 
-}, "1.0", {requires:['base','genericcontainer','subtaskui']});
+}, "1.0", {requires:['base','genericcontainer','connectionserver']});

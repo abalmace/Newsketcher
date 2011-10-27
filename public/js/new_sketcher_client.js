@@ -40,6 +40,10 @@ YUI.add("newsketcher_client", function(Y)
 			{
 			value:null
 			}
+		,currentRoomId:
+			{
+			value:null
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -96,6 +100,11 @@ YUI.add("newsketcher_client", function(Y)
 		sendSignal : function(path, data)
 		{		
 			this.socket.publish(path, data);
+		},
+	  
+		getWorkspaceMapDom : function()
+		{
+			return document.getElementById('map');
 		}
 	});
 
