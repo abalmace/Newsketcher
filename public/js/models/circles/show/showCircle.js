@@ -112,6 +112,7 @@ YUI.add("showcircle", function(Y)
 			{
 				container : this.li
 				,guid:guid
+				,people : this.people
 				,callback : this.callback
 			});
 		}

@@ -52,6 +52,10 @@ YUI.add("subtaskui", function(Y)
 			{
 			value:[]
 			}
+		,instanceSubTaskCreator:
+			{
+			value:null
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -72,11 +76,6 @@ YUI.add("subtaskui", function(Y)
 			this._addSubscriptions();
 			this._addEventButtonAdd();
 			this._addCurrentInstances({primero:{title:"instances of this task"},segundo:{title:"instances of this task..."}});
-			
-		this.publish("myEvent", {
-		defaultFn: this._defMyEventFn,
-		bubbles:false
-		});
 		},
 
 		destructor : function()
@@ -104,7 +103,7 @@ YUI.add("subtaskui", function(Y)
 			var self = this;
 			_.each(instances, function(instance)
 			{
-				self._joinInstanceTask(instance);
+				self._joinInstanceSubTask(instance);
 			});
 		},
 		
@@ -112,9 +111,9 @@ YUI.add("subtaskui", function(Y)
 		{
 			var self = this;
 		//suscribirse a la edicion de Rooms
-			self.subscriptions.push(self.client.subscribe(self._subscribePath('instanceSubTasks'), function(data) {
+			self.subscriptions.push(self.client.subscribe(self._subscribePath(), function(data) {
 				if (data.status == 'join')
-					self.joinInstanceTask(data);
+					self._joinInstanceSubTask(data);
 				else if (data.status == 'delete')
 					self.removeInstanceTask(data);
 
@@ -157,7 +156,10 @@ YUI.add("subtaskui", function(Y)
 				});
 
 
-			//Listen for all drop:over events
+			del.on('drop:over', function(e)
+			{
+				e.stopPropagation();
+			});
 			del.on('drop:enter', function(e)
 			{
 				//Get a reference to our drag and drop nodes
@@ -251,9 +253,9 @@ YUI.add("subtaskui", function(Y)
 			});
 		},
 	  
-		_subscribePath : function(zone)
+		_subscribePath : function()
 		{
-			return '/channel/' +this.guid+'/'+ zone;
+			return '/channel/' +this.guid+'/'+ 'instanceTasks';
 		},
 		
 		_addEventButtonAdd : function()
@@ -263,22 +265,24 @@ YUI.add("subtaskui", function(Y)
 			var add =li.find("div.instanceAdd");
 			add.bind('click', function(e)
 			{
-				var instanceTaskCreator = new InstanceTaskCreator(
+				if(self.instanceSubTaskCreator)
+					self.instanceSubTaskCreator.destroy();
+				self.instanceSubTaskCreator = new Y.ModuleTask.InstanceSubTaskCreator(
 					{
 					client:self.client
-					,group:self.group
-					,function:
+					,people:self.people
+					,callback:
 						{
 						click:function(data)
 							{
-							this.client.sendSignal(this.subscribePath('instanceTasks'), data);
+							self.client.sendSignal(self._subscribePath(), data);
 							}
 						}
 					});
 			});
 		},
 	  
-		_joinInstanceTask : function(data)
+		_joinInstanceSubTask : function(data)
 		{
 			var li = document.createElement('li');
 			li.className = "instanceTask";
@@ -292,6 +296,7 @@ YUI.add("subtaskui", function(Y)
 				,dom:li
 				,name :id
 				,title:data.title
+				,group:data.group
 				}
 			var insTask = new Y.ModuleTask.InstanceSubTask(dataAux);
 			this.instances.push(insTask);
@@ -311,4 +316,4 @@ YUI.add("subtaskui", function(Y)
 
 	Y.namespace("ModuleTask").SubTaskUI = SubTaskUI;
 
-}, "1.0", {requires:['base','genericdivanimation','showtask','dd-constrain', 'dd-proxy', 'dd-delegate', 'node','instancesubtask']});
+}, "1.0", {requires:['base','genericdivanimation','showtask','dd-constrain', 'dd-proxy', 'dd-delegate', 'node','instancesubtask','instancesubtaskcreator']});

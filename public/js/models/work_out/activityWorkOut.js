@@ -24,7 +24,7 @@ YUI.add("activityworkout", function(Y)
 			{
 			value:null
 			}
-		,taskInfo:
+		,people:
 			{
 			value:null
 			}
@@ -37,6 +37,7 @@ YUI.add("activityworkout", function(Y)
 		{
 			this.container = document.getElementById(data.container || 'unknown');
 			this.allCircles = [];
+			this.people = data.people;
 			this.prefixIdTask = 'task_';
 			
 			//this._addEventClick();
@@ -80,7 +81,7 @@ YUI.add("activityworkout", function(Y)
 			Y.ModuleConnectionServer.getJSON('/channel/Task/'+guid +'/task.json',function(data)
 			{
 				self._getInfo(data.task[0]);
-			})	
+			});
 		},
 	  
 		_getInfo : function(task)
@@ -93,6 +94,7 @@ YUI.add("activityworkout", function(Y)
 				{
 				textElement:'free'
 				,guid : task.guid
+				,people : this.people
 				}
 				this._addMySubTask(data);
 			}

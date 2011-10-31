@@ -5,7 +5,7 @@ YUI.add("instancesubtaskui", function(Y)
 
 	function InstanceSubTaskUI(data)
 	{
-	InstanceSubTaskUI.superclass.constructor.apply(this, arguments);
+		InstanceSubTaskUI.superclass.constructor.apply(this, arguments);
 	}
 
 

@@ -9,6 +9,7 @@ function GroupWizard(options)
 	this.edit = options.edit;
 	this.show = options.show;
 	this.client = options.client;
+	this.people = options.people;
 	this.active = false;
 	this.stringAddRoommate = "roommate_";
 	this.stringClassBase = "roommateIconBase ";
@@ -19,22 +20,20 @@ function GroupWizard(options)
 	this.ROOMMATE_ICON_BASE = "roommateIconBase ";
 	
 	this.start();
-	this.getUsers();
+	this.addPeople();
 }
 /*
  * Variable para extender de Roommates
  */
 GroupWizard.prototype = new Roommates();
 
-GroupWizard.prototype.getUsers = function()
+GroupWizard.prototype.addPeople = function()
 {
 // Download roommates
 	var self = this;
-	$.getJSON('/rooms/users.json', function(data) {
-		_.each(data.users, function(user) {
-			self.add(user);
-		});
-	})	
+	_.each(this.people, function(person) {
+		self.add(person);
+	});	
 }
 
 GroupWizard.prototype.add = function(data)

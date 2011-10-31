@@ -36,10 +36,10 @@ YUI.add("subtaskcontainer", function(Y)
 		initializer: function(data)
 		{
 			this.container = document.getElementById(data.container || 'unknow');
-			this.allCircles = [];
+			this.task = data.task;
 			this.prefixIdTask = 'task_';
 			
-			//this._addEventClick();
+			this._addEventButtonAdd();
 			this._retrieveTaskInfo(data.guid);
 
 		this.publish("myEvent", {
@@ -66,11 +66,6 @@ YUI.add("subtaskcontainer", function(Y)
 		{
 			return '/channel/'+this.guid.+'/subTask';
 		},
-
-		_handleClick : function(e)
-		{
-			
-		},
 	  
 		__retrieveTaskInfo : function(guid)
 		{
@@ -79,8 +74,10 @@ YUI.add("subtaskcontainer", function(Y)
 			var self = this;
 			Y.ModuleConnectionServer.getJSON('/channel/Task/'+guid +'/task.json',function(data)
 			{
-				self._getInfo(data.task[0]);
+				self.task = data.task[0];
 			})	
+			
+			self.._getInfo(self.task);
 		},
 	  
 		_getInfo : function(task)
@@ -110,9 +107,32 @@ YUI.add("subtaskcontainer", function(Y)
 		_addMySubTask : function(subTask)
 		{
 			this._addElement(subTask);
-		}
+		},
+	  
+		_addEventButtonAdd : function()
+		{
+			var self = this;
+			var li =jQuery(this.li);
+			var add =li.find("div.instanceAdd");
+			add.bind('click', function(e)
+			{
+				var instanceSubTaskCreator = new Y.ModuleTask.InstanceSubTaskCreator(
+					{
+					client:self.client
+					,people: self.task && self.task.people
+					,function:
+						{
+						click:function(data)
+							{
+								self.client.sendSignal(self._subscribePath('instanceSubTask'), data);
+							}
+						}
+					});
+			});
+}
+
 	});
 
 	Y.namespace("ModuleSubTask").SubTaskContainer = SubTaskContainer;
 
-}, "1.0", {requires:['base','genericcontainer','connectionserver']});
+}, "1.0", {requires:['base','genericcontainer','connectionserver','instancesubtaskcreator']});

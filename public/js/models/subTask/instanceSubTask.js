@@ -219,7 +219,7 @@ YUI.add("instancesubtask", function(Y)
 		{
 			if(this.persisted)
 			{
-				this.client.sendOverlay(this, overlay);
+				this._sendOverlay(overlay);
 			} 
 			else
 			{
@@ -235,7 +235,7 @@ YUI.add("instancesubtask", function(Y)
 			if(this.persisted)
 			{
 				this.client.removeSketch(this, overlay);
-				this.client.sendOverlay(this, overlay);
+				this._sendOverlay(overlay);
 			} 
 			else
 			{
@@ -385,9 +385,16 @@ YUI.add("instancesubtask", function(Y)
 			{
 				self.setActive(true);
 			});
-		}
+		},
 	  
-		
+		_sendOverlay : function(overlay)
+		{
+			var data = overlay.to_json();
+			data.client = this.client.guid;
+			data.type = 'new';
+
+			this.client.sendSignal(this._roomPath('sketches'), data);
+		}
 	});
 
 	Y.namespace("ModuleTask").InstanceSubTask = InstanceSubTask;

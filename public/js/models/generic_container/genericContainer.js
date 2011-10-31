@@ -82,12 +82,13 @@ YUI.add("genericcontainer", function(Y)
 		_createContainer : function()
 		{
 			//Setup some private variables..
+			var self = this;
 			var goingUp = false, lastY = 0, trans = {};
 
 			var elementsContainer = Y.one(this.container);
 			this.del = new Y.DD.Delegate({
 				container: elementsContainer
-				,nodes: 'li'
+				,nodes: 'li.item'
 				,target: true
 			});
 			var del = this.del;
@@ -103,16 +104,7 @@ YUI.add("genericcontainer", function(Y)
 			del.dd.addHandle('.drag');
 			
 			
-			//Create simple targets for the 2 lists.
-			var uls = Y.Node.all(this.container);
-			uls.each(function(v, k)
-			{
-				var tar = new Y.DD.Drop({node: v});
-			});
-			
-
-			//Listen for all drop:over events
-			Y.DD.DDM.on('drop:over', function(e)
+			var _dropOver = function(e)
 			{
 				//Get a reference to our drag and drop nodes
 				var drag = e.drag.get('node'),
@@ -122,7 +114,8 @@ YUI.add("genericcontainer", function(Y)
 
 				//Are we dropping on a li node?
 				var tagName = drop.get('tagName').toLowerCase();
-				var parentClassName = drop.get('parentNode').get('className');
+				var fatherDrop = drop.get('parentNode');
+				var parentClassName = fatherDrop.get('className');
 				if (tagName === 'li' && parentClassName !== 'elementContainer')
 				{
 					//Are we not going up?
@@ -135,7 +128,7 @@ YUI.add("genericcontainer", function(Y)
 					//Resize this nodes shim, so we can drop on it later.
 					e.drop.sizeShim();
 				}
-				else if (drop.get('tagName').toLowerCase() !== 'li')
+				else if (tagName !== 'li')
 				{
 					var str = drop.get('tagName').toLowerCase();
 					var bool = drop.contains(drag);
@@ -149,6 +142,23 @@ YUI.add("genericcontainer", function(Y)
 					}
 				}
 				del.syncTargets();
+			};
+			
+			//Create simple targets for the 2 lists.
+			var ul = Y.one(this.container);
+			var tar = new Y.DD.Drop({node: ul});
+			tar.on('drop:over', function(e)
+			{
+				if(this === ul);
+					_dropOver(e);
+			});
+			
+			
+
+			//Listen for all drop:over events
+			del.on('drop:over', function(e)
+			{
+				_dropOver(e);
 			});
 			
 			//Listen for all drag:drag events
@@ -216,6 +226,7 @@ YUI.add("genericcontainer", function(Y)
 				}
 			});
 		},
+	  
 	  
 		_syncTargets: function()
 		{
