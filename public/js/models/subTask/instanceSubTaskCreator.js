@@ -81,7 +81,7 @@ YUI.add("instancesubtaskcreator", function(Y)
 
 		showUsers : function()
 		{
-			this.group = new GroupWizard({client:this.client, people:this.people});
+			this.group = new Y.ModuleTask.GroupWizard({client:this.client, people:this.people});
 			this.group.setVisible(true);
 		},
 	  
@@ -127,4 +127,4 @@ YUI.add("instancesubtaskcreator", function(Y)
 
 	Y.namespace("ModuleTask").InstanceSubTaskCreator = InstanceSubTaskCreator;
 
-}, "1.0", {requires:['base']});
+}, "1.0", {requires:['base','groupwizard']});

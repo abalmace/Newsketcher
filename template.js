@@ -5,7 +5,7 @@ YUI.add("showcontainertask", function(Y)
 
 	function ShowContainerTask(data)
 	{
-	ShowContainerTask.superclass.constructor.apply(this, arguments);
+		ShowContainerTask.superclass.constructor.apply(this, arguments);
 	}
 
 
@@ -105,4 +105,4 @@ YUI.add("showcontainertask", function(Y)
 
 	Y.namespace("ModuleGenericContainer").ShowContainerTask = ShowContainerTask;
 
-}, "1.0", {requires:['base','containertask']});
+}, "1.0", {requires:['base']});
