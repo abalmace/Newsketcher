@@ -70,6 +70,20 @@ YUI.add("user", function(Y)
 		* It does not need to invoke the superclass destructor. 
 		* destroy() will call initializer() for all classes in the hierarchy.
 		*/
+		},
+	  
+		to_json : function()
+		{
+			var data =
+			{
+				name : this.name
+				,guid: this.guid
+				,nick : this.nick
+				,selected : this.selected
+				,working : this.working
+				,userType : this.userType
+			}
+			return data;
 		}
 	});
 

@@ -114,14 +114,14 @@ YUI.add("instancesubtaskcreator", function(Y)
 
 		getUsers : function()
 		{
-			var people = this.people;
-			var idUsers = [];
+			var people = this.group.getGroup();
+			var subGroup = [];
 			_.each(people, function(person)
 			{
 				if(person.selected)
-					idUsers.push(person.guid)
+					subGroup.push(person.to_json())
 			})
-			return idUsers;
+			return subGroup;
 		}
 	});
 

@@ -28,6 +28,10 @@ YUI.add("instancesubtask", function(Y)
 			{
 			value:[]
 			}
+		,group:
+			{
+			value:[]
+			}
 		,name:
 			{
 			value:null
@@ -52,6 +56,10 @@ YUI.add("instancesubtask", function(Y)
 			{
 			value:null
 			}
+		,instanceSubTaskGroup:
+			{
+			value:null
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -62,6 +70,7 @@ YUI.add("instancesubtask", function(Y)
 			this.overlays = [];
 			this.subscriptions = [];
 			this.client = data.client;
+			this.group = data.group;
 			this.name = data.name.toLowerCase();
 			this.dom = data.dom;
 			this.editable = (typeof data.editable == 'undefined') ?
@@ -234,7 +243,7 @@ YUI.add("instancesubtask", function(Y)
 			*/
 			if(this.persisted)
 			{
-				this.client.removeSketch(this, overlay);
+				this._removeOverlay(overlay);
 				this._sendOverlay(overlay);
 			} 
 			else
@@ -247,7 +256,7 @@ YUI.add("instancesubtask", function(Y)
 		{
 			if(this.persisted)
 			{
-				this.client.removeSketch(this, overlay);
+				this._removeOverlay(overlay);
 			} 
 			else
 			{
@@ -321,6 +330,8 @@ YUI.add("instancesubtask", function(Y)
 				newsketcherClient.currentRoomId=self.name;
 				var parentNode = self.dom.parentNode;
 				self.instanceSubTaskUI.active(true);
+					
+				self.instanceSubTaskGroup = new Y.ModuleTask.InstanceSubTaskGroup({client:self.client, group:self.group});
 				//TODO
 				/*
 				document.getElementById('personalDelete').style.display ="none";
@@ -342,6 +353,8 @@ YUI.add("instancesubtask", function(Y)
 				self.workspace = null;
 				self.dom.style.border = "";
 				self.instanceSubTaskUI.active(false);
+				if(self.instanceSubTaskGroup)
+					self.instanceSubTaskGroup.destroy();
 				//TODO
 				//self.map.setOpacity(this.NOT_SELECTED);
 				
@@ -393,10 +406,26 @@ YUI.add("instancesubtask", function(Y)
 			data.client = this.client.guid;
 			data.type = 'new';
 
-			this.client.sendSignal(this._roomPath('sketches'), data);
+			this._sendSignal('sketches', data);
+		},
+	  
+		_removeOverlay : function(overlay)
+		{
+			var data = 
+			{
+			id: overlay.id
+			,type: 'delete'
+			,client: this.client.guid	
+			}
+			this._sendSignal('sketches', data);
+		},
+	  
+		_sendSignal : function(zone,data)
+		{
+			this.client.sendSignal(this._roomPath(zone), data);
 		}
 	});
 
 	Y.namespace("ModuleTask").InstanceSubTask = InstanceSubTask;
 
-}, "1.0", {requires:['base','instancesubtaskui']});   
+}, "1.0", {requires:['base','instancesubtaskui','instancesubtaskgroup']});   

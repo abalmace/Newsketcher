@@ -32,10 +32,6 @@ YUI.add("groupwizard", function(Y)
 			{
 			value:null
 			}
-		,del:
-			{
-			value:null	
-			}
 	};
 
     /* MyComponent extends the Base class */
@@ -83,6 +79,11 @@ YUI.add("groupwizard", function(Y)
 			{
 				self.add(person);
 			});	
+		},
+	  
+		getGroup : function()
+		{
+			return this.roommatesContainer;
 		},
 
 		add : function(data)

@@ -115,7 +115,8 @@ YUI.add("genericcontainer", function(Y)
 				//Are we dropping on a li node?
 				var tagName = drop.get('tagName').toLowerCase();
 				var fatherDrop = drop.get('parentNode');
-				var parentClassName = fatherDrop.get('className');
+				var fatherDrag = drag.get('parentNode');
+				var parentClassName = fatherDrag.get('className');
 				if (tagName === 'li' && parentClassName !== 'elementContainer')
 				{
 					//Are we not going up?
@@ -149,7 +150,7 @@ YUI.add("genericcontainer", function(Y)
 			var tar = new Y.DD.Drop({node: ul});
 			tar.on('drop:over', function(e)
 			{
-				if(this === ul);
+				if(this === ul)
 					_dropOver(e);
 			});
 			

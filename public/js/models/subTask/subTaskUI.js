@@ -75,7 +75,7 @@ YUI.add("subtaskui", function(Y)
 			this._createInstanceContainer();
 			this._addSubscriptions();
 			this._addEventButtonAdd();
-			this._addCurrentInstances({primero:{title:"instances of this task"},segundo:{title:"instances of this task..."}});
+			this._addCurrentInstances({primero:{title:"instances of this task",status:'join'},segundo:{title:"instances of this task...",status:'join'}});
 		},
 
 		destructor : function()
@@ -103,7 +103,7 @@ YUI.add("subtaskui", function(Y)
 			var self = this;
 			_.each(instances, function(instance)
 			{
-				self._joinInstanceSubTask(instance);
+				self.client.sendSignal(self._subscribePath(), instance);
 			});
 		},
 		
@@ -115,7 +115,7 @@ YUI.add("subtaskui", function(Y)
 				if (data.status == 'join')
 					self._joinInstanceSubTask(data);
 				else if (data.status == 'delete')
-					self.removeInstanceTask(data);
+					self._removeInstanceSubTask(data);
 
 			}));
 			
@@ -133,16 +133,11 @@ YUI.add("subtaskui", function(Y)
 			var self = this;
 			self.container = self._getContainer();
 			var container = Y.one(self.container);
-			var liTag = Y.one(self.li);
-			var uls = liTag.all('div.inner');
-			//Setup some private variables..
-			
 			
 			this.del = new Y.DD.Delegate({
 				container: container
 				,nodes: 'li'
 				,target:true
-				,startCentered: true
 			});
 			var del = this.del;
 			del.dd.plug(Y.Plugin.DDProxy,
@@ -198,12 +193,13 @@ YUI.add("subtaskui", function(Y)
 				node.removeClass('insTaskNode');
 				drag.removeClass('insTaskMoving');
 			});
-			del.on('drop:hit', function(e)
+			del.on('drag:drophit', function(e)
 			{
 				var target = e.target;
 				var node = target.get('node');
 				var drag = e.drag.get('node');
-				_dropHit(drag,node);
+				var drop = e.drop.get('node');
+				_dropHit(node,drop);
 				node.removeClass('insTaskOver');
 			});
 			
@@ -211,18 +207,11 @@ YUI.add("subtaskui", function(Y)
 			{
 				var nodeId = node.get('id');
 				var dropId = drop.get('id');
-				var nodeInstance = self.findInstanceTask(nodeId);
-				var dropInstance = self.findInstanceTask(dropId);
+				var nodeInstance = self._findInstanceTask(nodeId);
+				var dropInstance = self._findInstanceTask(dropId);
 				
 				dropInstance.copyOverlays(nodeInstance);
 			}
-			
-			//Create simple targets for the list.
-			uls.each(function(v, k)
-			{
-				var tar = new Y.DD.Drop({node: v});
-			});
-			
 		},
 	  
 		_findInstanceTask : function(id)
@@ -296,7 +285,7 @@ YUI.add("subtaskui", function(Y)
 				,dom:li
 				,name :id
 				,title:data.title
-				,group:data.group
+				,group:data.group || []
 				}
 			var insTask = new Y.ModuleTask.InstanceSubTask(dataAux);
 			this.instances.push(insTask);
@@ -311,6 +300,11 @@ YUI.add("subtaskui", function(Y)
 			this.del.syncTargets();
 			
 			return insTask.name;
+		},
+		
+		_removeInstanceSubTask : function()
+		{
+			
 		}
 	});
 
