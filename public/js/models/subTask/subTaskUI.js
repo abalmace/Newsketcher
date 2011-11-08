@@ -275,7 +275,7 @@ YUI.add("subtaskui", function(Y)
 		{
 			var li = document.createElement('li');
 			li.className = "instanceTask";
-			var id = data.id || Utils.guid();
+			var id = data.guid || Utils.guid();
 			li.id = id;	
 			
 			var dataAux = 

@@ -1,6 +1,16 @@
 <div  id = "divLogin">
-	<div class="signin-box">
+	<div id = "header-bar">
+		<div class="content clearfix">
+			<img class="logo" src="//ssl.gstatic.com/images/logos/google_logo_41.png" alt="Google">
+			<span class="signup-button">
+				New to Newsketcher?
+				<input type="button" class="createAccount gButton g-button-submit" id="register" value="Create an account"/>
+			</span>
+		</div>
+	</div>
+	<div class="form-box">
 		<h2>Sign in <strong></strong></h2>
+		<label class = "errorMessage" style = "visibility:hidden" >Datos ingresados incorrectos. </label>
 		<label>
 			<strong>Username</strong>
 			<input type="text" id="login_UserName" value="">
@@ -9,6 +19,6 @@
 			<strong>Password</strong>
 			<input type="password" id="login_Password"/>
 		</label>
-		<input type="button" class="gButton g-button-submit" id="signIn" value="Sign in"/>
+		<input type="button" class="submitForm gButton g-button-submit" id="signIn" value="Sign in"/>
 	</div>
 </div>

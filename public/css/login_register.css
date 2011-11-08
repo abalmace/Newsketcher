@@ -1,0 +1,111 @@
+#divLogin
+{
+	width: 100%;
+	float: left;
+}
+
+#divRegister
+{
+	width: 100%;
+	float: left;
+}
+
+.form-box
+{
+	float:right;
+	width: 335px;
+	margin: 12px 0 0;
+	padding: 20px 25px 15px;
+	background: #F5F5F5;
+	border: 1px solid #E5E5E5;
+}
+
+div.form-box label
+{
+	display: block;
+	margin: 0 0 1.5em;
+}
+
+#header-bar
+{
+	height: 71px;
+	width:100%;
+	background: #F5F5F5;
+	border-bottom: 1px solid #E5E5E5;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+div.form-box label strong
+{
+	float:left;
+	font-weight: bold;
+	margin: 0 0 .5em;
+	display: block;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;	
+}
+
+div.form-box label input
+{
+	display: inline-block;
+	height: 29px;
+	width: 100%;
+	font-size: 15px;
+	margin: 0;
+	padding-left: 8px;
+	background: white;
+	border: 1px solid #D9D9D9;
+	border-top: 1px solid silver;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-border-radius: 1px;
+	-moz-border-radius: 1px;
+	border-radius: 1px;	
+}
+
+.submitForm
+{
+	border: 1px solid #2F5BB7;
+	color: white;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	background: #357AE8;
+}
+
+
+.content
+{
+	width: auto;
+	max-width: 1000px;
+	min-width: 780px;
+	margin: 0 auto;
+	width: 650px;
+	padding: 0 44px;
+}
+
+.clearfix::after
+{
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: '.';
+	clear: both;
+	height: 0;
+}
+
+.createAccount
+{
+	border: 1px solid #992A1B;
+	color: white;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	background: #B0281A;
+}
+
+.toHide
+{
+	visibility:hidden;
+}

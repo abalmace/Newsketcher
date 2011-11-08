@@ -5,6 +5,23 @@
 	width:100%;
 }
 
+#menuLeader
+{
+	top:0;
+	left:0;
+	height:40px;
+	width:100%;
+}
+
+#bodyContainer
+{
+	position:absolute;
+	top:40px;
+	bottom:0px;
+	height:auto;
+	width:100%;
+}
+
 #userContainer
 {
 	position:absolute;

@@ -26,14 +26,6 @@ body {
 	bottom:0;
 }
 
-#menuLeader
-{
-	top:0;
-	left:0;
-	height:20px;
-	width:100%;
-}
-
 #wrapper {
   position: relative;
   top: 0;

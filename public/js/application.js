@@ -8,93 +8,16 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 	var personCreator;
 	var showContainerCircle;
 	var activity;
-	function init()
+	var login = true;
+	
+	function _init()
 	{
 		Y.ModuleConnectionServer.getJSON('/config.json',function(config)
 		{
 			config.hostname = window.location.hostname
 			configClient = config;
 			
-			Y.one('#ajaxContainer').load('/partialView/login.ejs', _submitLogin); 	
-		});
-		
-		Y.one('#btnActivityLeader').on('click', function(e)
-		{
-			memoryFree();
-			Y.one('#ajaxContainer').load('/partialView/mainContainer.ejs', function(){}); 	
-			e.stopImmediatePropagation()
-		});
-		
-		Y.one('#btnTaskLeader').on('click', function(e)
-		{
-			Y.one('#ajaxContainer').load('/partialView/definerTaskContainer.ejs', function(e)
-			{
-			
-				Y.use('taskcreator', function(Y)
-				{
-					memoryFree();
-					taskcreator = new Y.ModuleTask.TaskCreator({client:newsketcherClient});
-				});
-			});
-			e.stopImmediatePropagation()
-		});
-		
-		Y.one('#btnGroupLeader').on('click', function(e)
-		{
-			var node = Y.one('#ajaxContainer');
-			node.load('/partialView/definerGroupContainer.ejs',null,function()
-			{
-				Y.use('activity-designer', function(Y)
-				{
-					memoryFree();
-					activityDesigner = new Y.NewSketcher.ActivityDesigner({client:newsketcherClient});
-				});
-				
-			}); 
-			e.stopImmediatePropagation()
-		});
-		
-		Y.one('#personAdd').on('click', function(e)
-		{
-			var node = Y.one('#ajaxContainer');
-			node.load('/partialView/personCreator.ejs',null,function()
-			{
-				Y.use('personcreator', function(Y)
-				{
-					memoryFree();
-					personCreator = new Y.ModulePeople.PersonCreator({client:newsketcherClient});
-				});
-				
-			}); 
-			e.stopImmediatePropagation()
-		});
-		
-		Y.one('#btnSelectTask').on('click', function(e)
-		{
-			
-			var node = Y.one('#ajaxContainer');
-			node.load('/partialView/screenSelectTask.ejs',null,function()
-			{
-				Y.use('showcontainercircle','activityworkout', function(Y)
-				{
-					memoryFree();
-					showContainerCircle = new Y.ModuleContainerCircle.ShowContainerCircle(
-					{
-						client:newsketcherClient
-						,container:'div_containerSelectorTask'
-						,callback :
-						{
-							click:function(data)
-							{
-								_startTask(data);
-							}
-						}
-					});
-				});
-				
-				
-			}); 
-			e.stopImmediatePropagation()
+			Y.one('#ajaxContainer').load('/partialView/login.ejs', _logScreen); 	
 		});
 	}
 	
@@ -113,16 +36,50 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 			
 		}); 
 	}
-	function _submitLogin()
+	
+	function _logScreen()
+	{
+		_logIn();
+		_singUp();
+	}
+	
+	function _logIn()
 	{
 		Y.one('#signIn').on('click', function(e)
+		{
+			var userName = Y.one('#login_UserName').get('value');
+			var password = Y.one('#login_Password').get('value');
+			Y.ModuleConnectionServer.getJSON('/channel/Person/'+userName+'/'+password+'/person.json',function(data)
 			{
-				Y.ModuleConnectionServer.getJSON('/channel/Person/'+Y.one('#login_UserName').get('value')+'/'+Y.one('#login_Password').get('value')+'/person.json',function(data)
-				{
-					continueOrLogAgain(data.person && data.person[0])
-				});
+				continueOrLogAgain(data.person && data.person[0])
 			});
+		});
+		
 	}
+	
+	function _singUp()
+	{
+		var btnRegister = Y.one('#register');
+		btnRegister.on('click', function(e)
+		{
+			Y.one('#ajaxContainer').load('/partialView/register.ejs', _registerForm); 
+		});
+	}
+	
+	function _registerForm()
+	{
+		Y.one('#login_form').on('click', function(e)
+		{
+			Y.one('#ajaxContainer').load('/partialView/login.ejs', _logScreen); 
+		});
+		
+		Y.use('personcreator', function(Y)
+		{
+			memoryFree();
+			personCreator = new Y.ModulePeople.PersonCreator();
+		});
+	}
+	
 	function continueOrLogAgain(person)
 	{
 		memoryFree();
@@ -137,12 +94,84 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 				,guid:person.guid
 				};
 			newsketcherClient = new Y.NewSketcher.NewsketcherClient({options:configClient,data:data});
+			if(person.userType == 'leader')
+			{
+				_mainMenuLeader()
+			}
+			else if(person.userType == 'follower')
+			{
+				_selectTask()
+			}
 		}
 		//wrong user - pass
 		else
 		{
-			
+			alert("no esta en la base de datos");
 		}
+	}
+	
+	function _selectTask()
+	{
+	
+		var node = Y.one('#ajaxContainer');
+		node.load('/partialView/screenSelectTask.ejs',null,function()
+		{
+			Y.use('showcontainercircle','activityworkout', function(Y)
+			{
+				memoryFree();
+				showContainerCircle = new Y.ModuleContainerCircle.ShowContainerCircle(
+				{
+					client:newsketcherClient
+					,container:'div_containerSelectorTask'
+					,callback :
+					{
+						click:function(data)
+						{
+							_startTask(data);
+						}
+					}
+				});
+			});
+			
+			
+		}); 
+	}
+	
+	function _mainMenuLeader()
+	{
+		var node = Y.one('#ajaxContainer');
+		node.load('/partialView/mainMenuLeader.ejs',null,function()
+		{	
+			Y.one('#btn_create_task').on('click', function(e)
+			{
+				Y.one('#ajaxContainer').load('/partialView/definerTaskContainer.ejs', function(e)
+				{
+				
+					Y.use('taskcreator', function(Y)
+					{
+						memoryFree();
+						taskcreator = new Y.ModuleTask.TaskCreator({client:newsketcherClient});
+					});
+				});
+				e.stopImmediatePropagation()
+			});
+			
+			Y.one('#btn_create_activity').on('click', function(e)
+			{
+				var node = Y.one('#ajaxContainer');
+				node.load('/partialView/definerGroupContainer.ejs',null,function()
+				{
+					Y.use('activity-designer', function(Y)
+					{
+						memoryFree();
+						activityDesigner = new Y.NewSketcher.ActivityDesigner({client:newsketcherClient});
+					});
+					
+				}); 
+				e.stopImmediatePropagation()
+			});
+			
+		}); 
 	}
 	
 	function memoryFree()
@@ -152,10 +181,19 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 			showContainerCircle.destroy();
 			showContainerCircle = null;
 		}
-		
+		if(personCreator)
+		{
+			personCreator.destroy();
+			personCreator = null;
+		}
+		if(activityDesigner)
+		{
+			activityDesigner.destroy();
+			activityDesigner = null;
+		}
 	}
  
-     Y.on("domready", init); 
+     Y.on("domready", _init); 
 });
 
 

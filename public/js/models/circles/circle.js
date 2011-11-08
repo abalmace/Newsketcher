@@ -97,7 +97,8 @@ YUI.add("circle", function(Y)
 			this.people = _.without(this.people, personAux);
 			var element = $(this.dom).find('.circle_number');
 			element.html(this.people.length);
-			Y.one('#'+personAux.guid).remove(true);
+			var personDOM = document.getElementById(personAux.guid)
+			Y.one(personDOM).remove(true);
 		}
 	},
 	

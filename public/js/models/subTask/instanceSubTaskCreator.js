@@ -91,18 +91,18 @@ YUI.add("instancesubtaskcreator", function(Y)
 			self.btnCreate = Y.one('#taskCreate');
 			self.btnCreate.on('click',function(e)
 			{
-				self.createSubTask();
+				self.createInstanceSubTask();
 			});
 		},
 
-		createSubTask : function()
+		createInstanceSubTask : function()
 		{
 			var title = $('#taskTitle').val();
 			var users = this.getUsers();
 			var data = 
 				{
 				title:title
-				,id:this.prefixIdTask+Utils.guid()
+				,guid:this.prefixIdTask+Utils.guid()
 				,status:'join'
 				,owner:this.client.guid
 				,group:users

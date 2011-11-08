@@ -91,7 +91,7 @@ YUI.add("peoplecontainer", function(Y)
 			else
 			{
 			// Download people
-				$.getJSON('/channel/allUsers/people.json', function(data)
+				$.getJSON('/channel/follower/people.json', function(data)
 				{
 				_.each(data.users, function(person) {
 					self.addPerson(person);

@@ -16,11 +16,7 @@ YUI.add("personcreator", function(Y)
 	*/
 	PersonCreator.ATTRS =
 	{
-		client:
-			{
-			value:null
-			}
-		,name:
+		name:
 			{
 			value:null	
 			}
@@ -40,15 +36,17 @@ YUI.add("personcreator", function(Y)
 			{
 			value:null
 			}
+		,btnCreate:
+			{
+			value:null	
+			}
 	};
 
     /* MyComponent extends the Base class */
 	Y.extend(PersonCreator, Y.Base,
 	{
 		initializer: function(data)
-		{
-			this.client = data.client;
-			
+		{	
 			this._addEvents();
 
 			this.publish("myEvent", {
@@ -59,46 +57,53 @@ YUI.add("personcreator", function(Y)
 
 		destructor : function()
 		{
+			this.btnCreate.destroy();
 			this.cient = null;
 		},
 
 		_addEvents : function(e)
 		{
-			var buttonCreate = Y.one('#buttonAddPerson');
+			this.btnCreate = Y.one('#signUp');
 			var self = this;
-			buttonCreate.on('click', function(e)
+			this.btnCreate.on('click', function(e)
 			{
 				var data = self._createPerson();
-				self.client.sendSignal(self._subscribePath(), data);
+				self._sendUserData(data);
 			});
 		},
 	  
 		_createPerson : function()
 		{
-			var node = Y.one('#divCreatorPeople');
-			var nodeName = node.one('.selector_name');
-			var nodeNick = node.one('.selector_nick');
-			var nodePassword = node.one('.selector_passwordR');
-			var nodePasswordR = node.one('.selector_passwordR');
+			var nodeName = Y.one('#login_name');
+			var nodeNick = Y.one('#login_userName');
+			var nodeUserType = Y.one('#login_userType');
+			var nodePassword = Y.one('#login_password');
+			var nodePasswordR = Y.one('#login_retypePassword');
 			
 			var data =
 			{
 				name : nodeName.get('value')
 				,nick : nodeNick.get('value')
 				,password: nodePassword.get('value')
+				,userType : nodeUserType.get('value')
 				,guid : Utils.guid()
-				,status : 'new'
 			}
 			
 			return data;
 		},
 	  
-		_subscribePath : function()
+		_sendUserData: function(data)
 		{
-			return '/channel/People/person'
+			var bool;
+			Y.ModuleConnectionServer.getJSON('/channel/Person/'+data.name+'/'+data.nick+'/'+data.password+'/'+data.userType+'/'+data.guid+'/bool.json',function(data)
+			{
+				bool = (data && data.bool) || false
+			});
+			
+			return bool;
 		}
 	});
 
 	Y.namespace("ModulePeople").PersonCreator = PersonCreator;
 
-}, "1.0", {requires:["base"]});
+}, "1.0", {requires:["base",'connectionserver']});

@@ -15,7 +15,7 @@
 	<link rel="stylesheet" href="./css/groupDefiner.css" />
 	<link rel="stylesheet" href="./css/definerTaskContainer.css" />
 	<link rel="stylesheet" href="./css/listView.css" />
-	<link rel="stylesheet" href="./css/login.css" />
+	<link rel="stylesheet" href="./css/login_register.css" />
 	<link rel="stylesheet" href="/css/CssToolbar.css" />
 	<link rel="stylesheet" href="/css/roommates.css" />
 	<link rel="stylesheet" href="/css/CssButtons.css" />
@@ -124,6 +124,8 @@
 	<script type="text/javascript" src="/js/models/generic_group/genericGroup.js"></script>
 	
 	<!--Archivos para la gestion de task-->
+	
+	<script type="text/javascript" src="/js/models/task/creator/taskCreator.js"></script>
 	<!--
 	<script type="text/javascript" src="/js/models/task/menu/instanceTaskUI.js"></script>
 	<script type="text/javascript" src="/js/models/task/menu/instanceTask.js"></script>
@@ -133,7 +135,6 @@
 	<script type="text/javascript" src="/js/models/task/menu/containerTask.js"></script>
 	<script type="text/javascript" src="/js/models/task/menu/containerTaskLeader.js"></script>
 	<script type="text/javascript" src="/js/models/task/menu/containerTaskFollower.js"></script>
-	<script type="text/javascript" src="/js/models/task/creator/taskCreator.js"></script>
 	-->
 	
 	<!--Archivos para mostrar task disponibles a followers-->
@@ -146,14 +147,6 @@
 	
 	</head>
 	<body>
-		<div id="menuLeader">
-			<div id= "closeCircleDefinition" class = "gButton delete" style = "display:none">hola</div>
-			<input type='button' id="btnTaskLeader" value="task creator"/>
-			<input type='button' id="btnGroupLeader" value="group"/>
-			<input type='button' id="btnActivityLeader" value="activity"/>
-			<input type='button' id="btnSelectTask" value="select task"/>
-		<input type = "button" id ="personAdd" value = "new person"/>
-		</div>
 		<div id="ajaxContainer"></div>
 	</body>
 </html> 
