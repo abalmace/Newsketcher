@@ -1,0 +1,65 @@
+.msedit{
+	width: 200px;
+	min-width: 264px;
+	padding-right: 14px;
+	max-height: 450px;
+	background:white;
+}
+.iwspan{
+	width: 100%;
+}
+
+.msstyle{
+	background: white;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+}
+.inputField{
+	width: 100%;
+}
+.label{
+	color: #666;
+	font-weight: bold;
+	padding-right: 8px;
+	white-space: nowrap;
+}
+
+.stylecol{
+	width: 36px;
+}
+
+.icon{
+	width: 32px;
+	height: 32px;
+	padding: 2px;
+	border: 2px solid blue;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+.textField{
+	height: 9.2em;
+	margin-bottom: .5em;
+	clear: both;
+	width: 99%;
+	padding: 0;
+	resize: none;
+}
+
+.msiwpd {
+	margin-top: 4px;
+}
+
+.navLeft {
+width: 100%;
+vertical-align: baseline;
+}
+
+.navRight {
+padding-left: .2em;
+white-space: nowrap;
+vertical-align: baseline;
+}

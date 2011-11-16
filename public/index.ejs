@@ -14,8 +14,12 @@
 	<link rel="stylesheet" href="/css/mapsketcher.css" />
 	<link rel="stylesheet" href="./css/groupDefiner.css" />
 	<link rel="stylesheet" href="./css/definerTaskContainer.css" />
-	<link rel="stylesheet" href="./css/listView.css" />
+	<link rel="stylesheet" href="./css/objetivesView.css" />
+	<link rel="stylesheet" href="./css/stepsView.css" />
+	<link rel="stylesheet" href="./css/infoWindow.css" />
+	<link rel="stylesheet" href="./css/todoListCommon.css" />
 	<link rel="stylesheet" href="./css/login_register.css" />
+	<link rel="stylesheet" href="./css/activityWorkOut.css" />
 	<link rel="stylesheet" href="/css/CssToolbar.css" />
 	<link rel="stylesheet" href="/css/roommates.css" />
 	<link rel="stylesheet" href="/css/CssButtons.css" />
@@ -101,6 +105,10 @@
 	<script type="text/javascript" src="/js/models/subTask/instanceSubTask.js"></script>
 	<script type="text/javascript" src="/js/models/subTask/instanceSubTaskUI.js"></script>
 	<script type="text/javascript" src="/js/models/subTask/instanceSubTaskCreator.js"></script>
+	<script type="text/javascript" src="/js/models/subTask/room.js"></script>
+	<script type="text/javascript" src="/js/models/subTask/showRoom.js"></script>
+	<script type="text/javascript" src="/js/models/subTask/showRoomUI.js"></script>
+	<script type="text/javascript" src="/js/models/subTask/infoOnMap.js"></script>
 	
 	<!--Archivos para la adminitración de grupo-->
 	<script type="text/javascript" src="/js/models/group/groupWizard.js"></script>
@@ -108,7 +116,12 @@
 	
 	
 	<!--Archivos para la administración de Lista de items -->
-	<script type="text/javascript" src="/js/models/list/listView.js"></script>
+	<script type="text/javascript" src="/js/models/list/listAddView.js"></script>
+	<script type="text/javascript" src="/js/models/list/listModel.js"></script>
+	<script type="text/javascript" src="/js/models/list/localStorageSync.js"></script>
+	<script type="text/javascript" src="/js/models/list/objetivesView.js"></script>
+	<script type="text/javascript" src="/js/models/list/stepsView.js"></script>
+	<script type="text/javascript" src="/js/models/list/moduleModel.js"></script>
 	
 	<!--Archivos de la capa View-->
 		<!--Archivos de list-->
@@ -123,7 +136,7 @@
 	<script type="text/javascript" src="/js/models/generic_div_animation/genericDivAnimation.js"></script>
 	<script type="text/javascript" src="/js/models/generic_group/genericGroup.js"></script>
 	
-	<!--Archivos para la gestion de task-->
+	<!--Archivos para la gestion de task--> 
 	
 	<script type="text/javascript" src="/js/models/task/creator/taskCreator.js"></script>
 	<!--
@@ -142,6 +155,12 @@
 	<script type="text/javascript" src="/js/models/circles/show/showCircle.js"></script>
 	<script type="text/javascript" src="/js/models/task/show/showTask.js"></script>
     
+	<!--Archivos para workspace-->
+	<script type="text/javascript" src="/js/models/workspace/workspaceBase.js"></script>
+	<script type="text/javascript" src="/js/models/workspace/workspace.js"></script>
+	<script type="text/javascript" src="/js/models/workspace/workspaceRead.js"></script>
+	<script type="text/javascript" src="/js/models/workspace/workspaceToSubTask.js"></script>
+	
 	<!--Gestures-->
 	<script type="text/javascript" src="/js/models/gestures/dollar.js"></script>
 	

@@ -1,7 +1,33 @@
+<div id = "divHeaderScreenSelectorTask"><span>Selector Task</span></div>
 <div id="divGlobalScreenSelectorTask">
 	<ul id="div_containerSelectorTask" class = "layer gButtons"></ul>
-	<div id="div_containerSelectorInfoTask" class = "layer gButtons">
-		<span></span>
-		<input type = "button" id = "btn_start_task" value = "start"/>
+	<div id="div_containerSelectorInfoTask" class = "layer gButtons" style = "visibility:hidden">
+		<input type = "button" class = "gButton g-button-submit" id = "btn_hide_taskInfo" value = "hide"/>
+
+		<label>
+			<strong>Activity Type</strong>
+			<span></span>
+		</label>
+		<label>
+			<strong>Title</strong>
+			<span class = "title"></span>
+		
+		</label>	
+		<label>
+			<strong>Objetives</strong>
+			<ul class = "objetives"></ul>
+		</label>
+		<label>
+			<strong>Planning</strong>
+			<ul class = "subTasks" ></ul>
+		</label>
+		<input type = "button" class = "gButton g-button-submit" id = "btn_start_task" value = "start"/>
+	</div>
+	<div id="workspace" data-role="content">
+		<div id="layer">
+			<div id="map"></div>
+		</div>
+
+		<div id="sketches"></div>
 	</div>
 </div>

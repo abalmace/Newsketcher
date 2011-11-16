@@ -1,0 +1,19 @@
+#todo-objetives {
+    margin: 1em;
+    text-align: center;
+}
+
+#todo-list-objetives,
+#todo-stats-objetives {
+    margin: 1em auto;
+    text-align: left;
+    width: 450px;
+}
+
+#todo-list-objetives {
+    list-style: none;
+    padding: 0;
+}
+
+#todo-stats-objetives
+{ color: #777; }

@@ -26,6 +26,13 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 		var node = Y.one('#ajaxContainer');
 		node.load('/partialView/activityWorkOut.ejs',null,function()
 		{
+			var btn = Y.one('#changeTaskContainer');
+			btn.on('click', function(e)
+			{
+				btn.destroy();
+				_selectTask()
+			});
+			
 			Y.use('activityworkout', function(Y)
 			{
 				memoryFree();
@@ -33,7 +40,6 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 				data.container = "ul_subTask_container";
 				activity = new Y.ModuleNewsketcher.ActivityWorkOut(data);
 			});
-			
 		}); 
 	}
 	
@@ -96,7 +102,7 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 			newsketcherClient = new Y.NewSketcher.NewsketcherClient({options:configClient,data:data});
 			if(person.userType == 'leader')
 			{
-				_mainMenuLeader()
+				_activityDesigner()
 			}
 			else if(person.userType == 'follower')
 			{
@@ -161,6 +167,13 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 				var node = Y.one('#ajaxContainer');
 				node.load('/partialView/definerGroupContainer.ejs',null,function()
 				{
+					var btn = Y.one('#closeActivityDesigner');
+					btn.on('click', function(e)
+					{
+						btn.destroy();
+						_mainMenuLeader();
+					});
+					
 					Y.use('activity-designer', function(Y)
 					{
 						memoryFree();
@@ -169,6 +182,46 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 					
 				}); 
 				e.stopImmediatePropagation()
+			});
+			
+		}); 
+	}
+	
+	function _definerTaskContainer()
+	{
+		Y.one('#ajaxContainer').load('/partialView/definerTaskContainer.ejs', function(e)
+		{
+			var btn = Y.one('#changeActivityDesigner');
+			btn.on('click', function(e)
+			{
+				btn.destroy();
+				_activityDesigner();
+			});
+			
+			Y.use('taskcreator', function(Y)
+			{
+				memoryFree();
+				taskcreator = new Y.ModuleTask.TaskCreator({client:newsketcherClient});
+			});
+		});
+	}
+	
+	function _activityDesigner()
+	{
+		var node = Y.one('#ajaxContainer');
+		node.load('/partialView/definerGroupContainer.ejs',null,function()
+		{
+			var btn = Y.one('#changeTaskCreator');
+			btn.on('click', function(e)
+			{
+				btn.destroy();
+				_definerTaskContainer();
+			});
+			
+			Y.use('activity-designer', function(Y)
+			{
+				memoryFree();
+				activityDesigner = new Y.NewSketcher.ActivityDesigner({client:newsketcherClient});
 			});
 			
 		}); 

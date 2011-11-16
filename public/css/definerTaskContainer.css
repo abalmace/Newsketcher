@@ -6,11 +6,36 @@
 
 #divDefinerTask
 {
-	position:relative;
+	position:absolute;
+	top:0;
+	right:0;
 	width:30%;
 	height:100%;
+	overflow:auto;
 	padding: 35px 40px;
-	left:0;
+	z-index:100;
+
+}
+
+#changeActivityDesigner
+{
+	top:auto;
+	bottom:auto;
+	right: 15px;
+	position:absolute;
+	cursor:pointer;
+}
+
+#bar_task_creator
+{
+	height: 40px;
+	width:100%;
+	background: #F5F5F5;
+	border-bottom: 1px solid #E5E5E5;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	border: 0;
 }
 
 #buttonAddTask

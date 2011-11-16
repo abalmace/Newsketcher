@@ -9,7 +9,7 @@ YUI.add("taskcreator", function(Y)
 	}
 
 
-	TaskCreator.NAME = "taskcreator";
+	TaskCreator.NAME = "taskCreator";
 
 	/*
 	* The attribute configuration for the component. This defines the core user facing state of the component
@@ -28,7 +28,15 @@ YUI.add("taskcreator", function(Y)
 			{
 			value:null
 			}
-		,listView :
+		,objetivesview :
+			{
+			value:null
+			}
+		,stepsview :
+			{
+			value:null
+			}	
+		,infoOnMap :
 			{
 			value:null
 			}
@@ -40,9 +48,11 @@ YUI.add("taskcreator", function(Y)
 		initializer: function(data)
 		{
 			this.client = data.client;
-			this.listView = new Y.ModuleList.ListAddView();
+			this.objetivesview = new Y.ModuleList.ObjetivesView();
+			this.stepsview = new Y.ModuleList.StepsView({client:this.client});
+			
 			this._addEvents();
-
+			
 		this.publish("myEvent", {
 		defaultFn: this._defMyEventFn,
 		bubbles:false
@@ -53,7 +63,7 @@ YUI.add("taskcreator", function(Y)
 		{
 			this.cient = null;
 		},
-
+	  
 		_addEvents : function(e)
 		{
 			var buttonCreate = Y.one('#buttonAddTask');
@@ -61,6 +71,8 @@ YUI.add("taskcreator", function(Y)
 			buttonCreate.on('click', function(e)
 			{
 				var data = self._createTask();
+				data.objetives = self.objetivesview.getObjetives();
+				data.subTasks = self.stepsview.getSteps();
 				self.client.sendSignal(self._subscribePath(), data);
 			});
 		},
@@ -89,4 +101,4 @@ YUI.add("taskcreator", function(Y)
 
 	Y.namespace("ModuleTask").TaskCreator = TaskCreator;
 
-}, "1.0", {requires:['base','listaddview']});
+}, "1.0", {requires:['base','objetivesview','stepsview','infoonmap']});

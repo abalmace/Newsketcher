@@ -28,6 +28,11 @@ YUI.add("activityworkout", function(Y)
 			{
 			value:null
 			}
+		,task_title:
+			{
+			value:null
+			}
+		
 	};
 
     /* MyComponent extends the Base class */
@@ -39,9 +44,11 @@ YUI.add("activityworkout", function(Y)
 			this.allCircles = [];
 			this.people = data.people;
 			this.prefixIdTask = 'task_';
+			this.task_title =  data.title;
 			
 			//this._addEventClick();
 			this._retrieveTaskInfo(data.guid);
+			this._addInformationUI();
 
 		this.publish("myEvent", {
 		defaultFn: this._defMyEventFn,
@@ -112,6 +119,12 @@ YUI.add("activityworkout", function(Y)
 		_addMySubTask : function(subTask)
 		{
 			this._addElement(subTask,Y.ModuleTask.SubTaskUI);
+		},
+	  
+		_addInformationUI : function()
+		{
+			var title = Y.one('#div_header_activity strong');
+			title.set('innerHTML',this.task_title);
 		}
 	});
 

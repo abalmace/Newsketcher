@@ -44,6 +44,10 @@ YUI.add("newsketcher_client", function(Y)
 			{
 			value:null
 			}
+		,activeRoom:
+			{
+			value:null
+			}
 	};
 
     /* MyComponent extends the Base class */

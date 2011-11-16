@@ -10,6 +10,18 @@
 	float: left;
 }
 
+#header-bar
+{
+	height: 71px;
+	width:100%;
+	background: #F5F5F5;
+	border-bottom: 1px solid #E5E5E5;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
 .form-box
 {
 	float:right;
@@ -24,18 +36,6 @@ div.form-box label
 {
 	display: block;
 	margin: 0 0 1.5em;
-}
-
-#header-bar
-{
-	height: 71px;
-	width:100%;
-	background: #F5F5F5;
-	border-bottom: 1px solid #E5E5E5;
-	overflow: hidden;
-	margin: 0;
-	padding: 0;
-	border: 0;
 }
 
 div.form-box label strong

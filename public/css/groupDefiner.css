@@ -71,6 +71,24 @@
 	 line-height: normal;
 	 text-align:center
 }
+
+#closeCircleDefinition
+{
+	top:auto;
+	bottom:auto;
+	left: 15px;
+	position:absolute;
+	cursor:pointer;
+}
+
+#changeTaskCreator
+{
+	top:auto;
+	bottom:auto;
+	right: 15px;
+	position:absolute;
+	cursor:pointer;
+}
 				
 .outer_circle
 {

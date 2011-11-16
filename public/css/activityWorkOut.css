@@ -1,0 +1,142 @@
+#menuLeader
+{
+	position:relative;
+	top:0;
+	left:0;
+	height:5%;
+	width:100%;
+}
+
+#div_header_activity
+{
+	position: relative;
+	height:40px;
+	top:0;
+}
+
+#wrapper
+{
+  position: absolute;
+  height:auto;
+  top: 40px;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+#workspace {
+  position: absolute;
+  background-color: #333333;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 70%;
+  height:100%;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+#toolbar
+{
+  position: relative;
+  padding-right: 0;
+  padding-left: 0;
+  
+  height:200px;
+  width:100%;
+  top:0;
+}
+
+#toolbar_centerUp
+{
+	display:inline-block;
+	position:relative;
+	top:25px;
+	left:50px;
+	width:200px;
+	height:100px;
+	background-color:red;
+}
+
+#changeTaskContainer
+{
+	top:auto;
+	bottom:auto;
+	right: 15px;
+	position:absolute;
+	cursor:pointer;
+}
+
+.dropdownmenu
+{
+	z-index:1000;
+	position:absolute;
+	background:#fff;
+	cursor:default;
+	border-top:1px solid #ccc;
+	border-left:1px solid #ccc;
+	border-bottom:1px solid #676767;
+	border-right:1px solid #676767
+}
+
+ul.dropdownmenu{ /* all lists */
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+ 
+ul.dropdownmenu li{ /* all list items */
+	float: left;
+	position: relative;
+	width: 4em;
+	background-color:#FFF;
+}
+ul.dropdownmenu li:hover
+{ 
+  cursor:pointer;
+}
+
+
+
+
+
+
+
+.toolbarPanning {
+		
+	background-color:#333333;
+			
+}
+
+.toolbarDrawing {
+		
+	background-color:#ffd700;
+			
+}
+
+#toolbar-left{
+	
+	left:0;
+	width:80%;
+	position: absolute;
+	
+}
+
+#toolbar-right{
+
+	top:0;
+	right:0;
+	width:20%;
+	position: absolute;
+}
+
+
+#toolbar h4 {
+  margin-left: 18px;
+}

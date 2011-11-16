@@ -1,29 +1,71 @@
 <div id ="divCreatorTask">
+	<div id = "bar_task_creator">
+		<strong>Task Creator</strong>
+		<div id= "changeActivityDesigner" class = "gButton delete">Activity Designer</div>
+	</div>
 	<div id = "divDefinerTask" class = "layer">
 		<input type ="text" name ="title" class = "selector_title text_box text_box_title"  placeholder = "Title"/>
 		<div id = "divDefinerGoal" class = "layerTable">
 			<div id = "divGoaltitle" class = "headerTable"><span>Objetives</span></div>
 			<div id = "divGoals">
 				<!-- This is the main container and "shell" for the todo app. -->
-				<div id="todo-app">
+				<div id="todo-objetives">
 				<label class="todo-label" for="new-todo"></label>
-				<input type="text" id="new-todo" class="todo-input"
+				<input type="text" id="new-todo-objetives" class="todo-input"
 				placeholder="New objetive">
 
-				<ul id="todo-list"></ul>
-				<div id="todo-stats"></div>
+				<ul id="todo-list-objetives"></ul>
+				<div id="todo-stats-objetives"></div>
 				</div>
 			</div>
 		</div>
 		<div id = "divDefinerStep" class = "layerTable">
 			<div id = "divStepTitle" class = "headerTable"><span>Desarrollo</span></div>
-			<div id = "divSteps"></div>
+			<div id = "divSteps">
+				<!-- This is the main container and "shell" for the todo app. -->
+				<div id="todo-steps">
+				<label class="todo-label" for="new-todo"></label>
+				<input type="text" id="new-todo-steps" class="todo-input"
+				placeholder="New subtask">
+
+				<ul id="todo-list-steps"></ul>
+				<div id="todo-stats-steps"></div>
+			</div>
 		</div>
-		<div id = "buttonAddTask" class = "gButton add"></div>
 	</div>
-	<div id = "divMapTask"></div>
-	
-<div>
+	<div id = "buttonAddTask" class = "gButton add"></div>
+</div>
+
+<div id="wrapper" >
+	<div id="toolbar">	
+		<div id = "toggleModeButton" class = "btnMap"></div>
+		<div id = "toolbar_centerUp" style = "display:none">
+			<div class = "block">
+				<div id = "btnColor" class = "btnListMap"></div>
+				<ul id = "listColor" class = "dropdownmenu" style="display:none">
+					<li><img id = "btnGreen" src="./css/images/green.png"/></li>
+					<li><img id = "btnRed" src="./css/images/red.png"/></li>
+					<li><img id = "btnBlue" src="./css/images/blue.png"/></li>
+				</ul>
+			</div>
+			<div class = "block">
+				<div id = "btnSketch" class = "btnListMap"></div>
+				<ul id = "listSketch" class = "dropdownmenu" style="display:none">
+					<li><img id = "btnSlim" src="./css/images/slim.png"/></li>
+					<li><img id = "btnNormal" src="./css/images/normal.png"/></li>
+					<li><img id = "btnFat" src="./css/images/fat.png"/></li>
+				</ul>
+			</div>
+		</div>
+	</div>	
+	<div id="workspace" data-role="content">
+		<div id="layer">
+			<div id="map"></div>
+		</div>
+
+		<div id="sketches"></div>
+	</div>		
+</div>
 	
 	
 	

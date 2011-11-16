@@ -1,6 +1,6 @@
-YUI().add('listmodel',function (Y)
+YUI().add('modulemodel',function (Y)
 {
-	var listModel = Y.Base.create('listModel', Y.Model, [],
+	var moduleModel = Y.Base.create('moduleModel', Y.Model, [],
 	{
 		// This tells the Model to use a localStorage sync provider (which we'll
 		// create below) to save and load information about a todo item.
@@ -24,6 +24,6 @@ YUI().add('listmodel',function (Y)
 		}
 	});
 	
-	Y.namespace('ModuleListModel').ListModel = listModel;
+	Y.namespace('ModuleModel').ModuleModel = moduleModel;
 	
-}, "1.0", {requires:['base','model', 'model-list','localstoragesync','modulemodel']});
+}, "1.0", {requires:['base','model', 'model-list','localstoragesync']});

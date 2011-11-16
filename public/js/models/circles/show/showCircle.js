@@ -114,6 +114,7 @@ YUI.add("showcircle", function(Y)
 				,guid:guid
 				,people : this.people
 				,callback : this.callback
+				,client : this.client
 			});
 		}
 	});

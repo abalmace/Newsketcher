@@ -1,0 +1,19 @@
+#todo-steps {
+    margin: 1em;
+    text-align: center;
+}
+
+#todo-list-steps,
+#todo-stats-steps {
+    margin: 1em auto;
+    text-align: left;
+    width: 450px;
+}
+
+#todo-list-steps {
+    list-style: none;
+    padding: 0;
+}
+
+#todo-stats-steps
+{ color: #777; }

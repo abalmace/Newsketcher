@@ -5,9 +5,8 @@ YUI.add("showtask", function(Y)
 
 	function ShowTask(data)
 	{
-	ShowTask.superclass.constructor.apply(this, arguments);
+		ShowTask.superclass.constructor.apply(this, arguments);
 	}
-
 
 	ShowTask.NAME = "showTask";
 
@@ -40,6 +39,18 @@ YUI.add("showtask", function(Y)
 			{
 			value:null
 			}
+		,container:
+			{
+			value:null
+			}
+		,elementContainer:
+			{
+			value:[]
+			}	
+		,visibility:
+			{
+			value:false
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -53,8 +64,11 @@ YUI.add("showtask", function(Y)
 			this.name = data.name;
 			this.people = data.people;	//integrantes del circle
 			this.callback = data.callback;
+			this.container = Y.one('#div_containerSelectorInfoTask');
+			this.elementContainer = [];
 			
 			this._retrieveTaskInformation();
+			this._cleanMapArea();
 
 		this.publish("myEvent", {
 		defaultFn: this._defMyEventFn,
@@ -79,8 +93,14 @@ YUI.add("showtask", function(Y)
 		_createContainer : function(data)
 		{
 			var self = this;
-			var title = Y.one('#div_containerSelectorInfoTask').one('span');
+			var container =  self.container;
+			self.visibility = true;
+			container.setStyle('visibility', 'visible');
+			var title = container.one('span.title');
 			title.set('innerHTML',data.title);
+			this._addObjetives(data.objetives);
+			
+			this._addSubTasks(data.subTasks);
 			
 			var btnStart = Y.one('#btn_start_task');
 			btnStart.on('click', function(e)
@@ -99,9 +119,64 @@ YUI.add("showtask", function(Y)
 				}
 				btnStart.detach();
 			});
+			
+			var btnHide = Y.one('#btn_hide_taskInfo');
+			btnHide.on('click', function(e)
+			{
+				if(self.visibility)
+				{
+					container.setStyle('visibility', 'hidden');
+				}
+				else
+				{
+					container.setStyle('visibility', 'visible');
+				}
+				self.visibility = !self.visibility;
+				
+			});
+		},
+	  
+		_addObjetives : function(objetives)
+		{
+			var containerObj = this.container.one('ul.objetives');
+			containerObj.get('childNodes').remove()
+			Y.each(objetives, function(objetive)
+			{
+				var li = document.createElement('li');
+				li.innerHTML = objetive.description;
+				containerObj.append(li);
+			});
+		},
+		
+		_addSubTasks : function(subTasks)
+		{
+			var self = this;
+			var containerST = this.container.one('ul.subTasks');
+			containerST.get('childNodes').remove()
+			Y.each(subTasks, function(subTask)
+			{
+				var li = document.createElement('li');
+				
+				var data = 
+				{
+				dom:li
+				,description: subTask.description
+				,name: subTask.mapId
+				,client:self.client
+				}
+ 				var element = new Y.ModuleTask.ShowRoom(data); 
+ 				self.elementContainer.push(element);
+				containerST.append(li);
+			});
+		}
+		
+		,_cleanMapArea:function()
+		{
+			this.client.activeRoom && this.client.activeRoom.setActive(false);
+			this.client.activeRoom = null;
 		}
 	});
 
 	Y.namespace("ModuleTask").ShowTask = ShowTask;
 
-}, "1.0", {requires:['base','connectionserver']});
+}, "1.0", {requires:['base','connectionserver','showroom']});
