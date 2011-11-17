@@ -76,7 +76,7 @@ YUI.add("workspacebase", function(Y)
 		{
 			var self = this;
 			var dom = self.client.getWorkspaceMapDom()
-			self.map = new Map({
+			self.map = new Y.ModuleMap.GenericMap({
 				dom: self.client.getWorkspaceMapDom()
 				, controllable: true 
 				, position: self.room.currentPosition
@@ -145,4 +145,4 @@ YUI.add("workspacebase", function(Y)
 
 	Y.namespace("ModuleWorkspace").WorkspaceBase = WorkspaceBase;
 
-}, "1.0", {requires:['base']});
+}, "1.0", {requires:['base','genericmap']});

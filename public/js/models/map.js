@@ -64,6 +64,8 @@ function Map(options)
 		{
 			$('a[target="_blank"]', self.dom).parent().detach();
 		}, 800);
+	
+	this.setGeoLocation()
 }
 
 Map.prototype.onMove = function(callback)
@@ -171,4 +173,63 @@ Map.prototype.getCenter = function()
 Map.prototype.setOpacity = function(opacity)
 {
 	this.dom.style.opacity = opacity;
+}
+
+Map.prototype.setGeoLocation = function()
+{
+	var self = this;
+	if(navigator.geolocation)
+	{
+		browserSupportFlag = true;
+		navigator.geolocation.getCurrentPosition(function(position)
+		{
+			initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+			self.gmap.setCenter(initialLocation);
+			var beachMarker = new google.maps.Marker(
+			{
+				position: initialLocation,
+				map: self.gmap,
+				icon: '../../css/images/location.png'
+			});
+		}
+		,function()
+		{
+			self.handleNoGeolocation(browserSupportFlag);
+		});
+		// Try Google Gears Geolocation
+	}
+	else if (google.gears)
+	{
+		browserSupportFlag = true;
+		var geo = google.gears.factory.create('beta.geolocation');
+		geo.getCurrentPosition(function(position)
+		{
+			initialLocation = new google.maps.LatLng(position.latitude,position.longitude);
+			self.gmap.setCenter(initialLocation);
+		}
+		,function() {
+		handleNoGeoLocation(browserSupportFlag);
+		});
+		// Browser doesn't support Geolocation
+	}
+	else
+	{
+		browserSupportFlag = false;
+		self.handleNoGeolocation(browserSupportFlag);
+	}
+}
+
+Map.prototype.handleNoGeolocation = function(errorFlag)
+{
+	if (errorFlag == true)
+	{
+		alert("Geolocation service failed.");
+		initialLocation = newyork;
+	}
+	else
+	{
+		alert("Your browser doesn't support geolocation. We've placed you in Siberia.");
+		initialLocation = siberia;
+	}
+	this.gmap.setCenter(initialLocation);
 }

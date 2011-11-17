@@ -323,7 +323,7 @@ YUI.add("instancesubtask", function(Y)
 				self.client.activeRoom.setActive(false);
 				self.client.activeRoom = self;
 
-				self.workspace = new Workspace(self);
+				self.workspace = new Y.ModuleWorkOut.WorkspaceRWGPS({room:self});
 				self.workspace.defaultValues();
 				//TODO
 				//self.map.setOpacity(this.SELECTED);
@@ -428,4 +428,4 @@ YUI.add("instancesubtask", function(Y)
 
 	Y.namespace("ModuleTask").InstanceSubTask = InstanceSubTask;
 
-}, "1.0", {requires:['base','instancesubtaskui','instancesubtaskgroup']});   
+}, "1.0", {requires:['base','instancesubtaskui','instancesubtaskgroup','workspacerwgps']});   
