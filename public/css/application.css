@@ -219,15 +219,7 @@ body {
 	height:200px;
 	z-index:1000;
 }
-#toolbar_centerUp{
-	display:inline-block;
-	position:relative;
-	top:25px;
-	left:50px;
-	width:200px;
-	height:100px;
-	background-color:red;
-}
+
 
 .list{
 	position:relative;
@@ -268,12 +260,7 @@ li:hover ul, li.over ul { /* lists nested under hovered list items */
 	display: block;
 }
 
-.block{
-	position:relative;
-	display: inline-block;
-	z-index:1;
-	vertical-align: top;
-}
+
 
 .dropdownmenu{
 	z-index:1000;

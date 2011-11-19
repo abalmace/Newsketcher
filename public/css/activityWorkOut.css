@@ -56,7 +56,7 @@
 #toolbar_centerUp
 {
 	display:inline-block;
-	position:relative;
+	position:absolute;
 	top:25px;
 	left:50px;
 	width:200px;

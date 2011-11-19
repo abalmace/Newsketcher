@@ -227,51 +227,6 @@ YUI.add("genericroom", function(Y)
 				this.update(overlay.to_json());
 			}
 		},
-		
-		setActive : function(active)
-		{
-			var self = this;
-
-
-			if (active) {
-				if ( self.client.activeRoom == self ) return;
-				if ( self.client.activeRoom )
-				self.client.activeRoom.setActive(false);
-				self.client.activeRoom = self;
-
-				self.workspace = new Workspace(self);
-				self.workspace.defaultValues();
-				//TODO
-				//self.map.setOpacity(this.SELECTED);
-				mapSketcherClient.currentRoomId=self.name;
-				var parentNode = self.dom.parentNode;
-				self.instaceTaskUI.active(true);
-				//TODO
-				/*
-				document.getElementById('personalDelete').style.display ="none";
-				document.getElementById('collaborativeDelete').style.display ="none";
-				document.getElementById('globalDelete').style.display ="none";
-				if(parentNode.id =='personal')
-					document.getElementById('personalDelete').style.display ="";
-				else if(parentNode.id =='collaborative')
-					document.getElementById('collaborativeDelete').style.display ="";
-				else
-					document.getElementById('globalDelete').style.display ="";
-				
-				*/
-				
-				
-			} 
-			else {
-				self.workspace.stop();
-				self.workspace = null;
-				self.dom.style.border = "";
-				self.instaceTaskUI.active(false);
-				//TODO
-				//self.map.setOpacity(this.NOT_SELECTED);
-				
-			}
-		},
 	  
 		moveTo : function(pos, options)
 		{

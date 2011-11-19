@@ -317,7 +317,8 @@ YUI.add("instancesubtask", function(Y)
 			var self = this;
 
 
-			if (active) {
+			if (active)
+			{
 				if ( self.client.activeRoom == self ) return;
 				if ( self.client.activeRoom )
 				self.client.activeRoom.setActive(false);
@@ -325,38 +326,21 @@ YUI.add("instancesubtask", function(Y)
 
 				self.workspace = new Y.ModuleWorkOut.WorkspaceRWGPS({room:self});
 				self.workspace.defaultValues();
-				//TODO
-				//self.map.setOpacity(this.SELECTED);
 				newsketcherClient.currentRoomId=self.name;
 				var parentNode = self.dom.parentNode;
 				self.instanceSubTaskUI.active(true);
 					
 				self.instanceSubTaskGroup = new Y.ModuleTask.InstanceSubTaskGroup({client:self.client, group:self.group});
-				//TODO
-				/*
-				document.getElementById('personalDelete').style.display ="none";
-				document.getElementById('collaborativeDelete').style.display ="none";
-				document.getElementById('globalDelete').style.display ="none";
-				if(parentNode.id =='personal')
-					document.getElementById('personalDelete').style.display ="";
-				else if(parentNode.id =='collaborative')
-					document.getElementById('collaborativeDelete').style.display ="";
-				else
-					document.getElementById('globalDelete').style.display ="";
-				
-				*/
-				
-				
+				Y.one('#toolbar').setStyle('visibility','visible');
 			} 
-			else {
-				self.workspace.stop();
+			else
+			{
+				self.workspace.destroy();
 				self.workspace = null;
 				self.dom.style.border = "";
 				self.instanceSubTaskUI.active(false);
 				if(self.instanceSubTaskGroup)
 					self.instanceSubTaskGroup.destroy();
-				//TODO
-				//self.map.setOpacity(this.NOT_SELECTED);
 				
 			}
 		},

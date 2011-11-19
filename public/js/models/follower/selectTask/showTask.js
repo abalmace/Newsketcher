@@ -94,7 +94,6 @@ YUI.add("showtask", function(Y)
 		{
 			var self = this;
 			var container =  self.container;
-			self.visibility = true;
 			container.setStyle('visibility', 'visible');
 			var title = container.one('span.title');
 			title.set('innerHTML',data.title);
@@ -120,19 +119,19 @@ YUI.add("showtask", function(Y)
 				btnStart.detach();
 			});
 			
+			
+			var btnShow = Y.one('#btn_show_taskInfo');
+			btnShow.on('click', function(e)
+			{
+				container.setStyle('visibility', 'visible');
+				btnShow.setStyle('visibility', 'hidden');
+			});
+			
 			var btnHide = Y.one('#btn_hide_taskInfo');
 			btnHide.on('click', function(e)
 			{
-				if(self.visibility)
-				{
-					container.setStyle('visibility', 'hidden');
-				}
-				else
-				{
-					container.setStyle('visibility', 'visible');
-				}
-				self.visibility = !self.visibility;
-				
+				container.setStyle('visibility', 'hidden');
+				btnShow.setStyle('visibility', 'visible');
 			});
 		},
 	  
@@ -174,6 +173,11 @@ YUI.add("showtask", function(Y)
 		{
 			this.client.activeRoom && this.client.activeRoom.setActive(false);
 			this.client.activeRoom = null;
+			
+			var divMap = this.client.getWorkspaceMapDom();
+			var node = Y.one(divMap);
+			node.addClass('classBackgroundMap');
+			
 		}
 	});
 

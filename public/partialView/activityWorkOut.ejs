@@ -1,10 +1,11 @@
-<div id ="div_header_activity">
+<div id ="div_header_activity" class = "header_toolbar">
 	<strong>[nombre de la task]</strong>
 	<div id= "changeTaskContainer" class = "gButton delete">Tasks</div>
 </div>
 <div id="wrapper" >
-	<div id="toolbar">	
+	<div id="toolbar" style ="visibility:hidden">	
 		<div id = "toggleModeButton" class = "btnMap"></div>
+		<div id = "location"></div>
 		<div id = "toolbar_centerUp" style = "display:none">
 			<div class = "block">
 				<div id = "btnColor" class = "btnListMap"></div>
@@ -27,7 +28,7 @@
 	<div id="textoPrueba"><label id="result">Resultado</label></div>
 	<div id="workspace" data-role="content">
 		<div id="layer">
-			<div id="map"></div>
+			<div id="map" class = "classBackgroundMap"></div>
 		</div>
 
 		<div id="sketches"></div>
@@ -43,12 +44,11 @@
 		</div>
 	</div>
 	<!-- div para el contenedor de roommates -->
-	<div id ="divRoommateContainer" class = "layer">
+	<div id ="divRoommateContainer" class = "layer" style = "visibility:hidden">
 		<a href="#" id= "hideRoommate" class="btnHide">>></a>
 	</div>
 	<!-- div para el contenedor de subtask -->
-	<div id="play"> 
-		<a href="#" class ="roomAdd" id = "taskAdd"></a>
+	<div id="play">
 		<ul id = "ul_subTask_container" class="list layer" id="list1"></ul>
 	</div>
 				

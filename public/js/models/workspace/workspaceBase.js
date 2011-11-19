@@ -30,7 +30,11 @@ YUI.add("workspacebase", function(Y)
 			}
 		,map:
 			{
-			value:null	
+			value:null
+			,getter: function()
+				{
+				return this.map
+				}
 			}
 		,canvas:
 			{
@@ -60,14 +64,9 @@ YUI.add("workspacebase", function(Y)
 
 		destructor : function()
 		{
-		/*
-		* destructor is part of the lifecycle introduced by 
-		* the Base class. It is invoked when destroy() is called,
-		* and can be used to cleanup instance specific state.
-		*
-		* It does not need to invoke the superclass destructor. 
-		* destroy() will call initializer() for all classes in the hierarchy.
-		*/
+			this.map.destroy();
+			this.map = null;
+			$('#toggleModeButton').unbind('click');
 		},
 
 		/* MyComponent specific methods */
@@ -126,13 +125,6 @@ YUI.add("workspacebase", function(Y)
 		{
 			var self = this;
 			return self.map.getCenter();
-		},
-
-		stop : function()
-		{
-			//var self = this;
-			this.map = null;
-			$('#toggleModeButton').unbind('click');
 		},
 
 		saveOverlay : function(overlay)

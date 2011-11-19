@@ -23,61 +23,6 @@
 	Botón de edición
 */
 
-#toggleModeButton{
-	background: transparent url('./images/btnDrawing.png') no-repeat;
-	position: relative;
-	left:15px;
-	height:57px;
-	width:58px;
-	top:15px;
-}
-#toggleModeButton:hover
-{ 
-  cursor:pointer;
-}
-
-/*
-	Botón de color
-*/
-
-#btnColor{
-
-    background: transparent url('./images/btnBlue.png') no-repeat;
-	height:31px;
-	width:39px;
-	
-}
-
-#btnColor:active {
-    background: transparent url('./images/Bsd.png') no-repeat;
-    color: #000;
-    outline: none; /* hide dotted outline in Firefox */
-}
-#btnColor:hover
-{ 
-  cursor:pointer;
-}
-
-/*
-	Botón de grosor
-*/
-
-#btnSketch{
-	
-    background: transparent url('./images/btnNormal.png') no-repeat;
-	height:31px;
-	width:39px;
-}
-
-#btnSketch:active {
-    background: transparent url('./images/Bsd.png') no-repeat;
-    color: #000;
-    outline: none; /* hide dotted outline in Firefox */
-}
-#btnSketch:hover
-{ 
-  cursor:pointer;
-}
 
 /*
 	clase para agregar mini mapas a una room

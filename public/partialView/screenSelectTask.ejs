@@ -1,4 +1,4 @@
-<div id = "divHeaderScreenSelectorTask"><span>Selector Task</span></div>
+<div id = "divHeaderScreenSelectorTask" class = "header_toolbar"><span>Selector Task</span></div>
 <div id="divGlobalScreenSelectorTask">
 	<ul id="div_containerSelectorTask" class = "layer gButtons"></ul>
 	<div id="div_containerSelectorInfoTask" class = "layer gButtons" style = "visibility:hidden">
@@ -23,9 +23,10 @@
 		</label>
 		<input type = "button" class = "gButton g-button-submit" id = "btn_start_task" value = "start"/>
 	</div>
+	<input type = "button" class = "gButton g-button-submit" id = "btn_show_taskInfo"  style = "visibility:hidden" value = "show"/>
 	<div id="workspace" data-role="content">
 		<div id="layer">
-			<div id="map"></div>
+			<div id="map" class = "classBackgroundMap"></div>
 		</div>
 
 		<div id="sketches"></div>

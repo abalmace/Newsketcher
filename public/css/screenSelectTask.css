@@ -52,6 +52,13 @@
 	right : 15px;
 	position: absolute;
 }
+#btn_show_taskInfo
+{
+	top: 15px;
+	left : 0;
+	position: absolute;
+	z-index:100;
+}
 
 #div_containerSelectorInfoTask label
 {
