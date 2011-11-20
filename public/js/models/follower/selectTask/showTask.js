@@ -78,7 +78,35 @@ YUI.add("showtask", function(Y)
 
 		destructor : function()
 		{
-		
+			Y.Array.each(this.elementContainer,function(element)
+			{
+				element.destroy();
+				element = null;
+			});
+			this.elementContainer = null;
+		},
+	  
+		setActive : function(active)
+		{
+			var self = this;
+			if(active)
+			{
+				if ( self.client.activeTask == self ) return;
+				if ( self.client.activeTask )
+				self.client.activeTask.setActive(false);
+				self.client.activeTask = self;
+				
+				self.workspace = new Y.ModuleWorkspace.WorkspaceRead({room:self});
+				self.workspace.defaultValues();
+				self.showRoomUI.active(true);
+
+			}
+			else
+			{
+				self.showRoomUI.active(false);
+				self.workspace.destroy();
+				self.workspace = null;
+			}
 		},
 	  
 		_retrieveTaskInformation:function()

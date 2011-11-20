@@ -7,10 +7,10 @@
 #divDefinerTask
 {
 	position:absolute;
-	top:0;
+	top:40px;
 	right:0;
 	width:30%;
-	height:100%;
+	height:90%;
 	overflow:auto;
 	padding: 35px 40px;
 	z-index:100;

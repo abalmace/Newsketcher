@@ -107,13 +107,28 @@ YUI.add("activityworkout", function(Y)
 			}
 			else if(this.taskType = 'list')
 			{
-				
+				this._addSubTasks(task.subTasks,false)
 			}
 			else if(this.tasktype = 'orderList')
 			{
-				
+				this._addSubTasks(task.subTasks,true)
 			}
 			this.subTasks = task.subTask;
+		},
+	  
+		_addSubTasks:function(subtasks,order)
+		{
+			var self = this;
+			Y.Array.each(subtasks,function(subtask)
+			{
+				data =
+				{
+				textElement:subtask.description
+				,guid : subtask.mapId
+				,people : self.people
+				}
+				this._addMySubTask(data);
+			});
 		},
 		
 		_addMySubTask : function(subTask)

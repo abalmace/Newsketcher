@@ -97,20 +97,6 @@ YUI.add("instancesubtask", function(Y)
 
 		destructor : function()
 		{
-		/*
-		* destructor is part of the lifecycle introduced by 
-		* the Base class. It is invoked when destroy() is called,
-		* and can be used to cleanup instance specific state.
-		*
-		* It does not need to invoke the superclass destructor. 
-		* destroy() will call initializer() for all classes in the hierarchy.
-		*/
-		},
-
-		/* MyComponent specific methods */
-		
-		stop : function()
-		{
 			var self = this;
 
 			_.each(self.subscriptions, function(s)

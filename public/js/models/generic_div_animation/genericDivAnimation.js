@@ -39,6 +39,10 @@ YUI.add("genericdivanimation", function(Y)
 		,container:
 			{
 			value:null
+			,getter:function()
+				{
+				return this.container	
+				}
 			}	
 	};
 

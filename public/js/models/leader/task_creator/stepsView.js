@@ -411,6 +411,14 @@ YUI().add('stepsview',function (Y)
 			return steps;
 		},
 	  
+		visible : function(bool)
+		{
+			if(bool)
+				Y.one('#divDefinerStep').setStyle('visibility','visible');
+			else
+				Y.one('#divDefinerStep').setStyle('visibility','hidden');
+		},
+	  
 		_createMapInfo : function(self)
 		{
 			var data = 

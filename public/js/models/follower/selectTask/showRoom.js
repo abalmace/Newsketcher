@@ -60,14 +60,11 @@ YUI.add("showroom", function(Y)
 
 		destructor : function()
 		{
-		/*
-		* destructor is part of the lifecycle introduced by 
-		* the Base class. It is invoked when destroy() is called,
-		* and can be used to cleanup instance specific state.
-		*
-		* It does not need to invoke the superclass destructor. 
-		* destroy() will call initializer() for all classes in the hierarchy.
-		*/
+			Y.one(this.dom);
+			this.showRoomUI.destroy();
+			this.showRoomUI = null;
+			this.workspace.destroy();
+			this.workspace = null;
 		},
 
 		/* MyComponent specific methods */
@@ -90,7 +87,7 @@ YUI.add("showroom", function(Y)
 			else
 			{
 				self.showRoomUI.active(false);
-				self.workspace.stop();
+				self.workspace.destroy();
 				self.workspace = null;
 			}
 		},
@@ -99,7 +96,7 @@ YUI.add("showroom", function(Y)
 		{
 			var self = this;
 			
-			$(self.dom).bind('click',function()
+			Y.one(self.dom).on('click',function()
 			{
 				self.setActive(true);
 			});

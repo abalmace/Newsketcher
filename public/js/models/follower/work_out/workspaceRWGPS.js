@@ -43,40 +43,12 @@ YUI.add("workspacerwgps", function(Y)
 	{
 		initializer: function(data)
 		{
-			this._addEvent();
+
 		},
 
 		destructor : function()
 		{
-			Y.one('#location').detach();
-			Y.one('#location').removeClass('gpsWorking');
-		},
-	  
-		_addEvent:function()
-		{
-			var self = this;
-			var btnLocation = Y.one('#location');
-			btnLocation.on('click',function(e)
-			{
-				self._handleClick(btnLocation);
-				e.stopPropagation();
-			});
-		}
-		
-		,_handleClick:function(btn)
-		{
-			if(!this.gps)
-			{
-				this.map.showLocation();
-				this.map.centerInLocation();
-				btn.addClass('gpsWorking');
-			}
-			else
-			{
-				this.map.hideLocation();
-				btn.removeClass('gpsWorking');
-			}
-			this.gps = !this.gps;
+			
 		}
 
 	});

@@ -40,6 +40,10 @@ YUI.add("showcircle", function(Y)
 			{
 			value:[]	
 			}
+		,showDescription:
+			{
+			value:null
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -65,14 +69,12 @@ YUI.add("showcircle", function(Y)
 
 		destructor : function()
 		{
-		/*
-		* destructor is part of the lifecycle introduced by 
-		* the Base class. It is invoked when destroy() is called,
-		* and can be used to cleanup instance specific state.
-		*
-		* It does not need to invoke the superclass destructor. 
-		* destroy() will call initializer() for all classes in the hierarchy.
-		*/
+			var children = Y.one(this.container).get('children');
+			
+			children.each(function(node)
+			{
+				node.detach();
+			});
 		},
 	  
 		_addMyTask : function(task)
@@ -98,8 +100,8 @@ YUI.add("showcircle", function(Y)
 		_addEvent : function(dom)
 		{
 			var self = this;
-			var container = $(dom);
-			container.bind('click',function (e)
+			var container = Y.one(dom);
+			container.on('click',function (e)
 			{
 				self._handleClick(dom.id);	
 			});
@@ -108,7 +110,9 @@ YUI.add("showcircle", function(Y)
 	  
 		_handleClick : function(guid)
 		{
-			var showDescription = new Y.ModuleTask.ShowTask(
+			//this.showDescription && this.showDescription.destroy();
+			
+			this.showDescription = new Y.ModuleTask.ShowTask(
 			{
 				container : this.li
 				,guid:guid

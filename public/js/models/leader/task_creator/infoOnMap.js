@@ -87,11 +87,12 @@ YUI.add("infoonmap", function(Y)
 				
 				self.workspace = new Y.ModuleWorkspace.WorkspaceToSubTask({room:self});
 				self.workspace.defaultValues();
+				Y.one('#toolbar').setStyle('visibility','visible');
 
 			}
 			else
 			{
-				self.workspace.stop();
+				self.workspace.destroy();
 				self.workspace = null;
 			}
 		},

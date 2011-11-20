@@ -3,7 +3,12 @@
 		<strong>Task Creator</strong>
 		<div id= "changeActivityDesigner" class = "gButton delete">Activity Designer</div>
 	</div>
-	<div id = "divDefinerTask" class = "layer">
+	<div id = "divDefinerTask" class = "list layer">
+		<select id ="select_taskType">
+			<option value="free" >Free</option>
+			<option value="list">List</option>
+			<option value="orderList">Order List</option>
+		</select>
 		<input type ="text" name ="title" class = "selector_title text_box text_box_title"  placeholder = "Title"/>
 		<div id = "divDefinerGoal" class = "layerTable">
 			<div id = "divGoaltitle" class = "headerTable"><span>Objetives</span></div>
@@ -33,12 +38,13 @@
 			</div>
 		</div>
 	</div>
-	<div id = "buttonAddTask" class = "gButton add"></div>
+	<div id = "buttonAddTask" class = "gButton g-button-submit save-big">Done</div>
 </div>
 
 <div id="wrapper" >
-	<div id="toolbar">	
+	<div id="toolbar" style ="visibility:hidden">	
 		<div id = "toggleModeButton" class = "btnMap"></div>
+		<div id = "location"></div>
 		<div id = "toolbar_centerUp" style = "display:none">
 			<div class = "block">
 				<div id = "btnColor" class = "btnListMap"></div>

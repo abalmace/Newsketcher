@@ -1,13 +1,20 @@
 <div id = "divHeaderScreenSelectorTask" class = "header_toolbar"><span>Selector Task</span></div>
 <div id="divGlobalScreenSelectorTask">
-	<ul id="div_containerSelectorTask" class = "layer gButtons"></ul>
-	<div id="div_containerSelectorInfoTask" class = "layer gButtons" style = "visibility:hidden">
-		<input type = "button" class = "gButton g-button-submit" id = "btn_hide_taskInfo" value = "hide"/>
+	<div id ="circlesContainer" class = "globalContainer">
+		<ul id="div_containerSelectorTask" class = "list layer"></ul>
+	</div>
+	<div id="div_containerSelectorInfoTask" class = "list layer" style = "visibility:hidden">
+		<div id ="headerTaskType">
+			<div id = "btn_hide_taskInfo">
+				<div id = "imgHide"></div>
+			</div>
 
-		<label>
-			<strong>Activity Type</strong>
-			<span></span>
-		</label>
+			<label>
+				<strong>Activity Type</strong>
+				<span></span>
+			</label>
+		</div>
+		
 		<label>
 			<strong>Title</strong>
 			<span class = "title"></span>
@@ -21,7 +28,7 @@
 			<strong>Planning</strong>
 			<ul class = "subTasks" ></ul>
 		</label>
-		<input type = "button" class = "gButton g-button-submit" id = "btn_start_task" value = "start"/>
+		<input type = "button" class = "gButton g-button-submit save-big" id = "btn_start_task" value = "start"/>
 	</div>
 	<input type = "button" class = "gButton g-button-submit" id = "btn_show_taskInfo"  style = "visibility:hidden" value = "show"/>
 	<div id="workspace" data-role="content">

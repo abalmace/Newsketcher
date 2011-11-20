@@ -55,14 +55,8 @@ YUI.add("workspacerw", function(Y)
 
 		destructor : function()
 		{
-		/*
-		* destructor is part of the lifecycle introduced by 
-		* the Base class. It is invoked when destroy() is called,
-		* and can be used to cleanup instance specific state.
-		*
-		* It does not need to invoke the superclass destructor. 
-		* destroy() will call initializer() for all classes in the hierarchy.
-		*/
+			Y.one('#location').detach();
+			Y.one('#location').removeClass('gpsWorking');
 		},
 
 
@@ -195,6 +189,29 @@ YUI.add("workspacerw", function(Y)
 				self.listSketch = !self.listSketch;
 				return false;
 			});
+			
+			var btnLocation = Y.one('#location');
+			btnLocation.on('click',function(e)
+			{
+				self._handleClick(btnLocation);
+				e.stopPropagation();
+			});
+		},
+		
+		_handleClick:function(btn)
+		{
+			if(!this.gps)
+			{
+				this.map.showLocation();
+				this.map.centerInLocation();
+				btn.addClass('gpsWorking');
+			}
+			else
+			{
+				this.map.hideLocation();
+				btn.removeClass('gpsWorking');
+			}
+			this.gps = !this.gps;
 		}
 	});
 

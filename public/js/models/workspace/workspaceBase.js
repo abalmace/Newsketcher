@@ -54,7 +54,7 @@ YUI.add("workspacebase", function(Y)
 			var self = this;
 			self.room = data.room;
 			self.client = self.room.client;
-			self.canvas = new Canvas(self);
+			self.canvas = new Y.ModuleMap.Canvas({workspace:self});
 			
 		this.publish("myEvent", {
 		defaultFn: this._defMyEventFn,
@@ -137,4 +137,4 @@ YUI.add("workspacebase", function(Y)
 
 	Y.namespace("ModuleWorkspace").WorkspaceBase = WorkspaceBase;
 
-}, "1.0", {requires:['base','genericmap']});
+}, "1.0", {requires:['base','genericmap','canvas']});
