@@ -40,6 +40,14 @@ YUI.add("personcreator", function(Y)
 			{
 			value:null	
 			}
+		,notification:
+			{
+			value:null	
+			}	
+		,callback:
+			{
+			value:null	
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -47,12 +55,9 @@ YUI.add("personcreator", function(Y)
 	{
 		initializer: function(data)
 		{	
+			this.callback = data.callback;
+			this.notification = new Y.ModuleNotification.Notification();
 			this._addEvents();
-
-			this.publish("myEvent", {
-			defaultFn: this._defMyEventFn,
-			bubbles:false
-			});
 		},
 
 		destructor : function()
@@ -94,16 +99,25 @@ YUI.add("personcreator", function(Y)
 	  
 		_sendUserData: function(data)
 		{
+			var self = this;
 			var bool;
 			Y.ModuleConnectionServer.getJSON('/channel/Person/'+data.name+'/'+data.nick+'/'+data.password+'/'+data.userType+'/'+data.guid+'/bool.json',function(data)
 			{
-				bool = (data && data.bool) || false
+				if(data && data.bool)
+				{
+					var info =
+					{
+					icon:'./css/images/user_on.png'
+					,title:'Register'
+					,content:'The user was successfully created'	
+					}
+					self.notification.notify(info,'simple');
+					self.callback && self.callback()
+				}	
 			});
-			
-			return bool;
 		}
 	});
 
 	Y.namespace("ModulePeople").PersonCreator = PersonCreator;
 
-}, "1.0", {requires:["base",'connectionserver']});
+}, "1.0", {requires:['base','connectionserver','notification']});

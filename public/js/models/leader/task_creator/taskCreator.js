@@ -62,40 +62,34 @@ YUI.add("taskcreator", function(Y)
 			this.notification = new Y.ModuleNotification.Notification();
 			
 			this._addEvents();
-			//this._feedbackTaskCreated();
-			
-		this.publish("myEvent", {
-		defaultFn: this._defMyEventFn,
-		bubbles:false
-		});
 		},
 
 		destructor : function()
 		{
 			this.cient = null;
+			Y.one('#select_taskType').destroy()
+		},
+	  
+		createTask:function()
+		{
+			var self = this;
+			var data = self._createTask();
+			data.objetives = self.objetivesview.getObjetives();
+			data.subTasks = self.stepsview.getSteps();
+			self.client.sendSignal(self._subscribePath(), data);
+			var data =
+			{
+			icon:'./css/images/task-list.png'
+			,title:'Task Creator'
+			,content:'A new task has been created'	
+			}
+			self.notification.notify(data,'simple');
+			return true
 		},
 	  
 		_addEvents : function(e)
 		{
-			var buttonCreate = Y.one('#buttonAddTask');
 			var self = this;
-			buttonCreate.on('click', function(e)
-			{
-				var data = self._createTask();
-				data.objetives = self.objetivesview.getObjetives();
-				data.subTasks = self.stepsview.getSteps();
-				self.client.sendSignal(self._subscribePath(), data);
-				//self._taskCreated();
-				var data =
-				{
-				icon:'./css/images/task-list.png'
-				,title:'Task Creator'
-				,content:'A new task has been created'	
-				}
-				self.notification.notify(data,'simple');
-				
-			});
-			
 			var btnSelect = Y.one('#select_taskType');
 			btnSelect.on('change',function(e)
 			{
@@ -134,48 +128,6 @@ YUI.add("taskcreator", function(Y)
 		_subscribePath : function()
 		{
 			return '/channel/Tasks'
-		},
-		
-		_feedbackTaskCreated:function()
-		{
-			var self = this;
-			var node = Y.one('#bar_task_creator');
-			var nodeTitle = node.one('strong');
-
-			this.animatedFeedback = new Y.Anim(
-			{
-			node: node,
-			from: {
-				backgroundColor:node.getStyle('backgroundColor'),
-				color: node.getStyle('color'),
-				borderColor: node.getStyle('borderTopColor')
-			},
-
-			to: {
-				color: '#fff',
-				backgroundColor:'#93DB70',
-				borderColor: '#71241a'
-			},
-
-			duration:4.5
-			});
-			
-			this.animatedFeedback.on('end', function()
-			{
-				self._cleanForm();
-			});
-		},
-	  
-		_taskCreated:function()
-		{
-			this.animatedFeedback.set('reverse', false);
-			this.animatedFeedback.run();
-			this.animatedFeedback.set('reverse', true);
-			this.animatedFeedback.run();
-		},
-	  
-		_cleanForm:function()
-		{
 		}
 	});
 

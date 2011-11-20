@@ -45,6 +45,7 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 	
 	function _logScreen()
 	{
+		memoryFree();
 		_logIn();
 		_singUp();
 	}
@@ -82,7 +83,13 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 		Y.use('personcreator', function(Y)
 		{
 			memoryFree();
-			personCreator = new Y.ModulePeople.PersonCreator();
+			personCreator = new Y.ModulePeople.PersonCreator(
+			{
+				callback:function()
+				{
+					Y.one('#ajaxContainer').load('/partialView/login.ejs', _logScreen); 
+				}
+			});
 		});
 	}
 	
@@ -203,6 +210,17 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 				memoryFree();
 				taskcreator = new Y.ModuleTask.TaskCreator({client:newsketcherClient});
 			});
+			
+			var buttonCreate = Y.one('#buttonAddTask');
+			buttonCreate.on('click', function(e)
+			{
+				var bool = taskcreator.createTask();
+				if(bool)
+				{
+					_definerTaskContainer()
+				}
+				
+			});
 		});
 	}
 	
@@ -243,6 +261,11 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 		{
 			activityDesigner.destroy();
 			activityDesigner = null;
+		}
+		if(taskcreator)
+		{
+			taskcreator.destroy()
+			taskcreator = null;
 		}
 	}
  
