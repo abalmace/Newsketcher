@@ -81,8 +81,7 @@ YUI.add("instancesubtaskcreator", function(Y)
 
 		showUsers : function()
 		{
-			this.group = new Y.ModuleTask.GroupWizard({client:this.client, people:this.people});
-			this.group.setVisible(true);
+			this.group = new Y.ModuleTask.GroupWizard({client:this.client, group:this.people});
 		},
 	  
 		addCreatorBtnEvent : function()

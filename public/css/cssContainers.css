@@ -139,13 +139,13 @@ div.mod h2 a.close, div.mod h2 a.min {
    
     padding: 0;
 }
-div.mod h2 a.min {
-    right: 25px;
+div.mod h2 a.min
+{
     background: transparent url('./images/contract.png') no-repeat;
 }
-div.minned h2 a.min {
-    right: 25px;
-    background: transparent url('./images/contract.png') no-repeat;
+div.minned h2 a.min
+{
+    background: transparent url('./images/expand.png') no-repeat;
 }
 div.mod h2 a:hover.close, div.mod h2 a:hover.min {
     border-color: #D4D8EB;

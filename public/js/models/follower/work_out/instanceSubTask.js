@@ -97,12 +97,7 @@ YUI.add("instancesubtask", function(Y)
 
 		destructor : function()
 		{
-			var self = this;
-
-			_.each(self.subscriptions, function(s)
-			{
-				s.cancel();
-			});
+			
 		},
 
 		_addSubscriptions : function()
@@ -141,24 +136,15 @@ YUI.add("instancesubtask", function(Y)
 			//self.events();
 			
 		},
-
-		createRoommatesContainer : function()
+	  
+		stop:function()
 		{
-			var data = 
-				{
-				client:this.client
-				,roomName:this.name
-				};
-			this.roommatesContainer = new GroupInstanceTaskWizard(data);
-			
-			if(this.persisted)
+			var self = this;
+
+			_.each(self.subscriptions, function(s)
 			{
-				var data2 = this._roommateData();
-				this.roommatesContainer.addRoommates(data2);
-				this.roommatesContainer.setVisible(true);
-			}
-			else
-				this.roommatesContainer.setVisible(false);
+				s.cancel();
+			});
 		},
 	  
 		_roommateData : function()
@@ -316,7 +302,12 @@ YUI.add("instancesubtask", function(Y)
 				var parentNode = self.dom.parentNode;
 				self.instanceSubTaskUI.active(true);
 					
-				self.instanceSubTaskGroup = new Y.ModuleTask.InstanceSubTaskGroup({client:self.client, group:self.group});
+				self.instanceSubTaskGroup = new Y.ModuleTask.InstanceSubTaskGroup(
+				{
+					client:self.client
+					,group:self.group
+					,roomName:self.name
+				});
 				Y.one('#toolbar').setStyle('visibility','visible');
 			} 
 			else

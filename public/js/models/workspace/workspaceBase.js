@@ -115,7 +115,7 @@ YUI.add("workspacebase", function(Y)
 				});
 		},
 	  
-		_moveTo : function(pos)
+		moveTo : function(pos)
 		{
 			var self = this;
 			self.map.moveTo(pos);

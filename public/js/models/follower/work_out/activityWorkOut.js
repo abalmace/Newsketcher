@@ -95,7 +95,7 @@ YUI.add("activityworkout", function(Y)
 		{
 			var data;
 			this.taskType = task.type;
-			if(this.taskType == 'free' || true)
+			if(this.taskType == 'free' )
 			{
 				data =
 				{
@@ -127,7 +127,7 @@ YUI.add("activityworkout", function(Y)
 				,guid : subtask.mapId
 				,people : self.people
 				}
-				this._addMySubTask(data);
+				self._addMySubTask(data);
 			});
 		},
 		

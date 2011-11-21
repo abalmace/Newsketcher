@@ -107,9 +107,9 @@
 
 .instanceAdd{
 	position:absolute;
-	background: transparent url('./images/btnPlus.png') no-repeat;
+	background: transparent url('./images/btnPlus_small.png') no-repeat;
 	top:0;
-	right:70px;
+	right:30px;
 	width:24px;
 	height:24px;
 	z-index:100;

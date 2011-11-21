@@ -20,17 +20,9 @@ YUI.add("groupwizard", function(Y)
 			{
 			value:null
 			}
-		,people:
+		,group:
 			{
 			value:[]
-			}
-		,container:
-			{
-			value:null
-			}
-		,prefixIdTask:
-			{
-			value:null
 			}
 	};
 
@@ -40,21 +32,10 @@ YUI.add("groupwizard", function(Y)
 		initializer: function(data)
 		{
 			this.client = data.client;
-			this.people = data.people;
-			this.stringAddRoommate = "roommate_";
-			this.stringClassBase = "roommateIconBase ";
-			this.ROOMMATE_ICON_ADD = "roommateIconAdd";
-			this.roommateIconRemove = "roommateIconRemoveOff";
-			this.ROOMMATE_ICON_REMOVE_ON = "roommateIconRemoveOn";
-			this.ROOMMATE_BASE = "roommate ";
-			this.ROOMMATE_ICON_BASE = "roommateIconBase ";
+			this.group = data.group;
 			
 			this.addPeople();
-
-		this.publish("myEvent", {
-		defaultFn: this._defMyEventFn,
-		bubbles:false
-		});
+			this._showContainer();
 		},
 
 		destructor : function()
@@ -75,7 +56,7 @@ YUI.add("groupwizard", function(Y)
 		{
 		// Download roommates
 			var self = this;
-			Y.Array.each(this.people, function(person)
+			Y.Array.each(this.group, function(person)
 			{
 				self.add(person);
 			});	
@@ -88,94 +69,27 @@ YUI.add("groupwizard", function(Y)
 
 		add : function(data)
 		{
-			//ver si el usuario a agregar soy yo
 			if(data.guid == (this.client.guid))
+			{
+				data.selected = true;
+				this._addInContainer(data);
 				return;
-			//Ver si el usuario ya ha sido agregado
-			var roommate = this.searchRoommate(data.guid);
+			}
+			var roommate = this._searchRoommate(data.guid);
 			//Agregar el usuarios si no existe
 			if(!roommate)
 			{
-				if(data.userType == 'leader')
-					this.addLeader(data);
-				else if(data.selected)
-				{
-					if(!data.working)
-						this.addWithClass(data,"roommateIconRemoveOff");
-					else
-						this.addWithClass(data,"roommateIconRemoveOn");
-				
-				}
-				else
-					this.addWithClass(data,"roommateIconAdd");
-				
-			}
-			else if(roommate)
-			{
-				if(!data.working)
-					this.leave(data);
-				else if(data.selected)
-					this.changeClass(data,"roommateIconRemoveOn");
-				else
-					this.changeClass(data,"roommateIconRemoveOff");
+				var user = this._addPerson(data);
+				this._addEvent(user);
 			}
 		},
 
-		leave : function(data)
-		{
-			this.changeClass(data,"roommateIconAdd")
-		},
-
-		addWithClass : function(data, classRoommate)
-		{
-			var roommate = this.addInContainer(data,classRoommate);
-			this.addEvent(roommate);
-		},
-
-		addLeader : function(data)
-		{
-			this.addInContainer(data, "roommateIconLeader");
-		},
-	  
-		addInContainer : function(data, classRoommate)
+		_addEvent : function(roommate)
 		{
 			var self = this;
-			var divUser = document.createElement('div');
-			divUser.className = "roommate";
-			var id = data.guid || Utils.guid();
-			divUser.id = id
-			
-			var divIcon = document.createElement('div');
-			divIcon.className = this.stringClassBase+classRoommate;
-			
-			var spanName = document.createElement('span');
-			spanName.className = "roommateName";
-			spanName.innerText = data.name;
-			
-			$(divUser).prepend(spanName);
-			$(divUser).prepend(divIcon);
-			self.element.prepend(divUser);
-			
-			var roommate = new Y.ModulePeople.User(
-				{ 
-					name:data.name
-					,nick: data.nick
-					,guid: id
-					,selected : data.selected
-					,working: data.working
-				});
-
-			this.roommatesContainer.push(roommate)
-			
-			return $(divUser);
-		},
-
-		addEvent : function(roommate)
-		{
-			var self = this;
-			roommate.click(function()
+			roommate.on('click', function()
 			{
-				var id = this.id;
+				var id = this.get('id');
 				self.userClick(id);
 				
 			});
@@ -183,13 +97,18 @@ YUI.add("groupwizard", function(Y)
 
 		userClick : function(id)
 		{
-			var roommate = this.searchRoommate(id);
+			var roommate = this._searchRoommate(id);
 			roommate.selected = !roommate.selected;
 			if(roommate.selected)
-				this.changeStatusClass(id,this.ROOMMATE_ICON_BASE+this.ROOMMATE_ICON_REMOVE_ON);
+				this._changeClass({guid:id},this.icon);
 			else
-				this.changeStatusClass(id,this.ROOMMATE_ICON_BASE+this.ROOMMATE_ICON_ADD);
+				this._changeClass({guid:id},this.icon_off);
 				
+		},
+	  
+		_showContainer:function()
+		{
+			this._visible(this.group.length>1);
 		}
 	});
 

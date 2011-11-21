@@ -74,7 +74,7 @@ YUI.add("genericdivanimation", function(Y)
 			var str = 
 				'<div class="mod">' + 
 				'<h2><div class = "drag"></div><strong>' + this.textElement + '</strong>'+ 
-				'<a title="minimize module" class="min" href="#">-</a>' +
+				'<a title="minimize module" class="min" href="#"></a>' +
 				'<a title="close module" class="close" href="#" style = "display:none">X</a></h2>' +
 				'<div class ="instanceAdd"></div>'+
 				'<div class="inner">' +

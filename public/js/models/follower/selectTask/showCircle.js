@@ -60,6 +60,7 @@ YUI.add("showcircle", function(Y)
 			this.callback = data.callback;
 			
 			this._addTasks();
+			this._hideBtnPlus();
 			
 		this.publish("myEvent", {
 		defaultFn: this._defMyEventFn,
@@ -120,6 +121,13 @@ YUI.add("showcircle", function(Y)
 				,callback : this.callback
 				,client : this.client
 			});
+		},
+		
+		_hideBtnPlus:function()
+		{
+			var node = Y.one(this.li);
+			node = node.one('.instanceAdd');
+			node.setStyle('visibility','hidden');
 		}
 	});
 

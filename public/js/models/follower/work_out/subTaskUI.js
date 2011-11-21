@@ -75,7 +75,9 @@ YUI.add("subtaskui", function(Y)
 			this._createInstanceContainer();
 			this._addSubscriptions();
 			this._addEventButtonAdd();
-			this._addCurrentInstances({primero:{title:"instances of this task",status:'join'},segundo:{title:"instances of this task...",status:'join'}});
+			//this._addCurrentInstances({primero:{title:"instances of this task",status:'join'},segundo:{title:"instances of this task...",status:'join'}});
+			
+			
 		},
 
 		destructor : function()
@@ -113,7 +115,7 @@ YUI.add("subtaskui", function(Y)
 		//suscribirse a la edicion de Rooms
 			self.subscriptions.push(self.client.subscribe(self._subscribePath(), function(data) {
 				if (data.status == 'join')
-					self._joinInstanceSubTask(data);
+					self._isMyInstance(data);
 				else if (data.status == 'delete')
 					self._removeInstanceSubTask(data);
 
@@ -271,6 +273,14 @@ YUI.add("subtaskui", function(Y)
 			});
 		},
 	  
+		_isMyInstance:function(data)
+		{
+			var guid = this.client.guid;
+			var result = _.detect(data.group, function(s) { return s.guid == guid });
+			if(result)
+				this._joinInstanceSubTask(data);
+		},
+	  
 		_joinInstanceSubTask : function(data)
 		{
 			var li = document.createElement('li');
@@ -291,8 +301,8 @@ YUI.add("subtaskui", function(Y)
 			this.instances.push(insTask);
 			this.container.appendChild(li);
 			
-			if(data.active != undefined)
-				insTask.setActive(data);
+			if(data.owner == this.client.guid)
+				insTask.setActive(true);
 			
 			/*
 			Para que la nueva instancia agregada sea un Target tambien

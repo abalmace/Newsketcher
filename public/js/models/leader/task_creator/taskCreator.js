@@ -67,15 +67,12 @@ YUI.add("taskcreator", function(Y)
 		destructor : function()
 		{
 			this.cient = null;
-			Y.one('#select_taskType').destroy()
 		},
 	  
 		createTask:function()
 		{
 			var self = this;
 			var data = self._createTask();
-			data.objetives = self.objetivesview.getObjetives();
-			data.subTasks = self.stepsview.getSteps();
 			self.client.sendSignal(self._subscribePath(), data);
 			var data =
 			{
@@ -113,6 +110,7 @@ YUI.add("taskcreator", function(Y)
 		{
 			var node = Y.one('#divCreatorTask');
 			var nodeTitle = node.one('.selector_title');
+			var type = Y.one('#select_taskType').get('value');
 			
 			var data =
 			{
@@ -120,6 +118,9 @@ YUI.add("taskcreator", function(Y)
 				,guid : Utils.guid()
 				,status : 'add'
 				,owner : this.client.guid
+				,type : type
+				,objetives : this.objetivesview.getObjetives()
+				,subTasks : type == 'free'?null:subTasks = this.stepsview.getSteps()
 			}
 			
 			return data;

@@ -225,7 +225,6 @@ YUI.add("canvas", function(Y)
 			var marker = new Marker(data,null,null);
 			overlay.addOverlay(marker);
 			this.workspace.saveOverlay(overlay);
-			this.screenshotCreator.addMarker(position);
 		},
 
 		getPosition : function(event)

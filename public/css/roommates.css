@@ -20,32 +20,12 @@
 }
 .roommateIcon
 {
-	background: url(images/roommate.gif) no-repeat center center;
+	background: url(images/user_on.png) no-repeat center center;
 }
 
-.roommateIconAdd
+.roommateIconOff
 {
-  	background: url(images/user_add.png) no-repeat center center;  	
-}
-
-.roommateIconRemoveOn
-{
-  	background: url(images/user_delete.png) no-repeat center center;  	
-}
-
-.roommateIconRemoveOff
-{
-  	background: url(images/user_delete.png) no-repeat center center;  	
-}
-
-.roommateIconEnabled
-{
-  	background: url(images/user.png) no-repeat center center;  	
-}
-
-.roommateIconLeader
-{
-  	background: url(images/leader.png) no-repeat center center;  	
+  	background: url(images/user_off.png) no-repeat center center;  	
 }
 
 .roommateName
@@ -80,14 +60,15 @@
 	text-align:center;
 	overflow:hidden;
 	
-	
-}.roommate:hover
+}
+
+.roommateClick:hover
 {
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
 	background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
 	background-color:#dfdfdf;
-}.roommate:active
+}.roommateClick:active
 {
 	position:relative;
 	top:1px;
