@@ -151,6 +151,10 @@ YUI.add("activity-designer", function(Y)
 					{
 						self._onClickCircles(circle);	
 					}
+					,update: function()
+					{
+						self._syncTargets && self._syncTargets();	
+					}
 				}
 			});
 			this.containerSpecialCircle = new Y.ModuleContainerCircle.SpecialContainerCircle(
@@ -163,24 +167,43 @@ YUI.add("activity-designer", function(Y)
 					{
 						self._onClickCircles(circle);	
 					}
+					,update: function()
+					{
+						self._syncTargets && self._syncTargets();	
+					}
+					
 				}
 			});
 			this.peopleContainer = new Y.ModulePeopleContainer.PeopleContainer(
 			{
 				client:newsketcherClient
 				,container:this.peopleContainerDOM
-				,clicked: function(selected,guid)
+				,callback:
 				{
-					self._multiPeopleSelected(selected,guid);	
+					click: function(selected,guid)
+					{
+						self._multiPeopleSelected(selected,guid);	
+					}
+					,update: function()
+					{
+						self._syncTargets && self._syncTargets();	
+					}
 				}
 			});
 			this.containerSelectorTask = new Y.ModuleContainerSelectorTask.ContainerSelectorTask(
 			{
 				client:newsketcherClient
 				,container:this.containerSelectorTaskDOM
-				,clicked: function(selected,guid)
+				,callback:
 				{
-					self._multiTasksSelected(selected,guid);	
+					click: function(selected,guid)
+					{
+						self._multiTasksSelected(selected,guid);		
+					}
+					,update: function()
+					{
+						self._syncTargets && self._syncTargets();	
+					}
 				}
 			});
 			this._createDesigner();
@@ -255,7 +278,7 @@ YUI.add("activity-designer", function(Y)
 			var circlesElements = Y.one('#'+self.stringCircleContainerDOM);
 			this.delCircles = new Y.DD.Delegate({
 				container: circlesElements
-				,nodes: 'div.outer_circle'
+				,nodes: 'div.selected_circle'
 				,target: true
 			});
 			this.delCircles.dd.plug(Y.Plugin.DDProxy,
@@ -268,7 +291,7 @@ YUI.add("activity-designer", function(Y)
 			var specialCirclesElements = Y.one('#'+self.stringSpecialCircleContainerDOM);
 			this.delSpecialCircles = new Y.DD.Delegate({
 				container: specialCirclesElements
-				,nodes: 'div.outer_circle'
+				,nodes: 'div.selected_circle'
 				,target: true
 			});
 			this.delSpecialCircles.dd.plug(Y.Plugin.DDProxy,
@@ -293,6 +316,24 @@ YUI.add("activity-designer", function(Y)
 			{
 				var node = e.target.get('node');
 				node.removeClass('trashOver');
+			});
+			
+			this.delCircles.on('drop:enter',function(e)
+			{
+				var node = e.target.get('node');
+				node.addClass('background_selected_circle');
+			});
+	
+			this.delCircles.on('drop:exit',function(e)
+			{
+				var node = e.target.get('node');
+				node.removeClass('background_selected_circle');
+			});
+			
+			this.delCircles.on('drop:hit',function(e)
+			{
+				var node = e.target.get('node');
+				node.removeClass('background_selected_circle');
 			});
 			
 			//Listen for all drop:over events

@@ -30,10 +30,6 @@ YUI.add("containercircle", function(Y)
 			{
 			value:null
 			}
-		,subscriptions:
-			{
-			value:[]
-			}
 		,prefixIdTask:
 			{
 			value:''
@@ -54,7 +50,6 @@ YUI.add("containercircle", function(Y)
 			this.allCircles = [];
 			this.container = data.container;
 			this.callback = data.callback;
-			this.subscriptions = [];
 			this.prefixIdTask = 'circle_';
 			
 			
@@ -65,7 +60,6 @@ YUI.add("containercircle", function(Y)
 			this.client = null;
 			this.allCircles.destructor();
 			this.container = null;
-			this.subscriptions.destructor();
 		},
 
 		/* MyComponent specific methods */
@@ -125,7 +119,7 @@ YUI.add("containercircle", function(Y)
 		{
 			var div = document.createElement('div');
 			var guid = data.guid || Utils.guid()
-			div.className = "outer_circle";
+			div.className = "selected_circle";
 			div.id = guid;	
 			data.client = this.client;
 			
@@ -135,6 +129,9 @@ YUI.add("containercircle", function(Y)
 			var circle = new Y.ModuleCircle.Circle(data);
 			this.allCircles.push(circle);
 			this.container.appendChild(div);
+			
+			if(this.callback && this.callback.update)
+				this.callback.update();
 		},
 	  
 		_addPersonToCircle : function(circlePerson)

@@ -153,6 +153,6 @@ div.mod h2 a:hover.close, div.mod h2 a:hover.min {
 
 ul.elementContainer
 {
-	height:200px;
+	max-height:400px;
 	overflow:auto;
 }

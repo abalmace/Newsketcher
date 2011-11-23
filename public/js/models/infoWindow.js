@@ -76,8 +76,8 @@ InfoWindow.prototype.submitFunction = function()
 InfoWindow.prototype.deleteFunction = function()
 {
 	this.infowindow.close();
-	if(this.options.destroy)
-		this.options.destroy()
+	if(this.options.deleteOverlay)
+		this.options.deleteOverlay()
 }
 
 InfoWindow.prototype.cancelFunction = function()

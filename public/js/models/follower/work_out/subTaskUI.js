@@ -56,6 +56,14 @@ YUI.add("subtaskui", function(Y)
 			{
 			value:null
 			}
+		,taskGuid:
+			{
+			value:null
+			}
+		,circleGuid:
+			{
+			value:null
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -65,6 +73,8 @@ YUI.add("subtaskui", function(Y)
 		{
 			this.client = data.client;	//cliente
 			this.guid = data.guid;
+			this.taskGuid = data.taskGuid;
+			this.circleGuid = data.circleGuid;
 			this.li = data.li;	//elemento html que representa al módulo
 			this.name = data.name;
 			this.people = data.people;	//integrantes del circle	
@@ -75,6 +85,7 @@ YUI.add("subtaskui", function(Y)
 			this._createInstanceContainer();
 			this._addSubscriptions();
 			this._addEventButtonAdd();
+
 			//this._addCurrentInstances({primero:{title:"instances of this task",status:'join'},segundo:{title:"instances of this task...",status:'join'}});
 			
 			
@@ -121,13 +132,13 @@ YUI.add("subtaskui", function(Y)
 
 			}));
 			
-		// Download previos instanceTasks
-// 			$.getJSON('/room/'+ this.taskName +'/instanceSubTasks.json', function(data)
-// 			{
-// 				_.each(data.instanceTasks, function(info) {
-// 					self.joinInstanceTask(info);
-// 			});
-// 			})
+		//Download previos instanceSubTasks
+			$.getJSON('/room/'+ this.guid+'/'+this.client.guid+'/instanceSubTasks.json', function(data)
+			{
+				_.each(data.instanceSubTasks, function(info) {
+					self._isMyInstance(info);
+			});
+			})
 		},
 	  
 		_createInstanceContainer : function()
@@ -202,7 +213,7 @@ YUI.add("subtaskui", function(Y)
 				var drag = e.drag.get('node');
 				var drop = e.drop.get('node');
 				_dropHit(node,drop);
-				node.removeClass('insTaskOver');
+				drop.removeClass('insTaskOver');
 			});
 			
 			var _dropHit = function(node, drop)
@@ -212,7 +223,8 @@ YUI.add("subtaskui", function(Y)
 				var nodeInstance = self._findInstanceTask(nodeId);
 				var dropInstance = self._findInstanceTask(dropId);
 				
-				dropInstance.copyOverlays(nodeInstance);
+				if(dropInstance)
+					dropInstance.copyOverlays(nodeInstance);
 			}
 		},
 	  
@@ -246,7 +258,7 @@ YUI.add("subtaskui", function(Y)
 	  
 		_subscribePath : function()
 		{
-			return '/channel/' +this.guid+'/'+ 'instanceTasks';
+			return '/channel/' +this.guid+'/'+ 'instanceSubTasks';
 		},
 		
 		_addEventButtonAdd : function()
@@ -266,6 +278,9 @@ YUI.add("subtaskui", function(Y)
 						{
 						click:function(data)
 							{
+							data.circleGuid = self.circleGuid;
+							data.subtaskGuid = self.guid;
+							data.taskGuid = self.taskGuid;
 							self.client.sendSignal(self._subscribePath(), data);
 							}
 						}

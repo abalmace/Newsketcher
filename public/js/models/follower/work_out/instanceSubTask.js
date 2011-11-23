@@ -128,6 +128,8 @@ YUI.add("instancesubtask", function(Y)
 						self.add(sketch);
 					});
 				})
+				
+				self.subscriptions[0].cancel();
 			}
 			
 			//this.instace = new InstanceTask(this.dom);
@@ -224,7 +226,7 @@ YUI.add("instancesubtask", function(Y)
 			}
 		},
 
-		destroy : function(overlay)
+		deleteOverlay : function(overlay)
 		{
 			if(this.persisted)
 			{
@@ -274,7 +276,7 @@ YUI.add("instancesubtask", function(Y)
 			if (overlay) {
 				this.overlays = _.without(this.overlays, overlay);
 				var id = overlay.id;
-				overlay.destroy();
+				overlay.deleteOverlay();
 				
 				/*TODO
 				this.map.removeOverlay(id);
@@ -293,7 +295,7 @@ YUI.add("instancesubtask", function(Y)
 			{
 				if ( self.client.activeRoom == self ) return;
 				if ( self.client.activeRoom )
-				self.client.activeRoom.setActive(false);
+					self.client.activeRoom.setActive(false);
 				self.client.activeRoom = self;
 
 				self.workspace = new Y.ModuleWorkOut.WorkspaceRWGPS({room:self});
@@ -317,7 +319,11 @@ YUI.add("instancesubtask", function(Y)
 				self.dom.style.border = "";
 				self.instanceSubTaskUI.active(false);
 				if(self.instanceSubTaskGroup)
+				{
+					self.instanceSubTaskGroup.stop();
 					self.instanceSubTaskGroup.destroy();
+					delete self.instanceSubTaskGroup;
+				}
 				
 			}
 		},

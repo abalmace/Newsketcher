@@ -100,16 +100,46 @@ YUI.add("groupwizard", function(Y)
 			var roommate = this._searchRoommate(id);
 			roommate.selected = !roommate.selected;
 			if(roommate.selected)
-				this._changeClass({guid:id},this.icon);
+				this._changeClassIcon({guid:id},this.icon);
 			else
-				this._changeClass({guid:id},this.icon_off);
+				this._changeClassIcon({guid:id},this.icon_off);
 				
 		},
 	  
 		_showContainer:function()
 		{
 			this._visible(this.group.length>1);
-		}
+		},
+	  
+		_addPerson : function(data,selected)
+		{
+			var self = this;
+			var divUser = document.createElement('div');
+			divUser.className = "roommate roommateClick";
+			var id = data.guid || Utils.guid();
+			divUser.id = id
+			
+			var divIcon = document.createElement('div');
+			divIcon.className = this.stringClassBase;
+			divIcon.className += selected?this.icon:this.icon_off;
+			
+			
+			var spanName = document.createElement('span');
+			spanName.className = "roommateName";
+			spanName.innerText = data.name;
+			
+			
+			var nodeUser = Y.one(divUser)
+			nodeUser.prepend(spanName);
+			nodeUser.prepend(divIcon);
+			this.element.prepend(divUser);
+			
+			data.guid = id;
+			
+			this._addInContainer(data);
+			
+			return Y.one(divUser);
+		},
 	});
 
 	Y.namespace("ModuleTask").GroupWizard = GroupWizard;
