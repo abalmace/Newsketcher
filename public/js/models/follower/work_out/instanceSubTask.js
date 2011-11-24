@@ -56,10 +56,6 @@ YUI.add("instancesubtask", function(Y)
 			{
 			value:null
 			}
-		,instanceSubTaskGroup:
-			{
-			value:null
-			}
 	};
 
     /* MyComponent extends the Base class */
@@ -302,7 +298,7 @@ YUI.add("instancesubtask", function(Y)
 				var parentNode = self.dom.parentNode;
 				self.instanceSubTaskUI.active(true);
 					
-				self.instanceSubTaskGroup = new Y.ModuleTask.InstanceSubTaskGroup(
+				self.client.instanceSubTaskGroup = new Y.ModuleTask.InstanceSubTaskGroup(
 				{
 					client:self.client
 					,group:self.group
@@ -316,8 +312,8 @@ YUI.add("instancesubtask", function(Y)
 				self.workspace = null;
 				self.dom.style.border = "";
 				self.instanceSubTaskUI.active(false);
-				if(self.instanceSubTaskGroup)
-					self.instanceSubTaskGroup.destroy();
+				if(self.client.instanceSubTaskGroup)
+					self.client.instanceSubTaskGroup.destroy();
 				
 			}
 		},

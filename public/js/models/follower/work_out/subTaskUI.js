@@ -60,6 +60,14 @@ YUI.add("subtaskui", function(Y)
 			{
 			value:null
 			}
+		,taskGuid:
+			{
+			value:null
+			}
+		,circleGuid:
+			{
+			value:null
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -70,6 +78,8 @@ YUI.add("subtaskui", function(Y)
 			this.client = data.client;	//cliente
 			this.guid = data.guid;
 			this.activityWorkOut = data.activityWorkOut;
+			this.taskGuid = data.taskGuid;
+			this.circleGuid = data.circleGuid;
 			this.li = data.li;	//elemento html que representa al módulo
 			this.name = data.name;
 			this.people = data.people;	//integrantes del circle	
@@ -127,12 +137,13 @@ YUI.add("subtaskui", function(Y)
 			}));
 			
 		// Download previos instanceTasks
-// 			$.getJSON('/room/'+ this.taskName +'/instanceSubTasks.json', function(data)
-// 			{
-// 				_.each(data.instanceTasks, function(info) {
-// 					self.joinInstanceTask(info);
-// 			});
-// 			})
+			$.getJSON('/channel/'+ this.guid+'/'+this.client.guid+'/instanceSubTasks.json', function(data)
+			{
+				Y.Array.each(data.instanceSubTasks, function(info)
+				{
+					self._joinInstanceSubTask(info);
+				});
+			})
 		},
 	  
 		_createInstanceContainer : function()
@@ -251,7 +262,7 @@ YUI.add("subtaskui", function(Y)
 	  
 		_subscribePath : function()
 		{
-			return '/channel/' +this.guid+'/'+ 'instanceTasks';
+			return '/channel/' +this.guid+'/'+ 'instanceSubTasks';
 		},
 		
 		_addEventButtonAdd : function()
@@ -271,7 +282,10 @@ YUI.add("subtaskui", function(Y)
 						{
 						click:function(data)
 							{
-							self.client.sendSignal(self._subscribePath(), data);
+								data.taskGuid = self.taskGuid;
+								data.circleGuid = self.circleGuid;
+								data.subTaskGuid = self.guid;
+								self.client.sendSignal(self._subscribePath(), data);
 							}
 						}
 					});
@@ -306,8 +320,7 @@ YUI.add("subtaskui", function(Y)
 			this.instances.push(insTask);
 			this.container.appendChild(li);
 			
-			if(data.owner == this.client.guid)
-				insTask.setActive(true);
+			
 			
 			/*
 			Para que la nueva instancia agregada sea un Target tambien

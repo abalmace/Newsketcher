@@ -32,7 +32,7 @@ YUI.add("instancesubtaskcreator", function(Y)
 			{
 			value:null
 			}
-		,prefixIdSubTask:
+		,prefixIdInstance:
 			{
 			value:null
 			}
@@ -54,7 +54,7 @@ YUI.add("instancesubtaskcreator", function(Y)
 			this.client = data.client;
 			this.callback = data.callback;
 			this.dom = document.getElementById('taskDefinition');
-			this.prefixIdTask = 'subTask_';
+			this.prefixIdInstance = 'instanceSubTask_';
 			this.people = data.people;
 			
 			this.showTaskDefinition(true);
@@ -101,7 +101,7 @@ YUI.add("instancesubtaskcreator", function(Y)
 			var data = 
 				{
 				title:title
-				,guid:this.prefixIdTask+Utils.guid()
+				,guid:this.prefixIdInstance+Utils.guid()
 				,status:'join'
 				,owner:this.client.guid
 				,group:users

@@ -140,7 +140,7 @@ YUI.add("showtask", function(Y)
 						,title : data.title
 						,type : data.type
 						,people : self.people
-						,subtasks : data.subtasks
+						,subtasks : data.subTasks
 					}
 					self.callback.click(activity);
 				}
