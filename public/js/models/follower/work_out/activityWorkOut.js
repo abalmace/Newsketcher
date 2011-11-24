@@ -32,7 +32,10 @@ YUI.add("activityworkout", function(Y)
 			{
 			value:null
 			}
-		
+		,instanceSubTaskCreator:
+			{
+			value:null
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -126,6 +129,7 @@ YUI.add("activityworkout", function(Y)
 				textElement:subtask.description
 				,guid : subtask.guid
 				,people : self.people
+				,activityWorkOut:self
 				}
 				self._addMySubTask(data);
 			});

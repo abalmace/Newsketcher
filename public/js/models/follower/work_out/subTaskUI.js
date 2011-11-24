@@ -56,6 +56,10 @@ YUI.add("subtaskui", function(Y)
 			{
 			value:null
 			}
+		,activityWorkOut:
+			{
+			value:null
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -65,6 +69,7 @@ YUI.add("subtaskui", function(Y)
 		{
 			this.client = data.client;	//cliente
 			this.guid = data.guid;
+			this.activityWorkOut = data.activityWorkOut;
 			this.li = data.li;	//elemento html que representa al módulo
 			this.name = data.name;
 			this.people = data.people;	//integrantes del circle	
@@ -256,9 +261,9 @@ YUI.add("subtaskui", function(Y)
 			var add =li.find("div.instanceAdd");
 			add.bind('click', function(e)
 			{
-				if(self.instanceSubTaskCreator)
-					self.instanceSubTaskCreator.destroy();
-				self.instanceSubTaskCreator = new Y.ModuleTask.InstanceSubTaskCreator(
+				if(self.activityWorkOut.instanceSubTaskCreator)
+					self.activityWorkOut.instanceSubTaskCreator.destroy();
+				self.activityWorkOut.instanceSubTaskCreator = new Y.ModuleTask.InstanceSubTaskCreator(
 					{
 					client:self.client
 					,people:self.people
