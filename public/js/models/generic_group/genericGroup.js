@@ -28,10 +28,6 @@ YUI.add("genericgroup", function(Y)
 			{
 			value:null
 			}
-		,subscriptions:
-			{
-			value:[]
-			}
 		,edit:
 			{
 			value:null	
@@ -76,6 +72,30 @@ YUI.add("genericgroup", function(Y)
 			{
 			value:[]
 			}
+		,stringClassIndicatorBase:
+			{
+			value:null
+			,getter:function()
+				{
+				return this.stringClassIndicatorBase
+				}
+			}
+		,onlineClass:
+			{
+			value:null
+			,getter:function()
+				{
+				return this.onlineClass
+				}
+			}
+		,offlineClass:
+			{
+			value:null
+			,getter:function()
+				{
+				return this.offlineClass
+				}
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -84,7 +104,6 @@ YUI.add("genericgroup", function(Y)
 		initializer: function(data)
 		{
 			this.element = Y.one('#divRoommateContainer');	//elemento html utilizado como contenedor 
-			this.subscriptions = [];			//arreglo que contiene todas las subcripciones
 			this.roommatesContainer = [];			//compañeros
 			this.edit = data.edit;
 			this.client = data.client;
@@ -92,6 +111,11 @@ YUI.add("genericgroup", function(Y)
 			this.active = false;
 			this.stringAddRoommate = "roommate_";
 			this.stringClassBase = "roommateIconBase ";
+			this.icon =  'roommateIcon';
+			this.icon_off = 'roommateIconOff';
+			this.stringClassIndicatorBase = "indicator_roommate ";
+			this.onlineClass = "onLine_roommate";
+			this.offlineClass = "offLine_roommate";
 			this.icon =  'roommateIcon';
 			this.icon_off = 'roommateIconOff';
 			
@@ -114,11 +138,27 @@ YUI.add("genericgroup", function(Y)
 			this.client.sendSignal(this.roommatePath(), data)
 		},
 
-		leaveRoom : function(data)
+		_leaveRoom : function(data)
 		{
 			data.working = false;
 			data.status = 'leave';
 			this.client.sendSignal(this.roommatePath(),data)
+		},
+	  
+		_changeClassIndicator : function(data,className)
+		{
+			var dom = document.getElementById(data.guid);
+			var node = Y.one(dom);
+			node = node.one('div.'+this.stringClassIndicatorBase);
+			node.set('className',this.stringClassIndicatorBase+className);
+		},
+	  
+		_changeClassIcon : function(data,className)
+		{
+			var dom = document.getElementById(data.guid);
+			var node = Y.one(dom);
+			node = node.one('div.roommateIconBase');
+			node.set('className',this.stringClassBase+className);
 		},
 
 		_changeClass : function(data,className)
@@ -156,32 +196,6 @@ YUI.add("genericgroup", function(Y)
 		_searchRoommate : function(guid)
 		{
 			return  _.detect(this.roommatesContainer, function(s) { return s.guid == guid });	
-		},
-
-		_addPerson : function(data)
-		{
-			var self = this;
-			var divUser = document.createElement('div');
-			divUser.className = "roommate";
-			var id = data.guid || Utils.guid();
-			divUser.id = id
-			
-			var divIcon = document.createElement('div');
-			divIcon.className = this.stringClassBase + this.icon_off;
-			
-			var spanName = document.createElement('span');
-			spanName.className = "roommateName";
-			spanName.innerText = data.name;
-			
-			Y.one(divUser).prepend(spanName);
-			Y.one(divUser).prepend(divIcon);
-			this.element.prepend(divUser);
-			
-			data.guid = id;
-			
-			this._addInContainer(data);
-			
-			return Y.one(divUser);
 		},
 	  
 		_addInContainer:function(data)

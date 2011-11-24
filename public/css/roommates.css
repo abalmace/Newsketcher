@@ -28,6 +28,23 @@
   	background: url(images/user_off.png) no-repeat center center;  	
 }
 
+.indicator_roommate
+{
+	width:16px;
+	height:16px;
+	position:absolute;
+}
+
+.onLine_roommate
+{
+	background: url(images/online.png) no-repeat center center;  
+}
+
+.offLine_roommate
+{
+	background: url(images/offline.png) no-repeat center center;  
+}
+
 .roommateName
 {
 	display:block;
@@ -59,7 +76,7 @@
 	width: auto;
 	text-align:center;
 	overflow:hidden;
-	
+	position:relative;
 }
 
 .roommateClick:hover

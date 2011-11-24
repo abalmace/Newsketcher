@@ -23,20 +23,6 @@
 	margin-left:1px;
 }
 
-#divRoommateContainer
-{
-	position:absolute;
-	top:20%;
-	right:30%;
-	bottom:20%;
-	
-	height:auto;
-	width:10%;
-	padding: .5em;
-	
-	margin-right:17px; 
-}
-
 #taskTitle
 {
 	position:absolute;

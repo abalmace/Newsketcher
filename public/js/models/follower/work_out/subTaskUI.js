@@ -277,7 +277,7 @@ YUI.add("subtaskui", function(Y)
 		{
 			var guid = this.client.guid;
 			var result = _.detect(data.group, function(s) { return s.guid == guid });
-			if(result)
+			if(result && result.selected)
 				this._joinInstanceSubTask(data);
 		},
 	  

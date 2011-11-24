@@ -82,10 +82,6 @@ YUI.add("newsketcher_client", function(Y)
 			this.userType = data.usertype || "follower";
 			this.nick = data.nick || this.name;
 
-			this.publish("myEvent", {
-			defaultFn: this._defMyEventFn,
-			bubbles:false
-			});
 		},
 
 		destructor : function()

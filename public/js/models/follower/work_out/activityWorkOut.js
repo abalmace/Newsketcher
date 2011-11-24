@@ -124,7 +124,7 @@ YUI.add("activityworkout", function(Y)
 				data =
 				{
 				textElement:subtask.description
-				,guid : subtask.mapId
+				,guid : subtask.guid
 				,people : self.people
 				}
 				self._addMySubTask(data);

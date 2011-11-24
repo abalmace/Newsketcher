@@ -33,7 +33,7 @@ YUI.add("instancesubtaskgroup", function(Y)
 		{
 			this.client = data.client;
 			this.group = data.group;
-			
+			this.subscriptions = [];
 			this._subscriptionsInit();
 			this.addPeople();
 			this._showContainer();
@@ -47,7 +47,7 @@ YUI.add("instancesubtaskgroup", function(Y)
 			{
 				s.cancel();
 			});
-			this.leaveRoom({guid:this.client.guid})
+			this._leaveRoom({guid:this.client.guid})
 		},
 	  
 		addPeople : function()
@@ -73,13 +73,13 @@ YUI.add("instancesubtaskgroup", function(Y)
 				this._addPerson(data);
 			}
 			else
-				this._changeClass(data,this.icon);
+				this._changeClassIndicator(data,this.onlineClass);
 			
 		},
 
 		leave : function(data)
 		{
-			this._changeClass(data,this.icon_off)
+			this._changeClassIndicator(data,this.offlineClass)
 		},
 
 		
@@ -109,7 +109,41 @@ YUI.add("instancesubtaskgroup", function(Y)
 		_whoIsHere:function()
 		{
 			this.client.sendSignal(this.roommatePath(),{status:'answer'});
-		}
+		},
+		
+		_addPerson : function(data)
+		{
+			var self = this;
+			var divUser = document.createElement('div');
+			divUser.className = "roommate";
+			var id = data.guid || Utils.guid();
+			divUser.id = id
+			
+			var divIcon = document.createElement('div');
+			divIcon.className = this.stringClassBase;
+			divIcon.className += data.selected?this.icon:this.icon_off;
+			
+			var divIndicator = document.createElement('div');
+			divIndicator.className = this.stringClassIndicatorBase+this.offlineClass;
+			
+			
+			var spanName = document.createElement('span');
+			spanName.className = "roommateName";
+			spanName.innerText = data.name;
+			
+			
+			var nodeUser = Y.one(divUser)
+			nodeUser.prepend(spanName);
+			nodeUser.prepend(divIcon);
+			nodeUser.prepend(divIndicator);
+			this.element.prepend(divUser);
+			
+			data.guid = id;
+			
+			this._addInContainer(data);
+			
+			return Y.one(divUser);
+		},
 	});
 
 	Y.namespace("ModuleTask").InstanceSubTaskGroup = InstanceSubTaskGroup;
