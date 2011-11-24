@@ -115,7 +115,7 @@ YUI.add("groupwizard", function(Y)
 		{
 			var self = this;
 			var divUser = document.createElement('div');
-			divUser.className = "roommate";
+			divUser.className = "roommate roommateClick";
 			var id = data.guid || Utils.guid();
 			divUser.id = id
 			
