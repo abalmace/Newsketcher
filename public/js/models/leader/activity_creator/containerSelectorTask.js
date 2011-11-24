@@ -50,7 +50,7 @@ YUI.add("containerselectortask", function(Y)
 			this.client = data.client;
 			this.allTasks = [];
 			this.container = data.container;
-			this.clicked = data.clicked; 
+			this.callback = data.callback; 
 			this.subscriptions = [];
 			this.prefixIdTask = 'circle_';
 			
@@ -109,11 +109,15 @@ YUI.add("containerselectortask", function(Y)
 			
 			data.dom = div;
 			data.guid = guid;
-			data.clicked = this.clicked;
+			if(this.callback)
+				data.clicked = this.callback.click;
 			
 			var selectedTask = new Y.ModuleSelectedTask.SelectedTask(data);
 			this.allTasks.push(selectedTask);
 			this.container.appendChild(div);
+			
+			if(this.callback && this.callback.update)
+				this.callback.update();
 		},
 	  
 		getTask : function(guid)

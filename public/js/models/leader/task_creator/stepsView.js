@@ -42,7 +42,7 @@ YUI().add('stepsview',function (Y)
 			}
 		,prefixIdMap:
 			{
-			value: "map_"
+			value: null
 			}
 	};
 
@@ -55,7 +55,7 @@ YUI().add('stepsview',function (Y)
 			var self = this;
 			self.client = data.client;
 			self.infoOnMaps = [];
-			self.prefixIdMap = 'map_';
+			self.prefixIdMap = 'subTask_';
 
 			// -- Model --------------------------------------------------------------------
 
@@ -321,7 +321,7 @@ YUI().add('stepsview',function (Y)
 				
 				self._createMapInfo(this);
 				
-				model.set('mapId',this.sketch.name);
+				model.set('guid',this.sketch.name);
 				
 			},
 
@@ -333,7 +333,7 @@ YUI().add('stepsview',function (Y)
 				container.setContent(Y.Lang.sub(this.template, {
 				checked: done ? 'checked' : ''
 				,text   : model.getAsHTML('text')
-				,mapId : this.sketch.name
+				,guid : this.sketch.name
 				}));
 
 				container[done ? 'addClass' : 'removeClass']('todo-done');
@@ -404,7 +404,7 @@ YUI().add('stepsview',function (Y)
 				steps.push(
 					{
 						description:element.getAsHTML('text')
-						,mapId: element.getAsHTML('mapId')
+						,guid: element.getAsHTML('guid')
 					});
 			});
 			
@@ -433,7 +433,7 @@ YUI().add('stepsview',function (Y)
 			this.infoOnMaps.push(infoOnMap);
 		},
 	});
-	Y.namespace("ModuleList").StepsView= StepsView;
+	Y.namespace("ModuleList").StepsView = StepsView;
 
 }, "1.0", {requires:['event-focus', 'json', 'model', 'model-list', 'view','base','listmodel']});
 

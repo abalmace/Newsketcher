@@ -112,13 +112,23 @@ YUI.add("showcircle", function(Y)
 		_handleClick : function(guid)
 		{
 			//this.showDescription && this.showDescription.destroy();
+			var self = this;
 			
+			var callback = [];
+			if(self.callback && self.callback.click)
+			{
+				callback.click = function(data)
+				{
+					data.circleGuid = self.guid;
+					self.callback.click(data);
+				};
+			}
 			this.showDescription = new Y.ModuleTask.ShowTask(
 			{
 				container : this.li
 				,guid:guid
 				,people : this.people
-				,callback : this.callback
+				,callback :callback
 				,client : this.client
 			});
 		},

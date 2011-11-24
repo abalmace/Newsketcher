@@ -46,7 +46,7 @@ Overlay.prototype.getJsonElement = function()
 		}
 }
 
-Overlay.prototype.destroy = function()
+Overlay.prototype.deleteOverlay = function()
 {
 	var self = this;
 	_.each(this.drawPool, function(overlay, map_id)
@@ -75,10 +75,10 @@ Overlay.prototype.drawAt = function(map, options)
 						options.click.update(self);
 					}
 				}
-			,destroy: function()
+			,deleteOverlay: function()
 				{
 					if(options.click)
-						options.click.destroy(self);
+						options.click.deleteOverlay(self);
 				}
 			,drag: function()
 				{

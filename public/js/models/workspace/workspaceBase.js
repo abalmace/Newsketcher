@@ -101,9 +101,9 @@ YUI.add("workspacebase", function(Y)
 								{
 									self.room.updateOverlay(overlay);
 								}
-						,destroy: function(overlay)
+						,deleteOverlay: function(overlay)
 									{
-										self.room.destroy(overlay);
+										self.room.deleteOverlay(overlay);
 									}
 						}
 				,drag: function()

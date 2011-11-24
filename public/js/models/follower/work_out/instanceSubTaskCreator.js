@@ -115,7 +115,7 @@ YUI.add("instancesubtaskcreator", function(Y)
 		{
 			var people = this.group.getGroup();
 			var subGroup = [];
-			_.each(people, function(person)
+			Y.Array.each(people, function(person)
 			{
 				subGroup.push(person.to_json())
 			})

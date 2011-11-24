@@ -41,7 +41,7 @@ YUI.add("activityworkout", function(Y)
 		initializer: function(data)
 		{
 			this.container = document.getElementById(data.container || 'unknown');
-			this.allCircles = [];
+			this.circleGuid = data.circleGuid;
 			this.people = data.people;
 			this.prefixIdTask = 'task_';
 			this.task_title =  data.title;
@@ -107,16 +107,16 @@ YUI.add("activityworkout", function(Y)
 			}
 			else if(this.taskType = 'list')
 			{
-				this._addSubTasks(task.subTasks,false)
+				this._addSubTasks(task.subTasks,false,task.guid)
 			}
 			else if(this.tasktype = 'orderList')
 			{
-				this._addSubTasks(task.subTasks,true)
+				this._addSubTasks(task.subTasks,true,task.guid)
 			}
 			this.subTasks = task.subTask;
 		},
 	  
-		_addSubTasks:function(subtasks,order)
+		_addSubTasks:function(subtasks,order,taskGuid)
 		{
 			var self = this;
 			Y.Array.each(subtasks,function(subtask)
@@ -126,6 +126,8 @@ YUI.add("activityworkout", function(Y)
 				textElement:subtask.description
 				,guid : subtask.guid
 				,people : self.people
+				,taskGuid : taskGuid
+				,circleGuid:self.circleGuid
 				}
 				self._addMySubTask(data);
 			});
