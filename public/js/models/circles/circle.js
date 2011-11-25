@@ -122,6 +122,10 @@ YUI.add("circle", function(Y)
 
         _defineDOMElement : function()
 	{
+		
+		var divOuter = document.createElement('div');
+		divOuter.className = 'outer_circle';
+		
 		var divInner = document.createElement('div');
 		divInner.className = "inner_circle";
 
@@ -134,12 +138,13 @@ YUI.add("circle", function(Y)
 		divNumber.innerHTML = this.people.length;
 		
 		var divDragHidden = document.createElement('div');
-		divDragHidden.className = ".dragHidden";
+		divDragHidden.className = "dragHidden";
 
 		divInner.appendChild(divLabel);
 		divInner.appendChild(divNumber);
 		divInner.appendChild(divDragHidden);
-		this.dom.appendChild(divInner);
+		divOuter.appendChild(divInner);
+		this.dom.appendChild(divOuter);
         },
 	//TODO
         _addEvents : function()

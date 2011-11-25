@@ -16,6 +16,10 @@ YUI.add("specialcontainercircle", function(Y)
 			{
 			value:null
 			}
+		,subscriptions:
+			{
+			value:[]
+			}
 	};
 	
 	 /* MyComponent extends the Base class */
@@ -25,13 +29,13 @@ YUI.add("specialcontainercircle", function(Y)
 		initializer: function(data)
 		{
 			this.callback = data.callback;
+			this.subscriptions = [];
 			this._addSubscriptions()
 		},
 
 		destructor : function()
 		{
 			this.client = null;
-			this.allCircles.destructor();
 			this.container = null;
 			this.subscriptions.destructor();
 		},

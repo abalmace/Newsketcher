@@ -16,6 +16,10 @@ YUI.add("normalcontainercircle", function(Y)
 			{
 			value:null
 			}
+		,subscriptions:
+			{
+			value:[]
+			}
 	};
 	
 	 /* MyComponent extends the Base class */
@@ -25,7 +29,7 @@ YUI.add("normalcontainercircle", function(Y)
 		initializer: function(data)
 		{
 			this.callback = data.callback;
-			
+			this.subscriptions = [];
 			this._addSubscriptions();
 			this._initCircleCreator();
 		},
@@ -33,7 +37,6 @@ YUI.add("normalcontainercircle", function(Y)
 		destructor : function()
 		{
 			this.client = null;
-			this.allCircles.destructor();
 			this.container = null;
 			this.subscriptions.destructor();
 		},

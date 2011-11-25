@@ -34,7 +34,7 @@ YUI.add("peoplecontainer", function(Y)
 			{
 			value:[]
 			}
-		,clicked:
+		,callback:
 			{
 			value:[]
 			}
@@ -53,7 +53,7 @@ YUI.add("peoplecontainer", function(Y)
 			this.client = data.client;
 			this.allPeople = [];
 			this.container = data.container;
-			this.clicked = data.clicked;
+			this.callback = data.callback;
 			this.subscriptions = [];
 			this.prefixIdTask = 'people_';
 
@@ -112,11 +112,15 @@ YUI.add("peoplecontainer", function(Y)
 			data.dom = dom;
 			data.guid = guid;
 
-			data.clicked = this.clicked;
+			if(this.callback)
+				data.clicked = this.callback.click;
 
 			var person = new Y.ModulePerson.Person(data);
 			this.allPeople.push(person);
 			this.container.appendChild(dom);
+			
+			if(this.callback && this.callback.update)
+				this.callback.update();
 		},
 
 		getPerson : function(guid)
