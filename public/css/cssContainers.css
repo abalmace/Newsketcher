@@ -75,7 +75,6 @@ div.mod {
     -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
     font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'Helvetica', 'Arial', sans-serif;
-    margin: 15px 0;
     padding-bottom: 1px;
 
 
@@ -153,6 +152,6 @@ div.mod h2 a:hover.close, div.mod h2 a:hover.min {
 
 ul.elementContainer
 {
-	max-height:400px;
+	max-height:200px;
 	overflow:auto;
 }

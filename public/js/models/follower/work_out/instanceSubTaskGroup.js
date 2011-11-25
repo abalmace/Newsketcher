@@ -104,6 +104,11 @@ YUI.add("instancesubtaskgroup", function(Y)
 					self.joinRoom({guid:self.client.guid});
 			}));
 			
+			self.subscriptions.push(self.client.subscribe('/user/disconnect',function(data)
+			{
+				self.leave(data);
+			}));
+			
 		},
 	  
 		_whoIsHere:function()
@@ -119,13 +124,16 @@ YUI.add("instancesubtaskgroup", function(Y)
 			var id = data.guid || Utils.guid();
 			divUser.id = id
 			
+			
 			var divIcon = document.createElement('div');
 			divIcon.className = this.stringClassBase;
 			divIcon.className += data.selected?this.icon:this.icon_off;
 			
-			var divIndicator = document.createElement('div');
-			divIndicator.className = this.stringClassIndicatorBase+this.offlineClass;
-			
+			if(data.selected)
+			{
+				var divIndicator = document.createElement('div');
+				divIndicator.className = this.stringClassIndicatorBase+this.offlineClass;
+			}
 			
 			var spanName = document.createElement('span');
 			spanName.className = "roommateName";
@@ -135,7 +143,7 @@ YUI.add("instancesubtaskgroup", function(Y)
 			var nodeUser = Y.one(divUser)
 			nodeUser.prepend(spanName);
 			nodeUser.prepend(divIcon);
-			nodeUser.prepend(divIndicator);
+			data.selected && nodeUser.prepend(divIndicator);
 			this.element.prepend(divUser);
 			
 			data.guid = id;

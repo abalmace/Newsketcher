@@ -85,6 +85,8 @@ YUI.add("newsketcher_client", function(Y)
 			this.name = data.name || "unknow";
 			this.userType = data.usertype || "follower";
 			this.nick = data.nick || this.name;
+			
+			this._sendInfoToServer();
 
 		},
 
@@ -109,6 +111,16 @@ YUI.add("newsketcher_client", function(Y)
 		getWorkspaceMapDom : function()
 		{
 			return document.getElementById('map');
+		},
+	  
+		_sendInfoToServer:function()
+		{
+			var data = 
+			{
+				name:this.name
+				,guid:this.guid
+			}
+			this.sendSignal('/user/connect',data);
 		}
 	});
 

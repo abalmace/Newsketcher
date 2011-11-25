@@ -177,8 +177,11 @@ YUI.add("subtaskui", function(Y)
 			{
 				//Get a reference to our drag and drop nodes
 				var drag = e.drag.get('node'),
-				drop = e.drop.get('node');
-				drop.addClass("insTaskOver");
+				dragFather = drag.get('parentNode');
+				drop = e.drop.get('node'),
+				dropFather = drop.get('parentNode');
+				if(dragFather.compareTo(dropFather))
+					drop.addClass("insTaskOver");
 			});
 			del.on('drop:exit', function(e)
 			{
@@ -218,7 +221,7 @@ YUI.add("subtaskui", function(Y)
 				var drag = e.drag.get('node');
 				var drop = e.drop.get('node');
 				_dropHit(node,drop);
-				node.removeClass('insTaskOver');
+				drop.removeClass('insTaskOver');
 			});
 			
 			var _dropHit = function(node, drop)
@@ -227,8 +230,8 @@ YUI.add("subtaskui", function(Y)
 				var dropId = drop.get('id');
 				var nodeInstance = self._findInstanceTask(nodeId);
 				var dropInstance = self._findInstanceTask(dropId);
-				
-				dropInstance.copyOverlays(nodeInstance);
+				if(dropInstance)
+					dropInstance.copyOverlays(nodeInstance);
 			}
 		},
 	  
