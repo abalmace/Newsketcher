@@ -106,7 +106,7 @@ YUI.add("activityworkout", function(Y)
 				,guid : task.guid
 				,people : this.people
 				}
-				this._addMySubTask(data);
+				this._addMySubTask(data,task.guid);
 			}
 			else if(this.taskType = 'list')
 			{
@@ -129,16 +129,19 @@ YUI.add("activityworkout", function(Y)
 				textElement:subtask.description
 				,guid : subtask.guid
 				,people : self.people
-				,activityWorkOut:self
-				,taskGuid : taskGuid
-				,circleGuid:self.circleGuid
 				}
-				self._addMySubTask(data);
+				self._addMySubTask(data,taskGuid);
 			});
 		},
 		
-		_addMySubTask : function(subTask)
+		_addMySubTask : function(subTask,taskGuid)
 		{
+			var self = this;
+			
+			subTask.activityWorkOut = self;
+			subTask.taskGuid = taskGuid;
+			subTask.circleGuid = self.circleGuid;
+			
 			this._addElement(subTask,Y.ModuleTask.SubTaskUI);
 		},
 	  

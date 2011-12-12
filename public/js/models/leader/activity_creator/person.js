@@ -96,8 +96,21 @@ YUI.add("person", function(Y)
 		},
 
 		_defineDOMElement : function()
-		{
-			this.dom.innerHTML =this.name;
+		{	
+			var self = this;
+		
+			var divIcon = document.createElement('div');
+			divIcon.className = 'cssIconPerson';
+			
+			var spanName = document.createElement('span');
+			spanName.className = "cssNamePerson";
+			spanName.innerText = this.name;
+			
+			
+			var nodeUser = Y.one(self.dom)
+			nodeUser.prepend(spanName);
+			nodeUser.prepend(divIcon);
+			
 		},
 
 		_addEvents : function(e)

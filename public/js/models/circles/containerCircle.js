@@ -128,7 +128,8 @@ YUI.add("containercircle", function(Y)
 			
 			var circle = new Y.ModuleCircle.Circle(data);
 			this.allCircles.push(circle);
-			this.container.appendChild(div);
+			var container = Y.one(this.container);
+			container.prepend(div);
 			
 			
 			if(this.callback && this.callback.update)

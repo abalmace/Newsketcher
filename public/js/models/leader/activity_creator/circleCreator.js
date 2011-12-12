@@ -73,15 +73,15 @@ YUI.add("circle-creator", function(Y)
 								
 			});
 			
-			Y.one('#circleAdd').on('click', Y.bind(modal.show, modal));
-		
-			var modalDOM = Y.one('#modalCircleCreator');
-			
-			modalDOM.one('.cancelModal').on('click', Y.bind(modal.hide, modal));
-			modalDOM.one('.createModal').on('click', function(e)
+			Y.one('#circleAdd').on('keypress',function(e)
 			{
-				modal.hide();
-				self._createCircle(modalDOM.one('.textModal').get('value'));
+				if(e.keyCode === 13)//enter key
+				{
+					var node = Y.one('#circleAdd');
+					self._createCircle(node.get('value'));
+					node.focus();
+					node.set('value','');
+				}
 			});
 		},
 	  

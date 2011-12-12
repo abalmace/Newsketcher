@@ -266,7 +266,7 @@ YUI.add("activity-designer", function(Y)
 			var userElements = Y.one('#'+self.stringPeopleContainerDOM);
 			this.delUsers = new Y.DD.Delegate({
 				container: userElements
-				,nodes: 'div'
+				,nodes: 'div.people'
 				,target: false
 			});
 			this.delUsers.dd.plug(Y.Plugin.DDProxy,

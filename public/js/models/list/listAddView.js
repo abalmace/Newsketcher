@@ -304,7 +304,8 @@ YUI().add('listaddview',function (Y)
 				model.after('destroy', this.destroy, this);
 			},
 
-			render: function () {
+			render: function ()
+			{
 				var container = this.container,
 				model     = this.model,
 				done      = model.get('done');

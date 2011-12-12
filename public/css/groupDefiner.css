@@ -62,7 +62,19 @@
 	overflow:auto;
 }
 
- #circle{
+#circleAdd
+{
+	left:2px;
+	top:1px;
+	position:absolute;
+	border: 1px solid #CCC;
+	font: 17px arial,sans-serif;
+	margin-bottom: 10px;
+	padding: 5px;
+	width:250px;
+}
+
+#circle{
 	 position: relative;
 	 vertical-align:top;
 	 position:relative;
@@ -158,7 +170,9 @@
 {
 	height: 150px;
 	width: 150px;
-	margin: 15px;
+	margin-top: 30px;
+	margin-left: 15px;
+	margin-right: 15px;
 	position: relative;
 	vertical-align: top;
 	-webkit-border-radius: 63px;
@@ -167,6 +181,8 @@
 	cursor: pointer;
 	display:inline-block;
 }
+
+
 
 .background_selected_circle
 {
