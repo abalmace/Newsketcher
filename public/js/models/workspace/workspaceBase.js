@@ -74,6 +74,7 @@ YUI.add("workspacebase", function(Y)
 		start : function()
 		{
 			var self = this;
+			self.client.cleanWorkspaceMapDom();
 			var dom = self.client.getWorkspaceMapDom()
 			self.map = new Y.ModuleMap.GenericMap({
 				dom: self.client.getWorkspaceMapDom()

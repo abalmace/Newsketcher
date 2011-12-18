@@ -121,7 +121,7 @@ YUI.add("genericroom", function(Y)
 		}));
 		
 		// Download previos sketches
-		$.getJSON('/rooms/'+ this.name +'/sketches.json', function(data) {
+		Y.ModuleConnectionServer.getJSON('/rooms/'+ this.name +'/sketches.json', function(data) {
 			_.each(data.sketches, function(sketch) {
 				self.add(sketch);
 		  });
@@ -330,4 +330,4 @@ YUI.add("genericroom", function(Y)
 
 	Y.namespace("ModuleRoom").GenericRoom = GenericRoom;
 
-}, "1.0", {requires:['base']});
+}, "1.0", {requires:['base','connectionserver']});

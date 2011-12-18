@@ -137,7 +137,7 @@ YUI.add("subtaskui", function(Y)
 			}));
 			
 		// Download previos instanceTasks
-			$.getJSON('/channel/'+ this.guid+'/'+this.client.guid+'/instanceSubTasks.json', function(data)
+			Y.ModuleConnectionServer.getJSON('/channel/'+ this.guid+'/'+this.client.guid+'/instanceSubTasks.json', function(data)
 			{
 				Y.Array.each(data.instanceSubTasks, function(info)
 				{
@@ -341,4 +341,4 @@ YUI.add("subtaskui", function(Y)
 
 	Y.namespace("ModuleTask").SubTaskUI = SubTaskUI;
 
-}, "1.0", {requires:['base','genericdivanimation','showtask','dd-constrain', 'dd-proxy', 'dd-delegate', 'node','instancesubtask','instancesubtaskcreator']});
+}, "1.0", {requires:['base','genericdivanimation','showtask','dd-constrain', 'dd-proxy', 'dd-delegate', 'node','instancesubtask','instancesubtaskcreator','connectionserver']});

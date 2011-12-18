@@ -122,7 +122,8 @@ YUI.add("showcontainercircle", function(Y)
 			circle.textElement = circle.name;
 			circle.name = null;
 			circle.callback = this.callback;
-			this._addElement(circle,Y.ModuleCircle.ShowCircle);
+			var li = this._addElement(circle,Y.ModuleCircle.ShowCircle);
+			this._setUI(li);
 		},
 	  
 		_findTasksInCircle : function(circle)
@@ -136,6 +137,19 @@ YUI.add("showcontainercircle", function(Y)
 				self._addMyTask(task);
 			});
 			
+		},
+	  
+		_setUI:function(li)
+		{
+			var node = Y.one(li);
+			
+			node.addClass('liGroup');
+			
+			var nodeH2 = node.one(".mod h2");
+			nodeH2.addClass('backgroundHeaderGroup');
+			
+			var nodeUl = node.one(".elementContainer");
+			nodeUl.addClass('backgroundGroup');
 		}
 	});
 

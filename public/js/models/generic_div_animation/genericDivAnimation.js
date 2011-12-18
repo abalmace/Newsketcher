@@ -208,7 +208,7 @@ YUI.add("genericdivanimation", function(Y)
 		_addElement : function(data, classElement)
 		{
 			var li = document.createElement('li');
-			li.className = "instanceTask";
+			li.className = "genericDivAnimation";
 			var id = data.guid || Utils.guid();
 			li.id = id;
 			li.innerHTML = data.textElement;

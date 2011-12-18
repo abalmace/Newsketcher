@@ -1,8 +1,45 @@
-<div id ="div_header_activity" class = "header_toolbar">
-	<strong>[nombre de la task]</strong>
-	<div id= "changeTaskContainer" class = "gButton delete">Tasks</div>
-</div>
-<div id="wrapper" >
+<div id = "divHeaderScreenSelectorTask" class = "header_toolbar"><span>Selector Task</span></div>
+<div id="divGlobalScreenSelectorTask">
+	<div id ="blockLayer" class = "globalContainer layer"></div>
+	<div id ="circlesContainer" class = "globalContainer">
+		<ul id="div_containerSelectorTask" class = "list layer"></ul>
+	</div>
+	<div id="div_containerSelectorInfoTask" class = "list layer" style = "visibility:hidden">
+		<div id ="headerTaskType">
+			<div id = "btn_hide_taskInfo">
+				<div id = "imgHide"></div>
+			</div>
+
+			<label>
+				<strong>Activity Type</strong>
+				<span></span>
+			</label>
+		</div>
+		
+		<label>
+			<strong>Title</strong>
+			<span class = "title"></span>
+		
+		</label>	
+		<label>
+			<strong>Objetives</strong>
+			<ul class = "objetives"></ul>
+		</label>
+		<label>
+			<strong>Planning</strong>
+			<ul class = "subTasks" ></ul>
+		</label>
+		<input type = "button" class = "gButton g-button-submit save-big" id = "btn_start_task" value = "start"/>
+	</div>
+	<input type = "button" class = "gButton g-button-submit" id = "btn_show_taskInfo"  style = "visibility:hidden" value = "show"/>
+	<div id="workspace" data-role="content">
+		<div id="layer">
+			<div id="map" class = "classBackgroundMap"></div>
+		</div>
+
+		<div id="sketches"></div>
+	</div>
+	
 	<div id="toolbar" style ="visibility:hidden">	
 		<div id = "toggleModeButton" class = "btnMap"></div>
 		<div id = "location"></div>
@@ -24,15 +61,9 @@
 				</ul>
 			</div>
 		</div>
-	</div>	
-	<div id="textoPrueba"><label id="result">Resultado</label></div>
-	<div id="workspace" data-role="content">
-		<div id="layer">
-			<div id="map" class = "classBackgroundMap"></div>
-		</div>
-
-		<div id="sketches"></div>
 	</div>
+	
+	
 	<!-- div para la definición de la task -->
 	<div id = "taskDefinition" class = "layer" style = "display:none">
 		<input type="text" id="taskTitle" placeholder="Task title"/>
@@ -46,25 +77,5 @@
 	<!-- div para el contenedor de roommates -->
 	<div id ="divRoommateContainer" class = "layer" style = "visibility:hidden">
 		<a href="#" id= "hideRoommate" class="btnHide">>></a>
-	</div>
-	<!-- div para el contenedor de subtask -->
-	<div id="play" class = "globalContainer">
-		<ul id = "ul_subTask_container" class="list layer"></ul>
-	</div>
-				
-</div>
-		
-<div id="boxes">
-	<div id="dialog1" class="window">
-		<div class="d-header">
-			<input type="text" id = "name" value="name" onclick="this.value=''"/><br/>
-			<input type="text" id = "username" value="username" onclick="this.value=''"/> 
-			<select id = "userType">
-				<option value="follower">Follower</option>
-				<option value="leader">Leader</option>
-			</select>   
-		</div>
-		<div class="d-blank"></div>
-		<div class="close"><input type="image" alt="Login" title="Login" src="css/images/login-button.png"/></div>
 	</div>
 </div>

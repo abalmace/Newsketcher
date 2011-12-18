@@ -119,7 +119,7 @@ YUI.add("infoonmap", function(Y)
 				}));
 				
 				// Download previos sketches
-				$.getJSON('/rooms/'+ this.name +'/sketches.json', function(data)
+				Y.ModuleConnectionServer.getJSON('/rooms/'+ this.name +'/sketches.json', function(data)
 				{
 					_.each(data.sketches, function(sketch) {
 						self.add(sketch);
@@ -137,4 +137,4 @@ YUI.add("infoonmap", function(Y)
 
 	Y.namespace("ModuleTask").InfoOnMap = InfoOnMap;
 
-}, "1.0", {requires:['room','workspacetosubtask']});
+}, "1.0", {requires:['room','workspacetosubtask','connectionserver']});

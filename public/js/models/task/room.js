@@ -99,7 +99,7 @@ YUI.add("room", function(Y)
 			if (self.persisted)
 			{
 				// Download previos sketches
-				$.getJSON('/rooms/'+ this.name +'/sketches.json', function(data)
+				Y.ModuleConnectionServer.getJSON('/rooms/'+ this.name +'/sketches.json', function(data)
 				{
 					_.each(data.sketches, function(sketch) {
 						self.add(sketch);
@@ -290,4 +290,4 @@ YUI.add("room", function(Y)
 
 	Y.namespace("ModuleTask").Room = Room;
 
-}, "1.0", {requires:['base']});   
+}, "1.0", {requires:['base','connectionserver']});   

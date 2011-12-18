@@ -21,28 +21,6 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 		});
 	}
 	
-	function _startTask(data)
-	{
-		var node = Y.one('#ajaxContainer');
-		node.load('/partialView/activityWorkOut.ejs',null,function()
-		{
-			var btn = Y.one('#changeTaskContainer');
-			btn.on('click', function(e)
-			{
-				btn.destroy();
-				_selectTask()
-			});
-			
-			Y.use('activityworkout', function(Y)
-			{
-				memoryFree();
-				data.client = newsketcherClient;
-				data.container = "ul_subTask_container";
-				activity = new Y.ModuleNewsketcher.ActivityWorkOut(data);
-			});
-		}); 
-	}
-	
 	function _logScreen()
 	{
 		memoryFree();
@@ -113,7 +91,7 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 			}
 			else if(person.userType == 'follower')
 			{
-				_selectTask()
+				_startActivity()
 			}
 		}
 		//wrong user - pass
@@ -123,11 +101,11 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 		}
 	}
 	
-	function _selectTask()
+	function _startActivity()
 	{
 	
 		var node = Y.one('#ajaxContainer');
-		node.load('/partialView/screenSelectTask.ejs',null,function()
+		node.load('/partialView/activityWorkOut.ejs',null,function()
 		{
 			Y.use('showcontainercircle','activityworkout', function(Y)
 			{
@@ -140,7 +118,7 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 					{
 						click:function(data)
 						{
-							_startTask(data);
+							//_startTask(data);
 						}
 					}
 				});

@@ -86,6 +86,7 @@ YUI.add("genericcontainer", function(Y)
 			var goingUp = false, lastY = 0, trans = {};
 
 			var elementsContainer = Y.one(this.container);
+			elementsContainer.addClass('mainElementContainer');
 			this.del = new Y.DD.Delegate({
 				container: elementsContainer
 				,nodes: 'li.item'
@@ -117,7 +118,8 @@ YUI.add("genericcontainer", function(Y)
 				var fatherDrop = drop.get('parentNode');
 				var fatherDrag = drag.get('parentNode');
 				var parentClassName = fatherDrag.get('className');
-				if (tagName === 'li' && parentClassName !== 'elementContainer')
+				var classToFind = 'mainElementContainer';
+				if (tagName === 'li' && parentClassName.indexOf(classToFind)>-1)
 				{
 					//Are we not going up?
 					if (!goingUp)
@@ -269,6 +271,8 @@ YUI.add("genericcontainer", function(Y)
 			Para que el nuevo elemento agregado sea un Target tambien
 			*/
 			this.del.syncTargets();
+			
+			return li;
 		}
 	});
 

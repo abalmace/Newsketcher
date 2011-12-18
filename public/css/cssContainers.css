@@ -8,7 +8,7 @@
 	height:auto;
 	width:30%;
 	padding: .5em; 
-	z-index:1;
+	z-index:2;
 }
 
 .layer
@@ -51,7 +51,7 @@ ul.list
     margin: 2px;
 }
 
-.yui3-dd-proxy li, div.globalContainer li {
+.yui3-dd-proxy li, div.globalContainer >ul>li {
     padding-left: 20px;
     padding: 5px;
     margin: 2px;
@@ -90,9 +90,9 @@ div.mod div.inner div.loading {
     padding: 5px 5px 5px 25px;
 
 }
-div.mod div.inner ul li {
-    padding-left: 20px;
-    font-size: 80%;
+div.mod div.inner ul li
+{
+	font-size: 80%;
 }
 div.mod div.inner ul li a {
     color: #000;
@@ -100,14 +100,14 @@ div.mod div.inner ul li a {
 div.mod h2 {
     position: relative;
 
-    background: #E5E6F1;
+    background: #4A99CF;
     -moz-border-radius: 4px 4px 0 0;
     -webkit-border-radius: 4px 4px 0 0;
     border-radius: 4px 4px 0 0;
-    color: #5E6BA4;
+    color: white;
     font-weight: bold;
     font-size: 107.692%;
-    margin: 0;
+    margin: 2px;
     padding: 4px 7px 5px;
 
 
@@ -155,3 +155,105 @@ ul.elementContainer
 	max-height:200px;
 	overflow:auto;
 }
+
+ul.backgroundGroup
+{
+	
+}
+
+
+
+/*
+ * 
+ * cssTask.css
+ * 
+ */
+
+
+
+
+#global
+{
+	display: block;
+	position:absolute;
+	height:auto;
+	bottom:0;
+	top:0;
+	left:0;
+	right:0;
+	border:0;
+	background-color: green;
+	overflow:hidden;
+}
+
+#taskDefinition
+{
+	position:absolute;
+	float:left;
+	width:30%;
+	height:70%;
+	
+	margin-top:3px;
+	margin-left:1px;
+}
+
+#taskTitle
+{
+	position:absolute;
+	top:17px; 
+	left:5%;
+}
+
+
+
+
+/*
+	clase para agregar mini mapas a una room
+*/
+.roomAdd{
+	position:absolute;
+	background: transparent url('./images/btnPlus.png') no-repeat;
+	top:0;
+	right:2px;
+	width:31px;
+	height:31px;
+	z-index:100;
+}
+.roomAdd:hover
+{ 
+	cursor:pointer;
+}
+
+.instanceAdd{
+	position:absolute;
+	background: transparent url('./images/btnPlus_small.png') no-repeat;
+	top:0;
+	right:30px;
+	width:24px;
+	height:24px;
+	z-index:100;
+}
+.instanceAdd:hover
+{ 
+  cursor:pointer;
+}
+
+.drag
+{
+	position:absolute;
+	left:0;
+	top:0;
+	height:100%;
+	width:24px;
+	
+	cursor: move;
+	
+	background: transparent url('./images/drag24.png') no-repeat;
+}
+
+
+
+
+
+
+

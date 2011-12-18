@@ -6,11 +6,12 @@
 	bottom:20%;
 	
 	height:auto;
-	width:10%;
+	width:110px;
 	padding: .5em;
 	
 	margin-right:17px; 
 	overflow:auto;
+	z-index:100;
 }
 .roommateIconBase
 {

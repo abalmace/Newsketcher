@@ -69,11 +69,6 @@ YUI.add("genericmap", function(Y)
 		destructor : function()
 		{
 			this.gmap = null;
-			var newDiv = document.createElement('div');
-			newDiv.id = 'map';
-			var node = Y.one(this.dom);
-			node.replace(newDiv);
-			
 		},
 
 		/* MyComponent specific methods */

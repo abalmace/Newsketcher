@@ -52,6 +52,10 @@ YUI.add("newsketcher_client", function(Y)
 			{
 			value:null
 			}
+		,instanceSubTaskCreator:
+			{
+			value:null
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -111,6 +115,14 @@ YUI.add("newsketcher_client", function(Y)
 		getWorkspaceMapDom : function()
 		{
 			return document.getElementById('map');
+		},
+	  
+		cleanWorkspaceMapDom:function()
+		{
+			var newDiv = document.createElement('div');
+			newDiv.id = 'map';
+			var node = Y.one('#map');
+			node.replace(newDiv);
 		},
 	  
 		_sendInfoToServer:function()

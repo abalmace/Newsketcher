@@ -44,6 +44,10 @@ YUI.add("instancesubtaskcreator", function(Y)
 			{
 			value:null	
 			}
+		,container:
+			{
+			value:null	
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -52,14 +56,14 @@ YUI.add("instancesubtaskcreator", function(Y)
 		initializer: function(data)
 		{
 			this.client = data.client;
+			this.container = data.container;
 			this.callback = data.callback;
 			this.dom = document.getElementById('taskDefinition');
 			this.prefixIdInstance = 'instanceSubTask_';
 			this.people = data.people;
 			
-			this.showTaskDefinition(true);
+			this._showSubTaskDefinition();
 			this.showUsers();
-			this.addCreatorBtnEvent();
 
 		this.publish("myEvent", {
 		defaultFn: this._defMyEventFn,
@@ -74,9 +78,48 @@ YUI.add("instancesubtaskcreator", function(Y)
 
 		/* MyComponent specific methods */
 
-		showTaskDefinition : function(bool)
+		_showSubTaskDefinition : function()
 		{
-				this.dom.style.display = bool?"":"none";
+			var input = document.createElement('input');
+			input.id = 'instanceSubTaskInput';
+			
+			var btnCreate = document.createElement('div');
+			btnCreate.className = 'gButton add';
+			btnCreate.id ='btnNewInstance';
+			btnCreate.innerHTML ='done';
+			this._addCreatorBtnEvent(btnCreate,input);
+			
+			var btnCancel = document.createElement('div');
+			btnCancel.className = 'gButton delete';
+			btnCancel.id ='btnCancelNewInstance';
+			btnCancel.innerHTML ='cancel';
+			this._cancelBtnEvent(btnCancel);
+			
+			var li = document.createElement('li');
+			li.className = "elementInstanceSubTaskCreator layer";
+			li.id = 'containerCreatorInstance';
+			
+			li.appendChild(input);
+			li.appendChild(btnCreate);
+			li.appendChild(btnCancel);
+			
+			var node = Y.one(li);
+			node.setAttribute('z-index','200');
+			
+			var nodeContainer = Y.one(this.container);
+			
+			nodeContainer.prepend(li);
+			
+			this.dom = li;
+		},
+	  
+		_hideSubTaskDefinition:function()
+		{
+			var node = Y.one(this.container);
+			node.setAttribute('z-index','0');
+			
+			var nodeElement = node.one('.elementInstanceSubTaskCreator');
+			nodeElement.remove();
 		},
 
 		showUsers : function()
@@ -84,19 +127,29 @@ YUI.add("instancesubtaskcreator", function(Y)
 			this.group = new Y.ModuleTask.GroupWizard({client:this.client, group:this.people});
 		},
 	  
-		addCreatorBtnEvent : function()
+		_addCreatorBtnEvent : function(btn,input)
 		{
 			var self = this;
-			self.btnCreate = Y.one('#taskCreate');
+			self.btnCreate = Y.one(btn);
 			self.btnCreate.on('click',function(e)
 			{
-				self.createInstanceSubTask();
+				self.createInstanceSubTask(input);
+			});
+		},
+	  
+		_cancelBtnEvent : function(btn)
+		{
+			var self = this;
+			self.btnCancel = Y.one(btn);
+			self.btnCancel.on('click',function(e)
+			{
+				self._hideSubTaskDefinition();
 			});
 		},
 
-		createInstanceSubTask : function()
+		createInstanceSubTask : function(input)
 		{
-			var title = $('#taskTitle').val();
+			var title = $(input).val();
 			var users = this.getUsers();
 			var data = 
 				{
@@ -108,7 +161,7 @@ YUI.add("instancesubtaskcreator", function(Y)
 				}
 			if(this.callback && this.callback.click)
 				this.callback.click(data);
-			this.showTaskDefinition(false);
+			this._hideSubTaskDefinition();
 		},
 
 		getUsers : function()

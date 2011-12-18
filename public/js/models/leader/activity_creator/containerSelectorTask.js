@@ -91,7 +91,7 @@ YUI.add("containerselectortask", function(Y)
 			else
 			{
 				// Download Tasks
-				$.getJSON('/room/Task/tasks.json', function(data) {
+				Y.ModuleConnectionServer.getJSON('/room/Task/tasks.json', function(data) {
 					_.each(data.tasks, function(task) {
 						self.addTask(task);
 					});
@@ -149,4 +149,4 @@ YUI.add("containerselectortask", function(Y)
 
 	Y.namespace("ModuleContainerSelectorTask").ContainerSelectorTask = ContainerSelectorTask;
 
-}, "1.0", {requires:['base','selectedtask']});
+}, "1.0", {requires:['base','selectedtask','connectionserver']});

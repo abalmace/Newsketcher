@@ -8,8 +8,9 @@ YUI.add("connectionserver", function(Y)
 	namespace.getJSON = function(url,callback)
 	{
 		Y.io(url,
-		     {
-			on :
+		{
+			method: 'POST'
+			,on :
 			{
 				success : function (tx, r)
 				{

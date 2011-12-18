@@ -12,16 +12,7 @@
 	overflow:hidden;
 }
 
-#taskDefinition
-{
-	position:absolute;
-	float:left;
-	width:30%;
-	height:70%;
-	
-	margin-top:3px;
-	margin-left:1px;
-}
+
 
 #taskTitle
 {

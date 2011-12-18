@@ -91,7 +91,7 @@ YUI.add("peoplecontainer", function(Y)
 			else
 			{
 			// Download people
-				$.getJSON('/channel/follower/people.json', function(data)
+				Y.ModuleConnectionServer.getJSON('/channel/follower/people.json', function(data)
 				{
 				_.each(data.users, function(person) {
 					self.addPerson(person);
@@ -134,4 +134,4 @@ YUI.add("peoplecontainer", function(Y)
 
 	Y.namespace("ModulePeopleContainer").PeopleContainer = PeopleContainer;
 
-}, "1.0", {requires:['base','person']});
+}, "1.0", {requires:['base','person','connectionserver']});

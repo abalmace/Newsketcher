@@ -56,6 +56,10 @@ YUI.add("instancesubtask", function(Y)
 			{
 			value:null
 			}
+		,callback:
+			{
+			value:null
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -65,6 +69,7 @@ YUI.add("instancesubtask", function(Y)
 		{
 			this.overlays = [];
 			this.subscriptions = [];
+			this.callback = data.callback;
 			this.client = data.client;
 			this.group = data.group;
 			this.name = data.name.toLowerCase();
@@ -118,7 +123,7 @@ YUI.add("instancesubtask", function(Y)
 				}));
 				
 				// Download previos sketches
-				$.getJSON('/rooms/'+ this.name +'/sketches.json', function(data)
+				Y.ModuleConnectionServer.getJSON('/rooms/'+ this.name +'/sketches.json', function(data)
 				{
 					_.each(data.sketches, function(sketch) {
 						self.add(sketch);
@@ -297,6 +302,7 @@ YUI.add("instancesubtask", function(Y)
 				newsketcherClient.currentRoomId=self.name;
 				var parentNode = self.dom.parentNode;
 				self.instanceSubTaskUI.active(true);
+				self._showAddBtn(true);
 					
 				self.client.instanceSubTaskGroup = new Y.ModuleTask.InstanceSubTaskGroup(
 				{
@@ -312,6 +318,7 @@ YUI.add("instancesubtask", function(Y)
 				self.workspace = null;
 				self.dom.style.border = "";
 				self.instanceSubTaskUI.active(false);
+				self._showAddBtn(false);
 				if(self.client.instanceSubTaskGroup)
 					self.client.instanceSubTaskGroup.destroy();
 				
@@ -380,9 +387,15 @@ YUI.add("instancesubtask", function(Y)
 		_sendSignal : function(zone,data)
 		{
 			this.client.sendSignal(this._roomPath(zone), data);
+		},	
+	  
+		_showAddBtn:function(bool)
+		{
+			if(this.callback && this.callback.showAddBtn)
+				this.callback.showAddBtn(bool);
 		}
 	});
 
 	Y.namespace("ModuleTask").InstanceSubTask = InstanceSubTask;
 
-}, "1.0", {requires:['base','instancesubtaskui','instancesubtaskgroup','workspacerwgps']});   
+}, "1.0", {requires:['base','instancesubtaskui','instancesubtaskgroup','workspacerwgps','connectionserver']});   

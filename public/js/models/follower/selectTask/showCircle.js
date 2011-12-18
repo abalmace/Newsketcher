@@ -82,8 +82,11 @@ YUI.add("showcircle", function(Y)
 		{
 			task.textElement = task.title;
 			task.title = null;
-			var li = this._addElement(task);
-			this._addEvent(li);
+			task.client = this.client;
+			task.people = this.people;
+			task.circleGuid = this.guid;
+			var li = this._addElement(task,Y.ModuleTask.TaskActivity);
+			this._setUI(li);
 		},
 
 		_addTasks : function()
@@ -138,9 +141,25 @@ YUI.add("showcircle", function(Y)
 			var node = Y.one(this.li);
 			node = node.one('.instanceAdd');
 			node.setStyle('visibility','hidden');
+		},
+	  
+		_setUI:function(li)
+		{
+			var node = Y.one(li);
+			
+			node.addClass('liTask');
+			
+			var add = node.one('.instanceAdd');
+			add.setStyle('visibility','hidden');
+			
+			var nodeH2 = node.one(".mod h2");
+			nodeH2.addClass('backgroundHeaderTask');
+			
+			var nodeUl = node.one(".elementContainer");
+			nodeUl.addClass('backgroundTask');
 		}
 	});
 
 	Y.namespace("ModuleCircle").ShowCircle = ShowCircle;
 
-}, "1.0", {requires:['base','genericdivanimation','showtask']});
+}, "1.0", {requires:['base','genericdivanimation','showtask','taskactivity']});

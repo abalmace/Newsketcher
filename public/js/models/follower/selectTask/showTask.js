@@ -195,9 +195,9 @@ YUI.add("showtask", function(Y)
  				self.elementContainer.push(element);
 				containerST.append(li);
 			});
-		}
+		},
 		
-		,_cleanMapArea:function()
+		_cleanMapArea:function()
 		{
 			this.client.activeRoom && this.client.activeRoom.setActive(false);
 			this.client.activeRoom = null;
