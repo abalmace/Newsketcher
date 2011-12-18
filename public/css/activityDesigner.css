@@ -1,0 +1,19 @@
+.cssIconPerson
+{
+	background: transparent url('./images/user_on.png') no-repeat;
+	width: 48px;
+	height: 50px;
+}
+
+.cssNamePerson
+{
+	font-size: 13px;
+	overflow: hidden;
+	padding: 8px 4px 4px 4px;
+	width: 68px;
+	height:40px;
+	word-wrap: break-word;
+	top:0;
+	left:60px;
+	position:absolute;
+}
