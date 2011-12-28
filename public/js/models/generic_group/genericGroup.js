@@ -224,4 +224,4 @@ YUI.add("genericgroup", function(Y)
 
 	Y.namespace("ModuleGeneric").GenericGroup = GenericGroup;
 
-}, "1.0", {requires:['base']});
+}, "1.0", {requires:['base','user']});

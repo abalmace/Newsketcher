@@ -407,4 +407,4 @@ YUI.add("definersubtaskactivity", function(Y)
 
 	Y.namespace("ModuleTask").DefinerSubTaskActivity = DefinerSubTaskActivity;
 
-}, "1.0", {requires:['base','definersubtaskactivityui','instancesubtaskgroup','connectionserver']});   
+}, "1.0", {requires:['base','definersubtaskactivityui','instancesubtaskgroup','connectionserver','workspaceread']});   

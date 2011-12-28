@@ -117,4 +117,4 @@ YUI.add("showcircle", function(Y)
 
 	Y.namespace("ModuleCircle").ShowCircle = ShowCircle;
 
-}, "1.0", {requires:['base','genericdivanimation','showtask']});
+}, "1.0", {requires:['base','genericdivanimation']});

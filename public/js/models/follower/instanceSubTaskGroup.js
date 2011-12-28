@@ -156,4 +156,4 @@ YUI.add("instancesubtaskgroup", function(Y)
 
 	Y.namespace("ModuleTask").InstanceSubTaskGroup = InstanceSubTaskGroup;
 
-}, "1.0", {requires:['base','genericgroup','user']});
+}, "1.0", {requires:['base','genericgroup']});
