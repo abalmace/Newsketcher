@@ -97,8 +97,8 @@
 {
 	top:auto;
 	bottom:auto;
-	right: 15px;
-	position:absolute;
+	float: right;
+	position:relative;
 	cursor:pointer;
 }
 				

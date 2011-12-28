@@ -1,20 +1,20 @@
-YUI.add("instancesubtask", function(Y)
+YUI.add("definersubtaskactivity", function(Y)
 { 
 	var Lang = Y.Lang;
 
 
-	function InstanceSubTask(data)
+	function DefinerSubTaskActivity(data)
 	{
-		InstanceSubTask.superclass.constructor.apply(this, arguments);
+		DefinerSubTaskActivity.superclass.constructor.apply(this, arguments);
 	}
 
 
-	InstanceSubTask.NAME = "instanceSubTask";
+	DefinerSubTaskActivity.NAME = "definerSubTaskActivity";
 
 	/*
 	* The attribute configuration for the component. This defines the core user facing state of the component
 	*/
-	InstanceSubTask.ATTRS =
+	DefinerSubTaskActivity.ATTRS =
 	{
 		client:
 			{
@@ -42,7 +42,7 @@ YUI.add("instancesubtask", function(Y)
 			}
 		,editable:
 			{
-			value:true
+			value:false
 			}
 		,persisted:
 			{
@@ -52,7 +52,7 @@ YUI.add("instancesubtask", function(Y)
 			{
 			value:null
 			}
-		,instanceSubTaskUI:
+		,definerSubTaskActivityUI:
 			{
 			value:null
 			}
@@ -63,7 +63,7 @@ YUI.add("instancesubtask", function(Y)
 	};
 
     /* MyComponent extends the Base class */
-	Y.extend(InstanceSubTask, Y.Base,
+	Y.extend(DefinerSubTaskActivity, Y.Base,
 	{
 		initializer: function(data)
 		{
@@ -87,7 +87,7 @@ YUI.add("instancesubtask", function(Y)
 			}
 
 			this._addSubscriptions();
-			this.instanceSubTaskUI = new Y.ModuleTask.InstanceSubTaskUI({dom:this.dom,title:data.title});
+			//this.definerSubTaskActivityUI = new Y.ModuleTask.DefinerSubTaskActivityUI({dom:this.dom,title:data.title});
 			this._events();
 
 		this.publish("myEvent", {
@@ -296,14 +296,13 @@ YUI.add("instancesubtask", function(Y)
 				if ( self.client.activeRoom )
 				self.client.activeRoom.setActive(false);
 				self.client.activeRoom = self;
-
-				self.workspace = new Y.ModuleWorkOut.WorkspaceRWGPS({room:self});
+				
+				self.workspace = new Y.ModuleWorkspace.WorkspaceRead({room:self});
 				self.workspace.defaultValues();
 				newsketcherClient.currentRoomId=self.name;
-				var parentNode = self.dom.parentNode;
-				self.instanceSubTaskUI.active(true);
+				
 				self._showAddBtn(true);
-				self._showRemoveBtn(true);
+				//self._showRemoveBtn(true);
 					
 				self.client.instanceSubTaskGroup = new Y.ModuleTask.InstanceSubTaskGroup(
 				{
@@ -311,17 +310,17 @@ YUI.add("instancesubtask", function(Y)
 					,group:self.group
 					,roomName:self.name
 				});
-				Y.one('#toolbar').setStyle('visibility','visible');
-				Y.one('#location').setStyle('visibility','visible');
+				Y.one('#toolbar').setStyle('visibility','hidden');
+				Y.one('#location').setStyle('visibility','hidden');
 			} 
 			else
 			{
 				self.workspace.destroy();
 				self.workspace = null;
 				self.dom.style.border = "";
-				self.instanceSubTaskUI.active(false);
+				//self.definerSubTaskActivityUI.active(false);
 				self._showAddBtn(false);
-				self._showRemoveBtn(false);
+				//self._showRemoveBtn(false);
 				if(self.client.instanceSubTaskGroup)
 					self.client.instanceSubTaskGroup.destroy();
 				
@@ -395,8 +394,8 @@ YUI.add("instancesubtask", function(Y)
 	  
 		_showAddBtn:function(bool)
 		{
-			if(this.callback && this.callback.showAddBtn)
-				this.callback.showAddBtn(bool);
+			if(this.callback && this.callback.click)
+				this.callback.click(bool);
 		}
 		
 		,_showRemoveBtn:function(bool)
@@ -406,6 +405,6 @@ YUI.add("instancesubtask", function(Y)
 		}
 	});
 
-	Y.namespace("ModuleTask").InstanceSubTask = InstanceSubTask;
+	Y.namespace("ModuleTask").DefinerSubTaskActivity = DefinerSubTaskActivity;
 
-}, "1.0", {requires:['base','instancesubtaskui','instancesubtaskgroup','workspacerwgps','connectionserver']});   
+}, "1.0", {requires:['base','definersubtaskactivityui','instancesubtaskgroup','connectionserver']});   

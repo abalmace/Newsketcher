@@ -238,6 +238,20 @@ ul.backgroundGroup
   cursor:pointer;
 }
 
+.instanceRemove{
+	position:absolute;
+	background: transparent url('./images/btnRest_small.png') no-repeat;
+	top:0;
+	left:10px;
+	width:24px;
+	height:24px;
+	z-index:100;
+}
+.instanceRemove:hover
+{ 
+  cursor:pointer;
+}
+
 .drag
 {
 	position:absolute;

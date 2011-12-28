@@ -59,7 +59,7 @@ YUI.add("instancesubtaskcreator", function(Y)
 			this.container = data.container;
 			this.callback = data.callback;
 			this.dom = document.getElementById('taskDefinition');
-			this.prefixIdInstance = 'instanceSubTask_';
+			this.prefixIdInstance = 'instancesubtask_';
 			this.people = data.people;
 			
 			this._showSubTaskDefinition();
@@ -134,6 +134,7 @@ YUI.add("instancesubtaskcreator", function(Y)
 			self.btnCreate.on('click',function(e)
 			{
 				self.createInstanceSubTask(input);
+				e.stopPropagation();
 			});
 		},
 	  
@@ -144,6 +145,7 @@ YUI.add("instancesubtaskcreator", function(Y)
 			self.btnCancel.on('click',function(e)
 			{
 				self._hideSubTaskDefinition();
+				e.stopPropagation();
 			});
 		},
 

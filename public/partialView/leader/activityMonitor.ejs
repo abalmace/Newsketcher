@@ -1,0 +1,85 @@
+<div id = "divHeaderScreenSelectorTask" class = "header_toolbar">
+	<span>Activity Monitor</span>
+	<div id= "changeTaskCreator" class = "gButton delete">Task Creator</div>
+	<div id= "changeActivityDesigner" class = "gButton delete">Activity Designer</div>
+	</div>
+<div id="divGlobalScreenSelectorTask">
+	<div id ="blockLayer" class = "globalContainer layer"></div>
+	<div id ="circlesContainer" class = "globalContainer">
+		<ul id="div_containerSelectorTask" class = "list layer"></ul>
+	</div>
+	<div id="div_containerSelectorInfoTask" class = "list layer" style = "visibility:hidden">
+		<div id ="headerTaskType">
+			<div id = "btn_hide_taskInfo">
+				<div id = "imgHide"></div>
+			</div>
+
+			<label>
+				<strong>Activity Type</strong>
+				<span></span>
+			</label>
+		</div>
+		
+		<label>
+			<strong>Title</strong>
+			<span class = "title"></span>
+		
+		</label>	
+		<label>
+			<strong>Objetives</strong>
+			<ul class = "objetives"></ul>
+		</label>
+		<label>
+			<strong>Planning</strong>
+			<ul class = "subTasks" ></ul>
+		</label>
+		<input type = "button" class = "gButton g-button-submit save-big" id = "btn_start_task" value = "start"/>
+	</div>
+	<input type = "button" class = "gButton g-button-submit" id = "btn_show_taskInfo"  style = "visibility:hidden" value = "show"/>
+	<div id="workspace" data-role="content">
+		<div id="layer">
+			<div id="map" class = "classBackgroundMap"></div>
+		</div>
+
+		<div id="sketches"></div>
+	</div>
+	
+	<div id="toolbar" style ="visibility:hidden">	
+		<div id = "toggleModeButton" class = "btnMap"></div>
+		<div id = "location"></div>
+		<div id = "toolbar_centerUp" style = "display:none">
+			<div class = "block">
+				<div id = "btnColor" class = "btnListMap"></div>
+				<ul id = "listColor" class = "dropdownmenu" style="display:none">
+					<li><img id = "btnGreen" src="./css/images/green.png"/></li>
+					<li><img id = "btnRed" src="./css/images/red.png"/></li>
+					<li><img id = "btnBlue" src="./css/images/blue.png"/></li>
+				</ul>
+			</div>
+			<div class = "block">
+				<div id = "btnSketch" class = "btnListMap"></div>
+				<ul id = "listSketch" class = "dropdownmenu" style="display:none">
+					<li><img id = "btnSlim" src="./css/images/slim.png"/></li>
+					<li><img id = "btnNormal" src="./css/images/normal.png"/></li>
+					<li><img id = "btnFat" src="./css/images/fat.png"/></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	
+	<!-- div para la definición de la task -->
+	<div id = "taskDefinition" class = "layer" style = "display:none">
+		<input type="text" id="taskTitle" placeholder="Task title"/>
+		<div id = "taskStructure">
+			<a href="#" id="taskInfo" class="btnHide"><<</a>
+			<div class = "addSection"></div>
+			<ul id = "sections1" class ="taskInfo"></ul>
+			<a href="#" id="taskCreate" class="btnHide">Create</a>
+		</div>
+	</div>
+	<!-- div para el contenedor de roommates -->
+	<div id ="divRoommateContainer" class = "layer" style = "visibility:hidden">
+		<a href="#" id= "hideRoommate" class="btnHide">>></a>
+	</div>
+</div>

@@ -32,6 +32,10 @@ YUI.add("showcontainercircle", function(Y)
 			{
 			value:null
 			}
+		,showCircleType:
+			{
+			value:null
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -46,7 +50,6 @@ YUI.add("showcontainercircle", function(Y)
 			this.callback = data.callback;
 			
 			//this._addEventClick();
-			this._addSubscriptions();
 
 		this.publish("myEvent", {
 		defaultFn: this._defMyEventFn,
@@ -76,45 +79,9 @@ YUI.add("showcontainercircle", function(Y)
 			
 		},
 	  
-		_addSubscriptions : function()
-		{
-			var self = this;
-		//suscribirse a la edicion de Tasks
-			self.subscriptions.push(self.client.subscribe(self._subscribePath(), function(task) {
-				if (task.status == 'join')
-					self.addMyTask(task);
-				else if (data.status == 'delete')
-					self.removeTask(data);
-
-			}));
-			
-		// Download previos Tasks
-			Y.ModuleConnectionServer.getJSON('/channel/Circle/'+this.client.guid +'/circles.json',function(data)
-			{
-				Y.Array.each(data.circles, function(circle)
-				{
-					self._addMyCircle(circle);
-				});
-			})	
-		},
-	  
 		_addEventClick : function()
 		{
 			Y.one(this.container).delegate('click', this._handleClick, 'div');
-		},
-		
-		/*
-		Eliminar una task
-		*/
-		_removeTask : function()
-		{
-			var data = 
-				{
-				id:this.guid
-				,status:'remove'
-				}
-				
-			this.client.sendSignal(data);
 		},
 	  
 		_addMyCircle : function(circle)
@@ -122,21 +89,8 @@ YUI.add("showcontainercircle", function(Y)
 			circle.textElement = circle.name;
 			circle.name = null;
 			circle.callback = this.callback;
-			var li = this._addElement(circle,Y.ModuleCircle.ShowCircle);
+			var li = this._addElement(circle,this.showCircleType);
 			this._setUI(li);
-		},
-	  
-		_findTasksInCircle : function(circle)
-		{
-			var self = this;
-			var tasks = circle.tasks;
-			var people = circle.people;
-			
-			Y.Array.each(tasks, function(task)
-			{
-				self._addMyTask(task);
-			});
-			
 		},
 	  
 		_setUI:function(li)
@@ -155,4 +109,4 @@ YUI.add("showcontainercircle", function(Y)
 
 	Y.namespace("ModuleContainerCircle").ShowContainerCircle = ShowContainerCircle;
 
-}, "1.0", {requires:['base','node-event-delegate','node','connectionserver','genericcontainer','showcircle']});
+}, "1.0", {requires:['node-event-delegate','node','connectionserver','genericcontainer']});

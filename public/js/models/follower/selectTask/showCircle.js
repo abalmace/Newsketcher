@@ -44,6 +44,10 @@ YUI.add("showcircle", function(Y)
 			{
 			value:null
 			}
+		,taskActivityType:
+			{
+			value:null
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -59,13 +63,8 @@ YUI.add("showcircle", function(Y)
 			this.tasks = data.tasks;	//tareas asignadas a la circle
 			this.callback = data.callback;
 			
-			this._addTasks();
-			this._hideBtnPlus();
 			
-		this.publish("myEvent", {
-		defaultFn: this._defMyEventFn,
-		bubbles:false
-		});
+			this._hideBtnPlus();
 		},
 
 		destructor : function()
@@ -85,55 +84,8 @@ YUI.add("showcircle", function(Y)
 			task.client = this.client;
 			task.people = this.people;
 			task.circleGuid = this.guid;
-			var li = this._addElement(task,Y.ModuleTask.TaskActivity);
+			var li = this._addElement(task,this.taskActivityType);
 			this._setUI(li);
-		},
-
-		_addTasks : function()
-		{
-			
-		//Tasks
-			var self = this;
-			Y.Array.each(this.tasks, function(task)
-			{
-				self._addMyTask(task);
-			});	
-		},
-	  
-	  
-		_addEvent : function(dom)
-		{
-			var self = this;
-			var container = Y.one(dom);
-			container.on('click',function (e)
-			{
-				self._handleClick(dom.id);	
-			});
-			
-		},
-	  
-		_handleClick : function(guid)
-		{
-			//this.showDescription && this.showDescription.destroy();
-			var click;
-			var self = this;
-			var callback = [];
-			if(self.callback && self.callback.click)
-			{
-				callback.click = function(data)
-				{
-					data.circleGuid = self.guid;
-					self.callback.click(data);
-				};
-			}
-			this.showDescription = new Y.ModuleTask.ShowTask(
-			{
-				container : this.li
-				,guid:guid
-				,people : this.people
-				,callback : callback
-				,client : this.client
-			});
 		},
 		
 		_hideBtnPlus:function()
@@ -152,6 +104,9 @@ YUI.add("showcircle", function(Y)
 			var add = node.one('.instanceAdd');
 			add.setStyle('visibility','hidden');
 			
+			var remove = node.one('.instanceRemove');
+			remove.setStyle('visibility','hidden');
+			
 			var nodeH2 = node.one(".mod h2");
 			nodeH2.addClass('backgroundHeaderTask');
 			
@@ -162,4 +117,4 @@ YUI.add("showcircle", function(Y)
 
 	Y.namespace("ModuleCircle").ShowCircle = ShowCircle;
 
-}, "1.0", {requires:['base','genericdivanimation','showtask','taskactivity']});
+}, "1.0", {requires:['base','genericdivanimation','showtask']});

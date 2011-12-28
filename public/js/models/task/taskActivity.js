@@ -48,6 +48,10 @@ YUI.add("taskactivity", function(Y)
 			{
 			value:null
 			}
+		,subTaskActivityType:
+			{
+			value:null
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -64,8 +68,6 @@ YUI.add("taskactivity", function(Y)
 			this.people = data.people;
 			this.prefixIdTask = 'task_';
 			this.task_title =  data.title;
-			
-			this._retrieveTaskInformation();
 		},
 
 		destructor : function()
@@ -75,15 +77,6 @@ YUI.add("taskactivity", function(Y)
 			children.each(function(node)
 			{
 				node.detach();
-			});
-		},
-	  
-		_retrieveTaskInformation:function()
-		{
-			var self = this;
-			Y.ModuleConnectionServer.getJSON('/channel/Task/'+this.guid+'/task.json',function(data)
-			{
-				self._addSubTasks(data.task[0]);
 			});
 		},
 	  
@@ -110,7 +103,8 @@ YUI.add("taskactivity", function(Y)
 			subTask.client = this.client;
 			subTask.people = this.people;
 			subTask.circleGuid = this.circleGuid;
-			var li = this._addElement(subTask,Y.ModuleTask.SubTaskActivity);
+			subTask.taskGuid = this.guid;
+			var li = this._addElement(subTask,this.subTaskActivityType);
 			this._setUI(li);
 		},
 	  
@@ -123,6 +117,9 @@ YUI.add("taskactivity", function(Y)
 			var add = node.one('.instanceAdd');
 			add.setStyle('visibility','hidden');
 			
+			var remove = node.one('.instanceRemove');
+			remove.setStyle('visibility','hidden');
+			
 			var nodeH2 = node.one(".mod h2");
 			nodeH2.addClass('backgroundHeaderSubTask');
 			
@@ -133,4 +130,4 @@ YUI.add("taskactivity", function(Y)
 
 	Y.namespace("ModuleTask").TaskActivity = TaskActivity;
 
-}, "1.0", {requires:['genericdivanimationcontainer','subtaskactivity']});
+}, "1.0", {requires:['genericdivanimationcontainer']});

@@ -105,12 +105,12 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 	{
 	
 		var node = Y.one('#ajaxContainer');
-		node.load('/partialView/activityWorkOut.ejs',null,function()
+		node.load('/partialView/follower/activityWorkOut.ejs',null,function()
 		{
-			Y.use('showcontainercircle','activityworkout', function(Y)
+			Y.use('showcontainercircle','showcontainercirclefollower', function(Y)
 			{
 				memoryFree();
-				showContainerCircle = new Y.ModuleContainerCircle.ShowContainerCircle(
+				showContainerCircle = new Y.ModuleFollower.ShowContainerCircleFollower(
 				{
 					client:newsketcherClient
 					,container:'div_containerSelectorTask'
@@ -124,7 +124,6 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 				});
 			});
 			
-			
 		}); 
 	}
 	
@@ -135,7 +134,7 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 		{	
 			Y.one('#btn_create_task').on('click', function(e)
 			{
-				Y.one('#ajaxContainer').load('/partialView/definerTaskContainer.ejs', function(e)
+				Y.one('#ajaxContainer').load('/partialView/leader/definerTaskContainer.ejs', function(e)
 				{
 				
 					Y.use('taskcreator', function(Y)
@@ -150,7 +149,7 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 			Y.one('#btn_create_activity').on('click', function(e)
 			{
 				var node = Y.one('#ajaxContainer');
-				node.load('/partialView/definerGroupContainer.ejs',null,function()
+				node.load('/partialView/leader/definerGroupContainer.ejs',null,function()
 				{
 					var btn = Y.one('#closeActivityDesigner');
 					btn.on('click', function(e)
@@ -174,13 +173,22 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 	
 	function _definerTaskContainer()
 	{
-		Y.one('#ajaxContainer').load('/partialView/definerTaskContainer.ejs', function(e)
+		Y.one('#ajaxContainer').load('/partialView/leader/definerTaskContainer.ejs', function(e)
 		{
-			var btn = Y.one('#changeActivityDesigner');
-			btn.on('click', function(e)
+			var btnDesigner = Y.one('#changeActivityDesigner');
+			btnDesigner.on('click', function(e)
 			{
-				btn.destroy();
+				btnDesigner.destroy();
+				btnMonitor.destroy();
 				_activityDesigner();
+			});
+			
+			var btnMonitor = Y.one('#changeActivityMonitor');
+			btnMonitor.on('click', function(e)
+			{
+				btnDesigner.destroy();
+				btnMonitor.destroy();
+				_activityMonitoring();
 			});
 			
 			Y.use('taskcreator', function(Y)
@@ -205,19 +213,67 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 	function _activityDesigner()
 	{
 		var node = Y.one('#ajaxContainer');
-		node.load('/partialView/definerGroupContainer.ejs',null,function()
+		node.load('/partialView/leader/definerGroupContainer.ejs',null,function()
 		{
-			var btn = Y.one('#changeTaskCreator');
-			btn.on('click', function(e)
+			var btnCreator = Y.one('#changeTaskCreator');
+			btnCreator.on('click', function(e)
 			{
-				btn.destroy();
+				btnCreator.destroy();
+				btnMonitor.destroy();
 				_definerTaskContainer();
+			});
+			var btnMonitor = Y.one('#changeActivityMonitor');
+			btnMonitor.on('click', function(e)
+			{
+				btnCreator.destroy();
+				btnMonitor.destroy();
+				_activityMonitoring();
 			});
 			
 			Y.use('activity-designer', function(Y)
 			{
 				memoryFree();
 				activityDesigner = new Y.NewSketcher.ActivityDesigner({client:newsketcherClient});
+			});
+			
+		}); 
+	}
+	
+	function _activityMonitoring()
+	{
+		var node = Y.one('#ajaxContainer');
+		node.load('/partialView/leader/activityMonitor.ejs',null,function()
+		{
+			var btnCreator = Y.one('#changeTaskCreator');
+			btnCreator.on('click', function(e)
+			{
+				btnCreator.destroy();
+				btnDesigner.destroy();
+				_definerTaskContainer();
+			});
+			var btnDesigner = Y.one('#changeActivityDesigner');
+			btnDesigner.on('click', function(e)
+			{
+				btnCreator.destroy();
+				btnDesigner.destroy();
+				_activityDesigner();
+			});
+			
+			Y.use('showcontainercircleleader', function(Y)
+			{
+				memoryFree();
+				showContainerCircle = new Y.ModuleLeader.ShowContainerCircleLeader(
+				{
+					client:newsketcherClient
+					,container:'div_containerSelectorTask'
+					,callback :
+					{
+						click:function(data)
+						{
+							//_startTask(data);
+						}
+					}
+				});
 			});
 			
 		}); 

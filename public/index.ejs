@@ -80,9 +80,10 @@
 	<script type="text/javascript" src="/js/new_sketcher_client.js"></script>
 	<script type="text/javascript" src="/js/application.js"></script>
 	
-	<!--Archivos para la administración de circles-->
-	<script type="text/javascript" src="/js/models/circles/circle.js"></script>
-	<script type="text/javascript" src="/js/models/circles/containerCircle.js"></script>
+	<!--Archivos para la administración de circle-->
+	<script type="text/javascript" src="/js/models/circle/circle.js"></script>
+	<script type="text/javascript" src="/js/models/circle/containerCircle.js"></script>
+	<script type="text/javascript" src="/js/models/circle/showContainerCircle.js"></script>
 	
 	<!--Archivos para la administración de People-->
 	
@@ -93,14 +94,6 @@
 	
 	<script type="text/javascript" src="/js/models/register/personCreator.js"></script>
 	
-	<!--Archivos para la administración de Actividades (Leader)-->
-	<script type="text/javascript" src="/js/models/leader/activity_creator/activityDesigner.js"></script>
-	<script type="text/javascript" src="/js/models/leader/activity_creator/circleCreator.js"></script>
-	<script type="text/javascript" src="/js/models/leader/activity_creator/specialContainerCircle.js"></script>
-	<script type="text/javascript" src="/js/models/leader/activity_creator/normalContainerCircle.js"></script>
-	<script type="text/javascript" src="/js/models/leader/activity_creator/person.js"></script>
-	<script type="text/javascript" src="/js/models/leader/activity_creator/selectedTask.js"></script>
-	<script type="text/javascript" src="/js/models/leader/activity_creator/containerSelectorTask.js"></script>
 	
 	
 	<!--Archivos para la administración de Lista de items -->
@@ -129,6 +122,22 @@
 	<script type="text/javascript" src="/js/models/generic_div_animation/genericDivAnimationContainer.js"></script>
 	<script type="text/javascript" src="/js/models/generic_group/genericGroup.js"></script>
 	
+	
+	<!--Archivos para Monitoreo de Actividades (Leader)-->
+	<script type="text/javascript" src="/js/models/leader/activity_monitor/showCircleLeader.js"></script>
+	<script type="text/javascript" src="/js/models/leader/activity_monitor/showContainerCircleLeader.js"></script>
+	<script type="text/javascript" src="/js/models/leader/activity_monitor/subTaskActivityLeader.js"></script>
+	<script type="text/javascript" src="/js/models/leader/activity_monitor/taskActivityLeader.js"></script>
+	
+	<!--Archivos para la administración de Actividades (Leader)-->
+	<script type="text/javascript" src="/js/models/leader/activity_creator/activityDesigner.js"></script>
+	<script type="text/javascript" src="/js/models/leader/activity_creator/circleCreator.js"></script>
+	<script type="text/javascript" src="/js/models/leader/activity_creator/specialContainerCircle.js"></script>
+	<script type="text/javascript" src="/js/models/leader/activity_creator/normalContainerCircle.js"></script>
+	<script type="text/javascript" src="/js/models/leader/activity_creator/person.js"></script>
+	<script type="text/javascript" src="/js/models/leader/activity_creator/selectedTask.js"></script>
+	<script type="text/javascript" src="/js/models/leader/activity_creator/containerSelectorTask.js"></script>
+	
 	<!--Archivos para la creacion de task (Leader)--> 
 	<script type="text/javascript" src="/js/models/leader/task_creator/taskCreator.js"></script>
 	<script type="text/javascript" src="/js/models/leader/task_creator/infoOnMap.js"></script>
@@ -147,6 +156,12 @@
 	<script type="text/javascript" src="/js/models/task/menu/containerTaskFollower.js"></script>
 	-->
 	
+	<!-- Module Task -->
+	<script type="text/javascript" src="/js/models/task/room.js"></script>
+	<script type="text/javascript" src="/js/models/task/subTaskActivity.js"></script>
+	<script type="text/javascript" src="/js/models/task/taskActivity.js"></script>
+	
+	
 	<!--Archivos para mostrar activity work out a followers-->
 	<script type="text/javascript" src="/js/models/follower/work_out/activityWorkOut.js"></script>
 	<script type="text/javascript" src="/js/models/follower/work_out/subTaskUI.js"></script>
@@ -154,22 +169,24 @@
 	<script type="text/javascript" src="/js/models/follower/work_out/instanceSubTaskUI.js"></script>
 	<script type="text/javascript" src="/js/models/follower/work_out/instanceSubTaskCreator.js"></script>
 	<script type="text/javascript" src="/js/models/follower/work_out/workspaceRWGPS.js"></script>
-	<script type="text/javascript" src="/js/models/task/room.js"></script>
 	<script type="text/javascript" src="/js/models/follower/work_out/user.js"></script>
 	<script type="text/javascript" src="/js/models/follower/work_out/groupWizard.js"></script>
 	<script type="text/javascript" src="/js/models/follower/work_out/instanceSubTaskGroup.js"></script>
 	
 	<!--Archivos para mostrar task disponibles a followers-->
-	<script type="text/javascript" src="/js/models/follower/selectTask/showContainerCircle.js"></script>
 	<script type="text/javascript" src="/js/models/follower/selectTask/showCircle.js"></script>
 	<script type="text/javascript" src="/js/models/follower/selectTask/showTask.js"></script>
 	<script type="text/javascript" src="/js/models/follower/selectTask/showRoom.js"></script>
 	<script type="text/javascript" src="/js/models/follower/selectTask/showRoomUI.js"></script>
 	<script type="text/javascript" src="/js/models/follower/selectTask/workspaceRead.js"></script>
     
-	
-	<script type="text/javascript" src="/js/models/follower/taskActivity.js"></script>
-	<script type="text/javascript" src="/js/models/follower/subTaskActivity.js"></script>
+    
+	<script type="text/javascript" src="/js/models/follower/showCircleFollower.js"></script>
+	<script type="text/javascript" src="/js/models/follower/taskActivityFollower.js"></script>
+	<script type="text/javascript" src="/js/models/follower/subTaskActivityFollower.js"></script>
+	<script type="text/javascript" src="/js/models/follower/definerSubTaskActivity.js"></script>
+	<script type="text/javascript" src="/js/models/follower/definerSubTaskActivityUI.js"></script>
+	<script type="text/javascript" src="/js/models/follower/showContainerCircleFollower.js"></script>
 	
 	
 	<!--Gestures-->

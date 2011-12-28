@@ -299,6 +299,7 @@ ul.backgroundSubTask
 h2.backgroundHeaderSubTask
 {
 	 background: rgba(227, 145, 131,1) !important;/*E6E9F5*/ 
+	cursor:pointer;
 }
 
 

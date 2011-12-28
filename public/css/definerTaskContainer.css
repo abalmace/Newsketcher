@@ -21,8 +21,17 @@
 {
 	top:auto;
 	bottom:auto;
-	right: 15px;
-	position:absolute;
+	float:right;
+	position:relative;
+	cursor:pointer;
+}
+
+#changeActivityMonitor
+{
+	top:auto;
+	bottom:auto;
+	float:right;
+	position:relative;
 	cursor:pointer;
 }
 

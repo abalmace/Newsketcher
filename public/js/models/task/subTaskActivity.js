@@ -64,6 +64,18 @@ YUI.add("subtaskactivity", function(Y)
 			{
 			value:null
 			}
+		,definitionSubTask:
+			{
+			value:null
+			}
+		,instanceSubTaskType:
+			{
+			value:null
+			}
+		,callbackToInstance:
+			{
+			value:null
+			}
 	};
 
     /* MyComponent extends the Base class */
@@ -82,11 +94,7 @@ YUI.add("subtaskactivity", function(Y)
 			this.subscriptions = [];
 			this.instances = [];
 			
-			this._createInstanceContainer();
-			this._addSubscriptions();
-			this._addEventButtonAdd();
-			//this._addCurrentInstances({primero:{title:"instances of this task",status:'join'},segundo:{title:"instances of this task...",status:'join'}});
-			
+			this._createInstanceContainer();		
 		},
 
 		destructor : function()
@@ -97,45 +105,6 @@ YUI.add("subtaskactivity", function(Y)
 			{
 				node.detach();
 			});
-		},
-	  
-		_addMySubTask : function(task)
-		{
-			task.textElement = task.title;
-			task.title = null;
-			var li = this._addElement(task);
-			this._addEvent(li);
-		},
-	  
-		_addCurrentInstances : function(instances)
-		{
-			var self = this;
-			_.each(instances, function(instance)
-			{
-				self.client.sendSignal(self._subscribePath(), instance);
-			});
-		},
-		
-		_addSubscriptions : function()
-		{
-			var self = this;
-		//suscribirse a la edicion de Rooms
-			self.subscriptions.push(self.client.subscribe(self._subscribePath(), function(data) {
-				if (data.status == 'join')
-					self._isMyInstance(data);
-				else if (data.status == 'delete')
-					self._removeInstanceSubTask(data);
-
-			}));
-			
-		// Download previos instanceTasks
-			Y.ModuleConnectionServer.getJSON('/channel/'+ self.circleGuid +'/'+self.guid+'/'+self.client.guid+'/instanceSubTasks.json', function(data)
-			{
-				Y.Array.each(data.instanceSubTasks, function(info)
-				{
-					self._joinInstanceSubTask(info);
-				});
-			})
 		},
 	  
 		_createInstanceContainer : function()
@@ -241,6 +210,7 @@ YUI.add("subtaskactivity", function(Y)
 			container.bind('click',function (e)
 			{
 				self._handleClick(dom.id);	
+				e.stopPropagation();
 			});
 			
 		},
@@ -259,52 +229,6 @@ YUI.add("subtaskactivity", function(Y)
 		{
 			return '/channel/' +this.circleGuid+'/'+this.guid+'/'+ 'instanceSubTasks';
 		},
-		
-		_addEventButtonAdd : function()
-		{
-			var self = this;
-			var li =jQuery(this.li);
-			var add =li.find("div.instanceAdd");
-			add.bind('click', function(e)
-			{
-				if(self.client.instanceSubTaskCreator)
-					self.client.instanceSubTaskCreator.destroy();
-				self.client.instanceSubTaskCreator = new Y.ModuleTask.InstanceSubTaskCreator(
-					{
-					client:self.client
-					,people:self.people
-					,container:self.container
-					,callback:
-						{
-						click:function(data)
-							{
-								data.taskGuid = self.taskGuid;
-								data.circleGuid = self.circleGuid;
-								data.subTaskGuid = self.guid;
-								self.client.sendSignal(self._subscribePath(), data);
-							}
-						}
-					});
-			});
-		},
-	  
-		_showAddButton:function(bool)
-		{
-			var node = Y.one(this.li);
-			var add = node.one('.instanceAdd');
-			if(bool)
-				add.setStyle('visibility','visible');
-			else
-				add.setStyle('visibility','hidden');
-		},
-	  
-		_isMyInstance:function(data)
-		{
-			var guid = this.client.guid;
-			var result = _.detect(data.group, function(s) { return s.guid == guid });
-			if(result && result.selected)
-				this._joinInstanceSubTask(data);
-		},
 	  
 		_joinInstanceSubTask : function(data)
 		{
@@ -312,6 +236,7 @@ YUI.add("subtaskactivity", function(Y)
 			var li = document.createElement('li');
 			li.className = "instanceTask";
 			var id = data.guid || Utils.guid();
+			id = id.toLowerCase();
 			li.id = id;	
 			
 			var dataAux = 
@@ -322,15 +247,9 @@ YUI.add("subtaskactivity", function(Y)
 				,name :id
 				,title:data.title
 				,group:data.group || []
-				,callback:
-					{
-					showAddBtn:function(bool)
-						{
-							self._showAddButton(bool);
-						}
-					}
+				,callback:this.callbackToInstance
 				}
-			var insTask = new Y.ModuleTask.InstanceSubTask(dataAux);
+			var insTask = new this.instanceSubTaskType(dataAux);
 			this.instances.push(insTask);
 			var node = Y.one(this.container);
 			node.prepend(li);
@@ -345,9 +264,56 @@ YUI.add("subtaskactivity", function(Y)
 			return insTask.name;
 		},
 		
-		_removeInstanceSubTask : function()
+		_removeInstanceSubTask : function(data)
 		{
+			var dom = document.getElementById(data.guid);
+			var node = Y.one(dom);
+			node.remove();
+
+			var instance = _.detect(this.instances, function(s) { return s.guid == data.guid });
+		
+			if(instance)
+			{
+				this.instances = _.without(this.instances, instance);
+				if(self.currentRoomId == data.guid)
+				{
+					self.openOtherRoom();
+					room.stop();
+				}
+				return;
+			}			
 			
+		},
+	  
+		_openRoom : function(roomName, array)
+		{
+			var room = _.detect(array, function(s) { return s.name == roomName });
+			if(room)
+			{
+				room.setActive(true);
+			}
+		},
+
+		/*
+			Se utiliza cuando se elimina la room actualmente en uso.
+			De esta manera se abre una room disponible.
+		*/
+		_openOtherRoom : function(array)
+		{
+			var self = this;
+			
+			if(array.length>0)
+			{
+				var room =array[array.length-1];
+				self.openRoom(room.name,array);
+				return;
+			}
+			if(array == self.rooms.personalRooms)
+			{
+				self.createNewPersonalRoom();
+			}
+			else
+				self.openOtherRoom(self.rooms.personalRooms);
 		}
 	  
 		
@@ -355,4 +321,4 @@ YUI.add("subtaskactivity", function(Y)
 
 	Y.namespace("ModuleTask").SubTaskActivity = SubTaskActivity;
 
-}, "1.0", {requires:['genericdivanimationcontainer','connectionserver']});
+}, "1.0", {requires:['genericdivanimationcontainer','connectionserver','definersubtaskactivity']});

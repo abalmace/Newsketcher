@@ -68,6 +68,7 @@ YUI.add("genericdivanimationcontainer", function(Y)
 		{
 			var str = 
 				'<div class="mod">' + 
+				'<div class ="instanceRemove"></div>'+
 				'<h2><strong>' + this.textElement + '</strong>'+ 
 				'<a title="minimize module" class="min" href="#"></a>' +
 				'<a title="close module" class="close" href="#" style = "display:none">X</a></h2>' +
