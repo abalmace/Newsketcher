@@ -23,7 +23,7 @@ YUI.add("subtaskactivityleader", function(Y)
 	{
 		initializer: function(data)
 		{
-			this.instanceSubTaskType = Y.ModuleTask.InstanceSubTask;
+			this.instanceSubTaskType = Y.ModuleLeader.InstanceSubTaskMonitor;
 			
 			this._addSubTaskDefinition();
 			this._addSubscriptions();		
@@ -82,4 +82,4 @@ YUI.add("subtaskactivityleader", function(Y)
 
 	Y.namespace("ModuleLeader").SubTaskActivityLeader = SubTaskActivityLeader;
 
-}, "1.0", {requires:['genericdivanimationcontainer','connectionserver','definersubtaskactivity','subtaskactivity','instancesubtask']});
+}, "1.0", {requires:['genericdivanimationcontainer','connectionserver','definersubtaskactivity','subtaskactivity','instancesubtaskmonitor']});

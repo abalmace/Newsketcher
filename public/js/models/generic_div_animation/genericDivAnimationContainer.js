@@ -16,7 +16,7 @@ YUI.add("genericdivanimationcontainer", function(Y)
 	*/
 	GenericDivAnimationContainer.ATTRS =
 	{
-		div:
+		dom:
 			{
 			value:null	
 			}
@@ -47,21 +47,21 @@ YUI.add("genericdivanimationcontainer", function(Y)
 	{
 		initializer: function(data)
 		{
-			this.li = data.li;		//elemento html que representa al módulo
+			this.dom = data.li || document.createElement('li');		//elemento html que representa al módulo
 			this.textElement = data.textElement;
 			this.elements = [];
 			
 			this._createModule();
-
-		this.publish("myEvent", {
-		defaultFn: this._defMyEventFn,
-		bubbles:false
-		});
 		},
 
 		destructor : function()
 		{
 			this.client = null;
+		},
+	  
+		getDOMElement:function()
+		{
+			return this.dom;
 		},
 
 		_createModule:function()
@@ -78,12 +78,12 @@ YUI.add("genericdivanimationcontainer", function(Y)
 				'</div>' +
 				'</div>';
 			
-			var liTag = this.li;
-			liTag.innerHTML = str;
+			var domTag = this.dom;
+			domTag.innerHTML = str;
 			
-			var node = Y.one(liTag);
+			var node = Y.one(domTag);
 			//define
-			this.container = liTag.getElementsByClassName("elementContainer")[0];
+			this.container = domTag.getElementsByClassName("elementContainer")[0];
 			
 			//eventos de botones.
 			var _moduleClick = function(e)

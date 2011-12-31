@@ -25,7 +25,7 @@ YUI.add("subtaskactivityfollower", function(Y)
 		initializer: function(data)
 		{
 			var self = this;
-			this.instanceSubTaskType = Y.ModuleTask.InstanceSubTask;
+			this.instanceSubTaskType = Y.ModuleFollower.InstanceSubTaskFollower;
 			this.callbackToInstance = 
 					{
 					showAddBtn:function(bool)
@@ -79,7 +79,7 @@ YUI.add("subtaskactivityfollower", function(Y)
 			self.subscriptions.push(self.client.subscribe(self._subscribePath(), function(data) {
 				if (data.status == 'join')
 					self._isMyInstance(data);
-				else if (data.status == 'delete2')
+				else if (data.status == 'delete')
 					self._removeInstanceSubTask(data);
 
 			}));
@@ -138,7 +138,7 @@ YUI.add("subtaskactivityfollower", function(Y)
 					,circleGuid: self.circleGuid
 					,subTaskGuid : self.guid
 					,guid : guid
-					,status : 'delete2'
+					,status : 'delete'
 				}
 				self.client.sendSignal(self._subscribePath(), data);
 				e.stopPropagation();
@@ -177,4 +177,4 @@ YUI.add("subtaskactivityfollower", function(Y)
 
 	Y.namespace("ModuleFollower").SubTaskActivityFollower = SubTaskActivityFollower;
 
-}, "1.0", {requires:['genericdivanimationcontainer','connectionserver','definersubtaskactivity','subtaskactivity','instancesubtask','instancesubtaskcreator']});
+}, "1.0", {requires:['genericdivanimationcontainer','connectionserver','definersubtaskactivity','subtaskactivity','instancesubtaskfollower','instancesubtaskcreator']});

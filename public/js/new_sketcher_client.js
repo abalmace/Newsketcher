@@ -56,6 +56,10 @@ YUI.add("newsketcher_client", function(Y)
 			{
 			value:null
 			}
+		,subTaskCreator:
+			{
+			value:null
+			}
 	};
 
     /* MyComponent extends the Base class */

@@ -13,7 +13,7 @@
 	<!--<link rel="stylesheet" href="/css/application.css" />-->
 	<link rel="stylesheet" href="/css/mapsketcher.css" />
 	<link rel="stylesheet" href="./css/groupDefiner.css" />
-	<link rel="stylesheet" href="./css/definerTaskContainer.css" />
+	<link rel="stylesheet" href="./css/definerTask.css" />
 	<link rel="stylesheet" href="./css/objetivesView.css" />
 	<link rel="stylesheet" href="./css/stepsView.css" />
 	<link rel="stylesheet" href="./css/infoWindow.css" />
@@ -119,7 +119,9 @@
 	
 	<!--Archivos para módulos genéricos-->
 	<script type="text/javascript" src="/js/models/generic_container/genericContainer.js"></script>
+	<script type="text/javascript" src="/js/models/generic_container/generic_container.js"></script>
 	<script type="text/javascript" src="/js/models/generic_div_animation/genericDivAnimation.js"></script>
+	<script type="text/javascript" src="/js/models/generic_div_animation/animationContainer.js"></script>
 	<script type="text/javascript" src="/js/models/generic_div_animation/genericDivAnimationContainer.js"></script>
 	<script type="text/javascript" src="/js/models/generic_group/genericGroup.js"></script>
 	
@@ -129,6 +131,7 @@
 	<script type="text/javascript" src="/js/models/leader/activity_monitor/showContainerCircleLeader.js"></script>
 	<script type="text/javascript" src="/js/models/leader/activity_monitor/subTaskActivityLeader.js"></script>
 	<script type="text/javascript" src="/js/models/leader/activity_monitor/taskActivityLeader.js"></script>
+	<script type="text/javascript" src="/js/models/leader/activity_monitor/instanceSubTaskMonitor.js"></script>
 	
 	<!--Archivos para la administración de Actividades (Leader)-->
 	<script type="text/javascript" src="/js/models/leader/activity_creator/activityDesigner.js"></script>
@@ -141,11 +144,15 @@
 	
 	<!--Archivos para la creacion de task (Leader)--> 
 	<script type="text/javascript" src="/js/models/leader/task_creator/taskCreator.js"></script>
+	<script type="text/javascript" src="/js/models/leader/task_creator/subTaskCreator.js"></script>
+	<script type="text/javascript" src="/js/models/leader/task_creator/subTaskDefiner.js"></script>
+	<!--
+	<script type="text/javascript" src="/js/models/leader/task_creator/taskCreator.js"></script>
 	<script type="text/javascript" src="/js/models/leader/task_creator/infoOnMap.js"></script>
 	<script type="text/javascript" src="/js/models/leader/task_creator/objetivesView.js"></script>
 	<script type="text/javascript" src="/js/models/leader/task_creator/stepsView.js"></script>
 	<script type="text/javascript" src="/js/models/leader/task_creator/workspaceToSubTask.js"></script>
-	
+	-->
 	<!--
 	<script type="text/javascript" src="/js/models/task/menu/instanceTaskUI.js"></script>
 	<script type="text/javascript" src="/js/models/task/menu/instanceTask.js"></script>
@@ -161,16 +168,20 @@
 	<script type="text/javascript" src="/js/models/task/room.js"></script>
 	<script type="text/javascript" src="/js/models/task/subTaskActivity.js"></script>
 	<script type="text/javascript" src="/js/models/task/taskActivity.js"></script>
+	<script type="text/javascript" src="/js/models/task/instanceSubTask.js"></script>
+	<script type="text/javascript" src="/js/models/task/createSubTaskUI.js"></script>
+	<script type="text/javascript" src="/js/models/task/taskContainerUI.js"></script>
+	<script type="text/javascript" src="/js/models/task/taskContainerDDUI.js"></script>
+	<script type="text/javascript" src="/js/models/task/subTaskUI.js"></script>
 	
 	
 	<!--Archivos para mostrar activity work out a followers-->
 	
-	
-	<script type="text/javascript" src="/js/models/follower/instanceSubTask.js"></script>
 	<script type="text/javascript" src="/js/models/follower/instanceSubTaskUI.js"></script>
 	<script type="text/javascript" src="/js/models/follower/instanceSubTaskCreator.js"></script>
 	<script type="text/javascript" src="/js/models/follower/workspaceRWGPS.js"></script>
 	<script type="text/javascript" src="/js/models/follower/groupWizard.js"></script>
+	<script type="text/javascript" src="/js/models/follower/instanceSubTaskFollower.js"></script>
 	<script type="text/javascript" src="/js/models/follower/instanceSubTaskGroup.js"></script>
 	<script type="text/javascript" src="/js/models/follower/showCircleFollower.js"></script>
 	<script type="text/javascript" src="/js/models/follower/taskActivityFollower.js"></script>

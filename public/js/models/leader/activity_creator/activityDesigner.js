@@ -193,7 +193,7 @@ YUI.add("activity-designer", function(Y)
 			this.containerSelectorTask = new Y.ModuleContainerSelectorTask.ContainerSelectorTask(
 			{
 				client:newsketcherClient
-				,container:this.containerSelectorTaskDOM
+				,dom:this.containerSelectorTaskDOM
 				,callback:
 				{
 					click: function(selected,guid)
@@ -262,6 +262,7 @@ YUI.add("activity-designer", function(Y)
 				moveOnEnd: false
 				,borderStyle: 'none'
 				});
+			this.delTasks.dd.addHandle('.drag');
 			
 			var userElements = Y.one('#'+self.stringPeopleContainerDOM);
 			this.delUsers = new Y.DD.Delegate({
@@ -352,7 +353,7 @@ YUI.add("activity-designer", function(Y)
 				var guidCircle = dropId;
 				if(dropId == "trash")
 				{
-					if(fatherId == self.stringContainerSelectorTaskDOM)
+					if(drag.hasClass('dragTask'))
 					{
 						_.each(self.tasksSelected, function(task)
 						{
@@ -375,7 +376,7 @@ YUI.add("activity-designer", function(Y)
 				 */
 				else if(dropFatherId == self.stringSpecialCircleContainerDOM)
 				{
-					if(fatherId == self.stringContainerSelectorTaskDOM)
+					if(drag.hasClass('dragTask'))
 					{
 						_.each(self.tasksSelected, function(task)
 						{
@@ -394,7 +395,7 @@ YUI.add("activity-designer", function(Y)
 				/*
 				 * un circle es el drop
 				 */
-				else if(fatherId == self.stringContainerSelectorTaskDOM)
+				else if(drag.hasClass('dragTask'))
 				{
 					_.each(self.tasksSelected, function(task)
 					{
@@ -416,8 +417,9 @@ YUI.add("activity-designer", function(Y)
 			{
 				var target = e.target;
 				var node = target.get('node');
+				var parentNode = node.get('parentNode').get('parentNode').get('parentNode');
 				var drag = target.get('dragNode');
-				self._addTaskAndSelect(node.get('id'));
+				self._addTaskAndSelect(parentNode.get('id'));
 				
 				if (target.target)
 				{

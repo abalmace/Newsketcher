@@ -134,7 +134,7 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 		{	
 			Y.one('#btn_create_task').on('click', function(e)
 			{
-				Y.one('#ajaxContainer').load('/partialView/leader/definerTaskContainer.ejs', function(e)
+				Y.one('#ajaxContainer').load('/partialView/leader/definerTask.ejs', function(e)
 				{
 				
 					Y.use('taskcreator', function(Y)
@@ -173,7 +173,7 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 	
 	function _definerTaskContainer()
 	{
-		Y.one('#ajaxContainer').load('/partialView/leader/definerTaskContainer.ejs', function(e)
+		Y.one('#ajaxContainer').load('/partialView/leader/definerTask.ejs', function(e)
 		{
 			var btnDesigner = Y.one('#changeActivityDesigner');
 			btnDesigner.on('click', function(e)
@@ -194,7 +194,12 @@ YUI().use('node','node-load','newsketcher_client','connectionserver', function(Y
 			Y.use('taskcreator', function(Y)
 			{
 				memoryFree();
-				taskcreator = new Y.ModuleTask.TaskCreator({client:newsketcherClient});
+				taskcreator = new Y.ModuleTask.TaskCreator(
+					{
+						client:newsketcherClient
+						,li :document.getElementById('divSubTasks')
+						,textElement:'SubTasks'
+					});
 			});
 			
 			var buttonCreate = Y.one('#buttonAddTask');

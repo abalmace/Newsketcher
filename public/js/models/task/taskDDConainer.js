@@ -1,20 +1,20 @@
-YUI.add("containerselectortask", function(Y)
+YUI.add("taskddcontainer", function(Y)
 { 
 	var Lang = Y.Lang;
 
 
-	function ContainerSelectorTask(data)
+	function TaskDDContainer(data)
 	{
-	ContainerSelectorTask.superclass.constructor.apply(this, arguments);
+	TaskDDContainer.superclass.constructor.apply(this, arguments);
 	}
 
 
-	ContainerSelectorTask.NAME = "containerSelectorTask";
+	TaskDDContainer.NAME = "containerSelectorTask";
 
 	/*
 	* The attribute configuration for the component. This defines the core user facing state of the component
 	*/
-	ContainerSelectorTask.ATTRS =
+	TaskDDContainer.ATTRS =
 	{
 		client:
 			{
@@ -35,16 +35,16 @@ YUI.add("containerselectortask", function(Y)
 	};
 
     /* MyComponent extends the Base class */
-	Y.extend(ContainerSelectorTask, Y.ModuleContainer.Generic_Container,
+	Y.extend(TaskDDContainer, Y.ModuleGeneric.AnimationContainer,
 	{
 		initializer: function(data)
 		{
 			this.client = data.client;
 			this.callback = data.callback; 
 			this.subscriptions = [];
-			this.prefixIdTask = 'task_';
+			this.prefixIdSubTask = 'subTask_';
 			
-			this._addSubscriptions();
+			//this._addSubscriptions();
 			
 		},
 
@@ -86,10 +86,9 @@ YUI.add("containerselectortask", function(Y)
 		{
 			
 			data.client = this.client;
-			data.dom = document.createElement('li');
 			if(this.callback)
 				data.clicked = this.callback.click;
-			this.addElement(data,Y.ModuleLeader.SelectedTask,false)
+			var dom = this.addElement(data,Y.ModuleSelectedTask.SelectedTask,false)
 			
 			if(this.callback && this.callback.update)
 				this.callback.update();
@@ -121,6 +120,6 @@ YUI.add("containerselectortask", function(Y)
 		}
 	});
 
-	Y.namespace("ModuleContainerSelectorTask").ContainerSelectorTask = ContainerSelectorTask;
+	Y.namespace("ModuleTask").TaskDDContainer = TaskDDContainer;
 
 }, "1.0", {requires:['base','selectedtask','connectionserver','taskddui','animationcontainer']});

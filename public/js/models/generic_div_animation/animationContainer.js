@@ -1,87 +1,44 @@
-YUI.add("genericdivanimation", function(Y)
+YUI.add("animationcontainer", function(Y)
 { 
 	var Lang = Y.Lang;
 
 
-	function GenericDivAnimation(data)
+	function AnimationContainer(data)
 	{
-		GenericDivAnimation.superclass.constructor.apply(this, arguments);
+		AnimationContainer.superclass.constructor.apply(this, arguments);
 	}
 
 
-	GenericDivAnimation.NAME = "genericDivAnimation";
+	AnimationContainer.NAME = "animationContainer";
 
 	/*
 	* The attribute configuration for the component. This defines the core user facing state of the component
 	*/
-	GenericDivAnimation.ATTRS =
+	AnimationContainer.ATTRS =
 	{
-		client:
+		anim:
 			{
 			value:null
-			}
-		,div:
-			{
-			value:null	
-			}
-		,textElement:
-			{
-			value:null
-			}
-		,anim:
-			{
-			value:null
-			}
-		,elements:
-			{
-			value:[]
-			}
-		,container:
-			{
-			value:null
-			,getter:function()
-				{
-				return this.container	
-				}
 			}	
 	};
 
     /* MyComponent extends the Base class */
-	Y.extend(GenericDivAnimation, Y.Base,
+	Y.extend(AnimationContainer, Y.ModuleContainer.Generic_Container,
 	{
 		initializer: function(data)
 		{
-			this.client = data.client;	//cliente
-			this.dom = data.li || document.createElement('li');		//elemento html que representa al módulo
-			this.textElement = data.textElement;
-			this.elements = [];
-			
 			this._createModule();
-
-		this.publish("myEvent", {
-		defaultFn: this._defMyEventFn,
-		bubbles:false
-		});
 		},
 
 		destructor : function()
 		{
-			this.client = null;
-		},
-	  
-		getDOMElement:function()
-		{
-			return this.dom;
 		},
 
 		_createModule:function()
 		{
 			var str = 
 				'<div class="mod">' + 
-				'<h2><div class = "drag"></div><strong>' + this.textElement + '</strong>'+ 
-				'<a title="minimize module" class="min" href="#"></a>' +
-				'<a title="close module" class="close" href="#" style = "display:none">X</a></h2>' +
-				'<div class ="instanceAdd"></div>'+
+				'<h2><a title="minimize module" class="min" href="#"></a></h2>' +
 				'<div class="inner">' +
 				'    <ul class="elementContainer"></ul>' + 
 				'</div>' +
@@ -92,7 +49,7 @@ YUI.add("genericdivanimation", function(Y)
 			
 			var node = Y.one(domTag);
 			//define
-			this.container = domTag.getElementsByClassName("elementContainer")[0];
+			this.container = node.one('.elementContainer');
 			
 			//eventos de botones.
 			var _moduleClick = function(e)
@@ -208,32 +165,9 @@ YUI.add("genericdivanimation", function(Y)
 				}
 			}	
 			node.one('h2').on('click', _moduleClick);
-		},
-		
-		_addElement : function(data, classElement)
-		{
-			var li = document.createElement('li');
-			li.className = "genericDivAnimation";
-			var id = data.guid || Utils.guid();
-			li.id = id;
-			li.innerHTML = data.textElement;
-			data.li = li;
-			data.guid = id;
-			if(classElement)
-			{
-				var element = new classElement(data);
-				this.elements.push(element);
-			}
-			this.container.appendChild(li);
-			return li;
-		},
-	  
-		_getContainer : function()
-		{
-			return this.container;
 		}
 	});
 
-	Y.namespace("ModuleGeneric").GenericDivAnimation = GenericDivAnimation;
+	Y.namespace("ModuleGeneric").AnimationContainer = AnimationContainer;
 
-}, "1.0", {requires:['base','node','anim']});
+}, "1.0", {requires:['generic_container','node','anim']});

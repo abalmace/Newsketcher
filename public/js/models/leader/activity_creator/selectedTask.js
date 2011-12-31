@@ -16,11 +16,7 @@ YUI.add("selectedtask", function(Y)
 	*/
 	SelectedTask.ATTRS =
 	{
-		dom:
-			{
-			value:null
-			}
-		,title:
+		title:
 			{
 			value:null	
 			}
@@ -36,38 +32,32 @@ YUI.add("selectedtask", function(Y)
 			{
 			value:null
 			}
+		,subTasks:
+			{
+			value:null
+			}
 	};
 
     /* MyComponent extends the Base class */
-	Y.extend(SelectedTask, Y.Base,
+	Y.extend(SelectedTask, Y.ModuleGeneric.AnimationContainer,
 	{
 		initializer: function(data)
 		{
 			this.dom = data.dom;
 			this.title = data.title;
 			this.guid = data.guid;
+			this.subTasks = data.subTasks;
 			this.clicked = data.clicked;
 			this.selected = false;
 			
 			this._defineDOMElement();
 			this._addEvents();
-
-		this.publish("myEvent", {
-		defaultFn: this._defMyEventFn,
-		bubbles:false
-		});
+			this._addSubTasks();
 		},
 
 		destructor : function()
 		{
-		/*
-		* destructor is part of the lifecycle introduced by 
-		* the Base class. It is invoked when destroy() is called,
-		* and can be used to cleanup instance specific state.
-		*
-		* It does not need to invoke the superclass destructor. 
-		* destroy() will call initializer() for all classes in the hierarchy.
-		*/
+		
 		},
 
 		/* MyComponent specific methods */
@@ -84,7 +74,7 @@ YUI.add("selectedtask", function(Y)
 
 		_defineDOMElement : function()
 		{
-			this.dom.innerHTML =this.title;
+			var ui = new Y.ModuleTask.TaskContainerDDUI({dom:this.dom,title:this.title})
 		},
 
 		_addEvents : function(e)
@@ -110,9 +100,26 @@ YUI.add("selectedtask", function(Y)
 				$(this.dom).removeClass('gButtonSelected');
 			}
 			this.selected = !this.selected;
+		},
+	  
+		_addSubTasks:function()
+		{
+			var self = this;
+			Y.Array.each(this.subTasks,function(s)
+			{
+				self._addSubTask(s);
+			});
+		},
+	  
+		_addSubTask:function(data)
+		{
+			data.dom = document.createElement('li');
+			this.addElement(data,null,false);
+			new Y.ModuleTask.SubTaskUI(data)
+			
 		}
 	});
 
-	Y.namespace("ModuleSelectedTask").SelectedTask = SelectedTask;
+	Y.namespace("ModuleLeader").SelectedTask = SelectedTask;
 
-}, "1.0", {requires:["base"]});
+}, "1.0", {requires:["animationcontainer","subtaskui","taskcontainerddui"]});

@@ -89,7 +89,7 @@ YUI.add("taskactivity", function(Y)
 				var data = 
 				{
 				title: subTask.description
-				,guid: subTask.mapId
+				,guid: subTask.guid
 				,client:self.client
 				}
  				self._addMySubTask(data);
